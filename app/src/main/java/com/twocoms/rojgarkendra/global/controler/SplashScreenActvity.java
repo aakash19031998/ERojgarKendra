@@ -1,7 +1,9 @@
-package com.twocoms.rojgarkendra;
+package com.twocoms.rojgarkendra.global.controler;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.twocoms.rojgarkendra.R;
 
 public class SplashScreenActvity extends AppCompatActivity {
 
