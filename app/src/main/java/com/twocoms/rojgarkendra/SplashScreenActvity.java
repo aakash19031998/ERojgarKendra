@@ -1,4 +1,4 @@
-package com.twocoms.rojgarkendra.global.controler;
+package com.twocoms.rojgarkendra;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
