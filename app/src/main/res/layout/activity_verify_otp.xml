@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".registrationscreen.controler.VerifyOtpActivity">
+
+
+    <ImageView
+        android:id="@+id/backbutton"
+        android:layout_width="@dimen/_34sdp"
+        android:layout_height="@dimen/_34sdp"
+        android:text="Back"
+        android:textSize="36sp"
+        android:src="@drawable/backbutton"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:padding="6dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/explainabletext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please wait.\nWe will auto verify\nthe OTP sent to\n+919699101091"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/backbutton"
+        android:padding="6dp"/>
+
+    <LinearLayout
+        android:id="@+id/inputlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/explainabletext"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp">
+
+        <EditText
+            android:id="@+id/et1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:maxLength="1"
+            android:background="@drawable/edt_bg"
+            android:gravity="center"
+            android:textColor="@android:color/black">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/et2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:maxLength="1"
+            android:inputType="number"
+            android:background="@drawable/edt_bg"
+
+            android:gravity="center"
+            android:textColor="@android:color/black">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/et3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:inputType="number"
+            android:maxLength="1"
+            android:gravity="center"
+            android:background="@drawable/edt_bg"
+
+            android:textColor="@android:color/black">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/et4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:maxLength="1"
+            android:inputType="number"
+            android:gravity="center"
+            android:background="@drawable/edt_bg"
+
+            android:textColor="@android:color/black">
+
+        </EditText>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/didnotgetotptext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Didn't receive OTP"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:visibility="invisible"
+        android:layout_below="@+id/inputlayout"></TextView>
+
+    <TextView
+        android:id="@+id/otp_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your OTP will expire 1:20 min"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:visibility="visible"
+        android:layout_below="@+id/inputlayout"></TextView>
+
+    <TextView
+        android:id="@+id/resendotpbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resend OTP"
+        android:padding="10dp"
+        android:textColor="#24a0ed"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/didnotgetotptext"></TextView>
+
+
+    <TextView
+        android:id="@+id/verifybutton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_34sdp"
+        android:text="VERIFY"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_below="@+id/resendotpbutton"></TextView>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tclayout"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/mainlogo"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/mainlogo1"></ImageView>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/mainlogo">
+
+            <TextView
+                android:id="@+id/header1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+91"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:layout_marginLeft="10dp">
+
+
+            </TextView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mobile_edit_text_inputlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mobile_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:hint="Mobile Number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/proceddbuttonlayout"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/circle_bg_disablebled">
+
+                <TextView
+                    android:id="@+id/proceedbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="-4dp"
+                    android:gravity="center"
+                    android:text="->"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/tclayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/reg_tc_bg">
+
+        <TextView
+            android:id="@+id/mobilenumbertext1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:textColor="@android:color/black"
+            android:text="Your mobile number is totally protected">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/bg_view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="6dp"
+            android:background="@android:color/black"
+            android:layout_below="@+id/mobilenumbertext1"
+            android:text="By signing up you agree to 2COMS T&amp;C and Privacy Policy">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tcmaintext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/bg_view1"
+            android:layout_marginBottom="10dp"
+            android:textSize="12sp"
+            android:textColor="@android:color/black"
+            android:text="By signing up you agree to 2COMS T&amp;C and Privacy Policy">
+
+        </TextView>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
