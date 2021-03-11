@@ -75,9 +75,6 @@ public class VerifyOtpActivity extends AppCompatActivity {
                 callVerifyOTP();
             }
         });
-
-        String OTP ="123456";
-        et1.setText(String.valueOf(OTP.charAt(1)));
     }
 
     void showOtpTimer() {
@@ -212,17 +209,12 @@ public class VerifyOtpActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent)
         {
             try {
-
-
-                //Extract your data - better to use constants...
-                String incomingSms = intent.getStringExtra("incomingOTP");
-                Log.e("OTP sended to Activity", incomingSms);
-                et1.setText(intent.getStringExtra("OTP1"));
-//            et1.setText(intent.getStringExtra("OTP2"));
-//            et1.setText(intent.getStringExtra("OTP3"));
-//            et1.setText(intent.getStringExtra("OTP4"));
+                String[] splitted = intent.getStringExtra("OTP").split("(?<=.)");
+                et1.setText(splitted[0]);
+                et2.setText(splitted[1]);
+                et3.setText(splitted[2]);
+                et4.setText(splitted[3]);
                 callVerifyOTP();
-
             }catch (Exception e){
                 e.printStackTrace();
             }

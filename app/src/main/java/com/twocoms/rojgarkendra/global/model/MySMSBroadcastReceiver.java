@@ -22,14 +22,10 @@ public class MySMSBroadcastReceiver extends BroadcastReceiver {
                 case CommonStatusCodes.SUCCESS:
                     // Get SMS message contents
                     String message = (String) extras.get(SmsRetriever.EXTRA_SMS_MESSAGE);
-                    Log.e("SMS Message",message);
                     String OTP = message.substring(15,18);
-                    Log.e("OTP",OTP);
+                    Log.e("SMS Message",message);
                     Intent i = new Intent("android.intent.action.SmsReceiver")
-                            .putExtra("OTP1", OTP.charAt(0))
-                            .putExtra("OTP1", OTP.charAt(1))
-                            .putExtra("OTP1", OTP.charAt(2))
-                            .putExtra("OTP1", OTP.charAt(3));
+                            .putExtra("OTP",OTP);
                     context.sendBroadcast(i);
                     // Extract one-time code from the message and complete verification
                     // by sending the code back to your server.
