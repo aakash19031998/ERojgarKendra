@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.twocoms.rojgarkendra">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme_New">
-        <activity android:name=".registrationscreen.controler.RegisterUserDataActivity"></activity>
-        <activity
-            android:name=".registrationscreen.controler.VerifyMobileNumberActivity"
-            android:screenOrientation="portrait" />
         <activity android:name=".SplashScreenActvity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +24,16 @@
             android:name=".registrationscreen.controler.VerifyOtpActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".dashboardscreen.controler.DashboardActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".registrationscreen.controler.RegisterUserDataActivity"
+             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".registrationscreen.controler.VerifyMobileNumberActivity"
+            android:screenOrientation="portrait" />
+
         <receiver
             android:name=".global.model.MySMSBroadcastReceiver"
             android:exported="true"
@@ -32,6 +42,26 @@
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".global.model.MyFirebaseMessagingService1"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/bg_reg_drop_down" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
     </application>
 
 </manifest>

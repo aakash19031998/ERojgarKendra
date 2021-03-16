@@ -17,7 +17,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.twocoms.rojgarkendra.R;
+import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
+import com.twocoms.rojgarkendra.global.model.AppConstant;
+import com.twocoms.rojgarkendra.global.model.CommonMethod;
+import com.twocoms.rojgarkendra.global.model.ServiceHandler;
+import com.twocoms.rojgarkendra.global.model.Validation;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +39,10 @@ public class VerifyOtpActivity extends AppCompatActivity {
     TextView otp_timer, didnotgetotptext, resendotpbutton;
     TextView verifybutton;
     ImageView backbutton;
+    String otpStr, enteredOtpStr, mobile_no;
+    boolean isVerifiedEnabled  = false;
+    TextView explainableText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +53,11 @@ public class VerifyOtpActivity extends AppCompatActivity {
     }
 
     void init() {
+        Intent intent = getIntent();
+        otpStr  = intent.getStringExtra("otp");
+        mobile_no = intent.getStringExtra("mobile_no");
+        explainableText = (TextView)findViewById(R.id.explainabletext);
+        explainableText.setText("Please wait.\nWe will auto verify\nthe OTP sent to\n+91"+mobile_no);
         et1 = findViewById(R.id.et1);
         et2 = findViewById(R.id.et2);
         et3 = findViewById(R.id.et3);
@@ -65,14 +83,16 @@ public class VerifyOtpActivity extends AppCompatActivity {
         resendotpbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startTimer();
+                resendOtp();
             }
         });
 
         verifybutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callVerifyOTP();
+                if(isVerifiedEnabled) {
+                    callVerifyOTP();
+                }
             }
         });
     }
@@ -106,7 +126,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
         otp_timer.setVisibility(View.VISIBLE);
         isOtpExpire = false;
         long timeInMilliseconds;
-        timeInMilliseconds = 1 * 60000;
+        timeInMilliseconds = 5 * 60000;
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
@@ -192,9 +212,12 @@ public class VerifyOtpActivity extends AppCompatActivity {
                 !et4.getText().toString().equals("")) {
 
             verifybutton.setBackground(getResources().getDrawable(R.drawable.verify_enable));
+            isVerifiedEnabled = true;
+
 
         } else {
             verifybutton.setBackground(getResources().getDrawable(R.drawable.verify_disble));
+            isVerifiedEnabled = false;
         }
     }
 
@@ -235,8 +258,18 @@ public class VerifyOtpActivity extends AppCompatActivity {
     }
 
     void callVerifyOTP(){
-        Intent intent = new Intent(this,RegisterUserDataActivity.class);
-        startActivity(intent);
+        enteredOtpStr = et1.getText().toString()+et2.getText().toString()+et3.getText().toString()+et4.getText().toString();
+        Log.v("entered Otp", enteredOtpStr);
+
+        if (Validation.checkIfEmptyOrNot(et1.getText().toString()) || Validation.checkIfEmptyOrNot(et2.getText().toString()) || Validation.checkIfEmptyOrNot(et3.getText().toString()) || Validation.checkIfEmptyOrNot(et4.getText().toString()) ){
+            CommonMethod.showToast("Please Enter Valid Otp",VerifyOtpActivity.this);
+        }else if (!enteredOtpStr.equals(otpStr)){
+            CommonMethod.showToast("Please Enter Valid Otp",VerifyOtpActivity.this);
+        }else {
+//            Intent intent = new Intent(this, RegisterUserDataActivity.class);
+//            startActivity(intent);
+            verifyOtp();
+        }
     }
 
 
@@ -246,4 +279,97 @@ public class VerifyOtpActivity extends AppCompatActivity {
         filter.addAction("android.intent.action.SmsReceiver");
         registerReceiver(mServiceReceiver , filter);
     }
+
+    void verifyOtp(){
+        final JSONObject Json = new JSONObject();
+
+        try {
+            Json.put("contact", mobile_no);
+            Json.put("otp",enteredOtpStr);
+            //Json.put("Messege","HAVELLS APP VERIFICATION");
+            Log.v("JSONURL", Json.toString());
+            ServiceHandler serviceHandler = new ServiceHandler(VerifyOtpActivity.this);
+            serviceHandler.StringRequest(Request.Method.POST, Json.toString(), AppConstant.VERIFY_OTP, true, new ServiceHandler.VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+
+                    Log.v("Response",result);
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (jsonObject.getBoolean("success")){
+                            JSONObject dataStr = jsonObject.getJSONObject("data");
+                            otpStr = dataStr.getString("otp");
+                            String msgStr = jsonObject.getString("message");
+                            Intent intent = new Intent(VerifyOtpActivity.this, RegisterUserDataActivity.class);
+                            intent.putExtra("mobile_no",mobile_no);
+                            intent.putExtra("eduJob", "N");
+                            startActivity(intent);
+                            CommonMethod.showToast(msgStr,VerifyOtpActivity.this);
+                            finish();
+                        }else {
+                            String msgStr = jsonObject.getString("message");
+                            CommonMethod.showToast(msgStr,VerifyOtpActivity.this);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+//                    Intent intent = new Intent(VerifyOtpActivity.this, VerifyOtpActivity.class);
+//                    intent.putExtra("otp",otpStr);
+//                    startActivity(intent);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    void resendOtp(){
+        final JSONObject Json = new JSONObject();
+
+        try {
+            Json.put("contact", mobile_no);
+            Json.put("resend",1);
+            //Json.put("Messege","HAVELLS APP VERIFICATION");
+            Log.v("JSONURL", Json.toString());
+            ServiceHandler serviceHandler = new ServiceHandler(VerifyOtpActivity.this);
+            serviceHandler.StringRequest(Request.Method.POST, Json.toString(), AppConstant.RESEND_OTP, true, new ServiceHandler.VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+
+                    Log.v("Response",result);
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (jsonObject.getBoolean("success")){
+                            JSONObject dataStr = jsonObject.getJSONObject("data");
+                            otpStr = dataStr.getString("otp");
+                            String msgStr = jsonObject.getString("message");
+                            setDataEmpty();
+                            startTimer();
+                        }else {
+                            String msgStr = jsonObject.getString("message");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    void setDataEmpty(){
+        et1.setText("");
+        et2.setText("");
+        et3.setText("");
+        et4.setText("");
+        et1.requestFocus();
+    }
+
+
 }

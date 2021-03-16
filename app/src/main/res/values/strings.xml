@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">E Rojgar Kendra</string>
 
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="exit">Exit</string>
+    <string name="token_id">token</string>
 </resources>

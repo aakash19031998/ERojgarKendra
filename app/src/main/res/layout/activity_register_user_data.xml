@@ -57,9 +57,11 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/mobile_edit_text"
+                    android:id="@+id/name_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="Name" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -81,11 +83,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="Email Id" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/state_edit_text_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
@@ -97,10 +102,14 @@
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:padding="@dimen/_10sdp"
                     android:id="@+id/state_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/bg_reg_drop_down"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="State" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -121,6 +130,8 @@
                     android:id="@+id/city_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="City/District" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -140,11 +151,64 @@
                     android:id="@+id/language_known_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="Language known" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/gender_background_drawable"
+                android:layout_marginRight="10dp"
+                android:padding="@dimen/_3sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender :- "
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="@dimen/_15sdp"/>
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/gender_grp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        android:textStyle="bold"
+                        />
+
+                    <RadioButton
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:id="@+id/female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        android:textStyle="bold"
+                        />
+
+
+
+                </RadioGroup>
+
+
+            </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dob_known_edit_text_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
@@ -160,6 +224,8 @@
                     android:id="@+id/dob_known_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:drawableRight="@drawable/bg_edit_calendar"
                     android:hint="Date of birth" />
 
@@ -183,11 +249,14 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="10"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:hint="Phone Number" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/qualification_type_edit_text_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
@@ -200,16 +269,20 @@
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:padding="@dimen/_10sdp"
                     android:id="@+id/qualification_type_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:drawableRight="@drawable/bg_reg_drop_down"
                     android:hint="Qualification_type" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/experinace_edit_text_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
@@ -221,10 +294,13 @@
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:padding="@dimen/_10sdp"
                     android:id="@+id/experinace_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:drawableRight="@drawable/bg_reg_drop_down"
                     android:hint="Experienced" />
 
@@ -247,6 +323,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="Experience in years " />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -267,8 +345,9 @@
                     android:id="@+id/designation_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="10"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:hint="Designation" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -282,14 +361,17 @@
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
                 android:layout_marginTop="6dp"
+                android:hint="Roll"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/role_edit_text"
+                    android:id="@+id/roll_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -310,12 +392,14 @@
                     android:id="@+id/salary_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="Salary" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/centre_name_edit_text_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
@@ -331,11 +415,14 @@
                     android:id="@+id/centre_name_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Centre name" />
+                    android:hint="Centre name"
+                    android:singleLine="true"
+                    android:maxLines="1"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/project_name_edit_text_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
@@ -351,13 +438,14 @@
                     android:id="@+id/project_name_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="Project name" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/batch_name_edit_text_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
@@ -373,11 +461,14 @@
                     android:id="@+id/batch_name_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="Batch name" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/course_name_edit_text_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
@@ -393,7 +484,8 @@
                     android:id="@+id/course_name_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="Course name" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -408,7 +500,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:gravity="center"
-                android:background="@drawable/verify_enable"
+                android:background="@drawable/verify_disble"
                 android:padding="10dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="20dp"

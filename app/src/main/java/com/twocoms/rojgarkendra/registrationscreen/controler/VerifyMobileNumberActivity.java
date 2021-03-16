@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
@@ -21,17 +22,30 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.credentials.HintRequest;
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.internal.service.Common;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.twocoms.rojgarkendra.R;
+import com.twocoms.rojgarkendra.global.model.AppConstant;
+import com.twocoms.rojgarkendra.global.model.CommonMethod;
+import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
+import com.twocoms.rojgarkendra.global.model.ServiceHandler;
+import com.twocoms.rojgarkendra.global.model.Validation;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 //import com.twocoms.rojgarkendra.global.model.AppSignatureHelper;
 
 public class VerifyMobileNumberActivity extends AppCompatActivity {
@@ -43,12 +57,16 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
     boolean isProceedEnabld = false;
     int RESOLVE_HINT = 1001;
     GoogleApiClient googleApiClient;
+    String mobile_no;
+    String otpStr;
+    String android_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_mobile_number);
         init();
+        getFCMToken();
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Auth.CREDENTIALS_API)
                 .build();
@@ -67,9 +85,17 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
                 if (s.length() == 10) {
                     proceddbuttonlayout.setBackground(getResources().getDrawable(R.drawable.circle_bg_enabled));
                     isProceedEnabld = true;
+                    proceedbutton.setClickable(true);
+                    proceedbutton.setEnabled(true);
+//                    proceedbutton.setFocusable(true);
+//                    proceedbutton.setFocusableInTouchMode(true);
                 } else {
                     proceddbuttonlayout.setBackground(getResources().getDrawable(R.drawable.circle_bg_disablebled));
                     isProceedEnabld = false;
+                    proceedbutton.setClickable(false);
+                    proceedbutton.setEnabled(false);
+//                    proceedbutton.setFocusable(false);
+//                    proceedbutton.setFocusableInTouchMode(false);
                 }
 
             }
@@ -77,14 +103,27 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
         proceedbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+               mobile_no = mobile_edit_text.getText().toString();
 //                AppSignatureHelper appSignatureHelper = new AppSignatureHelper(VerifyMobileNumberActivity.this);
 //                appSignatureHelper.getAppSignatures();
+                if (Validation.checkIfEmptyOrNot(mobile_no)){
+                    CommonMethod.showToast("Please Enter Mobile Number", VerifyMobileNumberActivity.this);
+                }else if(!Validation.isValidMobileNumber(mobile_no)) {
+                    CommonMethod.showToast("Enter Valid Mobile Number", VerifyMobileNumberActivity.this);
+                } else {
+                    proceedButtonClicked();
+                }
 
-                proceedButtonClicked();
+
             }
         });
 
         requestPhoneNumber();
+
+        android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        Log.v("Device Id",android_id);
 
     }
 
@@ -100,6 +139,31 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
         mobile_edit_text = findViewById(R.id.mobile_edit_text);
         proceddbuttonlayout = findViewById(R.id.proceddbuttonlayout);
         proceedbutton = findViewById(R.id.proceedbutton);
+
+
+
+    }
+
+    void getFCMToken(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("Token", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        GlobalPreferenceManager.saveStringForKey(VerifyMobileNumberActivity.this, "firebasekey", token);
+
+                        // Log and toast
+                        //String msg = getString(R.string.token_id, token);
+                        Log.d("Token", token);
+//                        Toast.makeText(VerifyMobileNumberActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void customTextView(TextView view) {
@@ -128,8 +192,9 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
     }
 
     void callVerifyOtpScreen() {
-        Intent intent = new Intent(this, VerifyOtpActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, VerifyOtpActivity.class);
+//        startActivity(intent);
+        verifyMobileNo();
     }
 
 
@@ -199,7 +264,45 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
         });
     }
 
-    void callApiForRegistration(){
+//    void callApiForRegistration(){
+//
+//    }
+
+    void verifyMobileNo() {
+
+        final JSONObject Json = new JSONObject();
+
+        try {
+            Json.put("contact", mobile_edit_text.getText().toString());
+            //Json.put("Messege","HAVELLS APP VERIFICATION");
+            Log.v("JSONURL", Json.toString());
+            ServiceHandler serviceHandler = new ServiceHandler(VerifyMobileNumberActivity.this);
+            serviceHandler.StringRequest(Request.Method.POST, Json.toString(), AppConstant.VERIFY_MOB_NO, true, new ServiceHandler.VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+
+                    Log.v("Response",result);
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (jsonObject.getBoolean("success")){
+                            JSONObject dataStr = jsonObject.getJSONObject("data");
+                            otpStr = dataStr.getString("otp");
+                            Intent intent = new Intent(VerifyMobileNumberActivity.this, VerifyOtpActivity.class);
+                            intent.putExtra("mobile_no", mobile_no);
+                            intent.putExtra("otp",otpStr);
+                            startActivity(intent);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
+
 }

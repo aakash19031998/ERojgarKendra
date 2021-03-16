@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "611063325270",
+    "project_id": "e-rojgar-kendra",
+    "storage_bucket": "e-rojgar-kendra.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611063325270:android:e944a3913fe890a36dd1f7",
+        "android_client_info": {
+          "package_name": "com.twocoms.rojgarkendra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611063325270-0evbe75qv3trsev2p2q5j3p1fotehoql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcqAJbEBahy8feHNCgPerPZPoKdr2fbFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611063325270-0evbe75qv3trsev2p2q5j3p1fotehoql.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

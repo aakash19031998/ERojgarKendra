@@ -3,8 +3,8 @@
 
     <item
         android:drawable="@drawable/downarrow"
-        android:width="@dimen/_21sdp"
-        android:height="@dimen/_21sdp"
+        android:width="@dimen/_16sdp"
+        android:height="@dimen/_16sdp"
         />
 
 </layer-list >
