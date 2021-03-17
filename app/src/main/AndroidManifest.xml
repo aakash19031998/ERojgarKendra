@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
     <application
@@ -13,6 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme_New">
+
         <activity android:name=".SplashScreenActvity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,17 +29,52 @@
         <activity
             android:name=".registrationscreen.controler.VerifyOtpActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".dashboardscreen.controler.DashboardActivity"
-            android:screenOrientation="portrait"></activity>
-
-        <activity android:name=".registrationscreen.controler.RegisterUserDataActivity"
-             android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".registrationscreen.controler.RegisterUserDataActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".registrationscreen.controler.VerifyMobileNumberActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".registrationscreen.controler.ImagePickerActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".userprofilescreen.sample.controler.UserProfileActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <!--
+ Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/bg_reg_drop_down" />
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <receiver
             android:name=".global.model.MySMSBroadcastReceiver"
             android:exported="true"
@@ -50,18 +91,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
-     See README(https://goo.gl/l4GJaQ) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/bg_reg_drop_down" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-
     </application>
+
 
 </manifest>

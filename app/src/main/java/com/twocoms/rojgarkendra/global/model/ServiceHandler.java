@@ -43,31 +43,23 @@ public class ServiceHandler {
     SharedPreferences sharedpreferences;
 
 
-
-    public ServiceHandler(Context context)
-    {
+    public ServiceHandler(Context context) {
         this.context = context;
 
 
-
-        if(requestQueue == null)
-        {
+        if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(this.context);
         }
     }
 
-    public void jsonRequest(int requestType, JSONObject parameters, final String web_url, boolean showDialog, final VolleyJsonCallback callback)
-    {
-        if(showDialog)
-        {
-            loadingDialog =  new LoadingDialog(context);
+    public void jsonRequest(int requestType, JSONObject parameters, final String web_url, boolean showDialog, final VolleyJsonCallback callback) {
+        if (showDialog) {
+            loadingDialog = new LoadingDialog(context);
             loadingDialog.show();
         }
 
 
-        Log.d("JsonRequest",parameters.toString());
-
-
+        Log.d("JsonRequest", parameters.toString());
 
 
         JsonObjectRequest jsonObjectRequest;
@@ -103,13 +95,10 @@ public class ServiceHandler {
                         if (loadingDialog != null && loadingDialog.isShowing())
                             loadingDialog.dismiss();
 
-                        Log.d("Error",error.toString());
-                        Toast.makeText(context,error.toString(),Toast.LENGTH_LONG).show();
+                        Log.d("Error", error.toString());
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
                     }
-                })
-
-
-        {
+                }) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params1 = new HashMap<>();
@@ -134,20 +123,15 @@ public class ServiceHandler {
     }
 
 
-
-    public void JsonArrayRequest1(final String web_url,  Response.Listener<JSONArray> listener, boolean showDialog
-            ,Response.ErrorListener listener1)
-    {
-        if(showDialog)
-        {
-            loadingDialog =  new LoadingDialog(context);
+    public void JsonArrayRequest1(final String web_url, Response.Listener<JSONArray> listener, boolean showDialog
+            , Response.ErrorListener listener1) {
+        if (showDialog) {
+            loadingDialog = new LoadingDialog(context);
             loadingDialog.show();
         }
 
 
-
-
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(web_url, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(web_url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -159,8 +143,6 @@ public class ServiceHandler {
                 jsonArray = response;
 
 
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -169,12 +151,11 @@ public class ServiceHandler {
                 if (loadingDialog != null && loadingDialog.isShowing())
                     loadingDialog.dismiss();
 
-                Log.d("Error",error.toString());
-                Toast.makeText(context,error.toString(),Toast.LENGTH_LONG).show();
+                Log.d("Error", error.toString());
+                Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
 
             }
-        }){
-
+        }) {
 
 
             @Override
@@ -191,9 +172,7 @@ public class ServiceHandler {
             }
 
 
-
         };
-
 
 
         jsonArrayRequest.setShouldCache(false);
@@ -207,17 +186,11 @@ public class ServiceHandler {
     }
 
 
+    public void StringRequestjsonArry(int requestType, final JSONArray parameters, final String web_url, boolean showDialog, final VolleyCallback volleyCallback) {
+        if (CommonMethod.isOnline(context)) {
 
-
-
-    public void StringRequestjsonArry(int requestType, final JSONArray parameters, final String web_url, boolean showDialog, final VolleyCallback volleyCallback)
-    {
-        if(CommonMethod.isOnline(context))
-        {
-
-            if(showDialog)
-            {
-                loadingDialog =  new LoadingDialog(context);
+            if (showDialog) {
+                loadingDialog = new LoadingDialog(context);
                 loadingDialog.show();
             }
 
@@ -241,17 +214,16 @@ public class ServiceHandler {
                     if (loadingDialog != null && loadingDialog.isShowing())
                         loadingDialog.dismiss();
 
-                    if(error instanceof TimeoutError)
-                    {
+                    if (error instanceof TimeoutError) {
                         Toast.makeText(context, "timeout", Toast.LENGTH_SHORT).show();
                     }
 
-                    Log.d("Error",error.toString());
+                    Log.d("Error", error.toString());
 
                     Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
-            }){
+            }) {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> params1 = new HashMap<>();
@@ -277,9 +249,7 @@ public class ServiceHandler {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(stringRequest);
 
-        }
-        else
-        {
+        } else {
             Toast.makeText(context, "CHECK INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
         }
 
@@ -363,14 +333,11 @@ public class ServiceHandler {
     }*/
 
 
-    public void StringRequest(int requestType, final String parameters, final String web_url, boolean showDialog, final VolleyCallback volleyCallback)
-    {
-        if(CommonMethod.isOnline(context))
-        {
+    public void StringRequest(int requestType, final String parameters, final String web_url, boolean showDialog, final VolleyCallback volleyCallback) {
+        if (CommonMethod.isOnline(context)) {
 
-            if(showDialog)
-            {
-                loadingDialog =  new LoadingDialog(context);
+            if (showDialog) {
+                loadingDialog = new LoadingDialog(context);
                 loadingDialog.setCancelable(false);
                 loadingDialog.show();
 
@@ -396,17 +363,22 @@ public class ServiceHandler {
                     if (loadingDialog != null && loadingDialog.isShowing())
                         loadingDialog.dismiss();
 
-                    if(error instanceof TimeoutError)
-                    {
+                    if (error == null) {
+                        Toast.makeText(context, "Something went wrong please try again!", Toast.LENGTH_SHORT).show();
+
+                    } else if (error instanceof TimeoutError) {
                         Toast.makeText(context, "timeout", Toast.LENGTH_SHORT).show();
                     }
+                    else {
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
 
-                    Log.d("Error",error.toString());
+                    Log.d("Error", error.toString());
 
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+
 
                 }
-            }){
+            }) {
 //                @Override
 //                public Map<String, String> getHeaders() {
 //                    Map<String, String> params1 = new HashMap<>();
@@ -421,6 +393,7 @@ public class ServiceHandler {
                 public String getBodyContentType() {
                     return "application/json; charset=utf-8";
                 }
+
                 @Override
                 public byte[] getBody() throws AuthFailureError {
                     try {
@@ -441,24 +414,18 @@ public class ServiceHandler {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(stringRequest);
 
-        }
-        else
-        {
+        } else {
             Toast.makeText(context, "CHECK INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
         }
 
     }
 
 
+    public void StringRequest(int requestType, final JSONObject parameters, final String web_url, boolean showDialog, final VolleyCallback volleyCallback) {
+        if (CommonMethod.isOnline(context)) {
 
-    public void StringRequest(int requestType, final JSONObject parameters, final String web_url, boolean showDialog, final VolleyCallback volleyCallback)
-    {
-        if(CommonMethod.isOnline(context))
-        {
-
-            if(showDialog)
-            {
-                loadingDialog =  new LoadingDialog(context);
+            if (showDialog) {
+                loadingDialog = new LoadingDialog(context);
                 loadingDialog.show();
             }
 
@@ -482,17 +449,16 @@ public class ServiceHandler {
                     if (loadingDialog != null && loadingDialog.isShowing())
                         loadingDialog.dismiss();
 
-                    if(error instanceof TimeoutError)
-                    {
+                    if (error instanceof TimeoutError) {
                         Toast.makeText(context, "timeout", Toast.LENGTH_SHORT).show();
                     }
 
-                    Log.d("Error",error.toString());
+                    Log.d("Error", error.toString());
 
                     Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
-            }){
+            }) {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> params1 = new HashMap<>();
@@ -518,22 +484,17 @@ public class ServiceHandler {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(stringRequest);
 
-        }
-        else
-        {
+        } else {
             Toast.makeText(context, "CHECK INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    public void StringRequestScheme(int requestType, final JSONObject parameters, final String web_url, boolean showDialog, final VolleyCallback volleyCallback)
-    {
-        if(CommonMethod.isOnline(context))
-        {
+    public void StringRequestScheme(int requestType, final JSONObject parameters, final String web_url, boolean showDialog, final VolleyCallback volleyCallback) {
+        if (CommonMethod.isOnline(context)) {
 
-            if(showDialog)
-            {
-                loadingDialog =  new LoadingDialog(context);
+            if (showDialog) {
+                loadingDialog = new LoadingDialog(context);
                 loadingDialog.show();
             }
 
@@ -557,15 +518,14 @@ public class ServiceHandler {
                     if (loadingDialog != null && loadingDialog.isShowing())
                         loadingDialog.dismiss();
 
-                    if(error instanceof TimeoutError)
-                    {
+                    if (error instanceof TimeoutError) {
 
                         showAlert1("WEAK INTERNET CONNECTION, KINDLY TRY AGAIN");
                     }
 
 
                 }
-            }){
+            }) {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> params1 = new HashMap<>();
@@ -591,22 +551,17 @@ public class ServiceHandler {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(stringRequest);
 
-        }
-        else
-        {
+        } else {
             Toast.makeText(context, "CHECK INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    public void StringRequestGet(int requestType,  final String web_url, boolean showDialog, final VolleyCallback volleyCallback)
-    {
-        if(CommonMethod.isOnline(context))
-        {
+    public void StringRequestGet(int requestType, final String web_url, boolean showDialog, final VolleyCallback volleyCallback) {
+        if (CommonMethod.isOnline(context)) {
 
-            if(showDialog)
-            {
-                loadingDialog =  new LoadingDialog(context);
+            if (showDialog) {
+                loadingDialog = new LoadingDialog(context);
                 loadingDialog.show();
             }
 
@@ -630,17 +585,16 @@ public class ServiceHandler {
                     if (loadingDialog != null && loadingDialog.isShowing())
                         loadingDialog.dismiss();
 
-                    if(error instanceof TimeoutError)
-                    {
+                    if (error instanceof TimeoutError) {
                         Toast.makeText(context, "timeout", Toast.LENGTH_SHORT).show();
                     }
 
-                    Log.d("Error",error.toString());
+                    Log.d("Error", error.toString());
 
                     Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
-            }){
+            }) {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> params1 = new HashMap<>();
@@ -663,23 +617,18 @@ public class ServiceHandler {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(stringRequest);
 
-        }
-        else
-        {
+        } else {
             Toast.makeText(context, "CHECK INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
         }
 
     }
 
 
-    public void StringRequestGet1(int requestType, final String web_url, final boolean showDialog, final VolleyCallback1 volleyCallback)
-    {
-        if(CommonMethod.isOnline(context))
-        {
+    public void StringRequestGet1(int requestType, final String web_url, final boolean showDialog, final VolleyCallback1 volleyCallback) {
+        if (CommonMethod.isOnline(context)) {
 
-            if(showDialog)
-            {
-                loadingDialog =  new LoadingDialog(context);
+            if (showDialog) {
+                loadingDialog = new LoadingDialog(context);
                 loadingDialog.show();
             }
 
@@ -705,7 +654,7 @@ public class ServiceHandler {
 
 //
                 }
-            }){
+            }) {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> params1 = new HashMap<>();
@@ -730,38 +679,36 @@ public class ServiceHandler {
 
             requestQueue.add(stringRequest);
 
-        }
-        else
-        {
+        } else {
             Toast.makeText(context, "CHECK INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
         }
 
     }
 
 
-    public interface VolleyJsonCallback{
+    public interface VolleyJsonCallback {
         void onSuccess(JSONObject result);
     }
 
-    public interface VolleyJsonArrayCallback{
+    public interface VolleyJsonArrayCallback {
         void onSuccess(JSONArray result);
     }
 
-    public interface VolleyCallback{
+    public interface VolleyCallback {
         void onSuccess(String result);
 
     }
 
 
-    public interface VolleyCallback1{
+    public interface VolleyCallback1 {
         void onSuccess(String result);
+
         void onError(VolleyError error);
 
     }
 
 
-    public void showAlert(String Message)
-    {
+    public void showAlert(String Message) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
 
@@ -772,8 +719,8 @@ public class ServiceHandler {
         alertDialogBuilder
                 .setMessage(Message)
                 .setCancelable(false)
-                .setNegativeButton(context.getString(R.string.exit),new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
+                .setNegativeButton(context.getString(R.string.exit), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
                         // if this button is clicked, just close
                         // the dialog box and do nothing
                         //  finish();
@@ -792,8 +739,7 @@ public class ServiceHandler {
     }
 
 
-    public void showAlert1(String Message)
-    {
+    public void showAlert1(String Message) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
 
@@ -804,15 +750,15 @@ public class ServiceHandler {
         alertDialogBuilder
                 .setMessage(Message)
                 .setCancelable(false)
-                .setNegativeButton(context.getString(R.string.exit),new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
+                .setNegativeButton(context.getString(R.string.exit), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
                         // if this button is clicked, just close
                         // the dialog box and do nothing
                         //  finish();
 
                         dialog.dismiss();
 
-                        Intent i=new Intent(context, DashboardActivity.class);
+                        Intent i = new Intent(context, DashboardActivity.class);
                         context.startActivity(i);
 
 

@@ -13,4 +13,33 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
 
     </style>
+
+    <style name="dialog_animation_fade">
+        <item name="android:windowEnterAnimation">@anim/fadein</item>
+        <item name="android:windowExitAnimation">@anim/fadeout</item>
+    </style>
+
+    <style name="textAppearanceRegularForDialogs">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="squarecamera__CameraFullScreenTheme" parent="squarecamera__CameraFullScreenTheme.Base">
+
+    </style>
+
+    <style name="squarecamera__CameraFullScreenTheme.Base" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+
+    <style name="switch_style" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:colorAccent" tools:targetApi="lollipop">#8BC34A</item>
+        <item name="android:color">#8BC34A</item>
+    </style>
+
 </resources>

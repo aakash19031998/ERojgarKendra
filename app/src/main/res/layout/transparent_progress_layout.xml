@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    android:orientation="vertical">
-
-
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/progressDialogLayoutCopy"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16px"
+    android:layout_margin="18px"
+    android:background="@drawable/progress_bg"
+    android:layout_gravity="center"
+    android:layout_marginBottom="20dp">
     <ProgressBar
-        android:id="@+id/customProgressBar"
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
-
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/loader_icons"
+        android:layout_marginRight="16px"
+        android:layout_marginLeft="16px"
+        android:layout_centerVertical="true"
+        >
+    </ProgressBar>
     <TextView
+        android:id="@+id/progressMessageTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/customProgressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/colorPrimary"
-        android:visibility="invisible"/>
+        android:layout_gravity="center"
+        style="@style/textAppearanceRegularForDialogs"
+
+        android:text="Loading......"
+        android:layout_alignParentRight="false" android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/progressBar"
+        android:layout_marginRight="16px"
+        android:layout_marginLeft="10dp">
+    </TextView>
 </RelativeLayout>

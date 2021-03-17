@@ -22,7 +22,7 @@ public class MySMSBroadcastReceiver extends BroadcastReceiver {
                 case CommonStatusCodes.SUCCESS:
                     // Get SMS message contents
                     String message = (String) extras.get(SmsRetriever.EXTRA_SMS_MESSAGE);
-                    String OTP = message.substring(15,18);
+                    String OTP = message.substring(16,20);
                     Log.e("SMS Message",message);
                     Intent i = new Intent("android.intent.action.SmsReceiver")
                             .putExtra("OTP",OTP);

@@ -53,7 +53,7 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
     TextView tcmaintext;
     TextInputEditText mobile_edit_text;
     RelativeLayout proceddbuttonlayout;
-    TextView proceedbutton;
+    TextView signupbutton;
     boolean isProceedEnabld = false;
     int RESOLVE_HINT = 1001;
     GoogleApiClient googleApiClient;
@@ -83,24 +83,16 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (s.length() == 10) {
-                    proceddbuttonlayout.setBackground(getResources().getDrawable(R.drawable.circle_bg_enabled));
+                    signupbutton.setBackground(getResources().getDrawable(R.drawable.sign_up_enable));
                     isProceedEnabld = true;
-                    proceedbutton.setClickable(true);
-                    proceedbutton.setEnabled(true);
-//                    proceedbutton.setFocusable(true);
-//                    proceedbutton.setFocusableInTouchMode(true);
                 } else {
-                    proceddbuttonlayout.setBackground(getResources().getDrawable(R.drawable.circle_bg_disablebled));
+                    signupbutton.setBackground(getResources().getDrawable(R.drawable.sign_up_disble));
                     isProceedEnabld = false;
-                    proceedbutton.setClickable(false);
-                    proceedbutton.setEnabled(false);
-//                    proceedbutton.setFocusable(false);
-//                    proceedbutton.setFocusableInTouchMode(false);
                 }
 
             }
         });
-        proceedbutton.setOnClickListener(new View.OnClickListener() {
+        signupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -138,9 +130,7 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
         tcmaintext = findViewById(R.id.tcmaintext);
         mobile_edit_text = findViewById(R.id.mobile_edit_text);
         proceddbuttonlayout = findViewById(R.id.proceddbuttonlayout);
-        proceedbutton = findViewById(R.id.proceedbutton);
-
-
+        signupbutton = findViewById(R.id.signupbutton);
 
     }
 

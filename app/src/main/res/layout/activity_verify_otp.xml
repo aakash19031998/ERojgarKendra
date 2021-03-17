@@ -21,26 +21,61 @@
         android:textStyle="bold" />
 
 
+    <RelativeLayout
+        android:id="@+id/app_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backbutton"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/maintext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Place"
+            android:textColor="@color/app_colour_name"
+            android:textSize="40dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/maintext"
+            android:text="me"
+            android:textColor="@color/black"
+            android:textSize="40dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </RelativeLayout>
+
+
+
     <TextView
         android:id="@+id/explainabletext"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Please wait.\nWe will auto verify\nthe OTP sent to\n+919699101091"
+        android:text="Please wait.\nWe will auto verify the OTP sent to +919699101091"
         android:textSize="20sp"
         android:textColor="@android:color/black"
-        android:layout_marginLeft="20dp"
+        android:gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/backbutton"
+        android:layout_below="@+id/app_main_layout"
+
         android:padding="6dp"/>
 
     <LinearLayout
         android:id="@+id/inputlayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         android:layout_below="@+id/explainabletext"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp">
+        android:layout_marginTop="20dp">
 
         <EditText
             android:id="@+id/et1"
@@ -50,6 +85,8 @@
             android:maxLength="1"
             android:background="@drawable/edt_bg"
             android:gravity="center"
+            android:hint="-"
+            android:textColorHint="@color/black"
             android:textColor="@android:color/black">
 
         </EditText>
@@ -62,7 +99,8 @@
             android:maxLength="1"
             android:inputType="number"
             android:background="@drawable/edt_bg"
-
+            android:hint="-"
+            android:textColorHint="@color/black"
             android:gravity="center"
             android:textColor="@android:color/black">
 
@@ -77,7 +115,8 @@
             android:maxLength="1"
             android:gravity="center"
             android:background="@drawable/edt_bg"
-
+            android:hint="-"
+            android:textColorHint="@color/black"
             android:textColor="@android:color/black">
 
         </EditText>
@@ -91,7 +130,8 @@
             android:inputType="number"
             android:gravity="center"
             android:background="@drawable/edt_bg"
-
+            android:hint="-"
+            android:textColorHint="@color/black"
             android:textColor="@android:color/black">
 
         </EditText>
@@ -116,6 +156,7 @@
         android:text="Your OTP will expire 1:20 min"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_centerHorizontal="true"
         android:visibility="visible"
         android:layout_below="@+id/inputlayout"></TextView>
 
@@ -126,6 +167,7 @@
         android:text="Resend OTP"
         android:padding="10dp"
         android:textColor="#24a0ed"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_below="@+id/didnotgetotptext"></TextView>
 

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
+import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataActivity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.VerifyMobileNumberActivity;
 
 public class SplashScreenActvity extends AppCompatActivity {
@@ -38,7 +39,7 @@ public class SplashScreenActvity extends AppCompatActivity {
 //                        finish();
 //                    }
 //                } else {
-                    Intent mainIntent = new Intent(SplashScreenActvity.this, VerifyMobileNumberActivity.class);
+                    Intent mainIntent = new Intent(SplashScreenActvity.this, RegisterUserDataActivity.class);
                     startActivity(mainIntent);
                     finish();
 //                }

@@ -113,7 +113,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         ImageView imageView = convertView.findViewById(R.id.header_icon);
 
-        imageView.setImageResource(headerTitle.getIconImg());
+        //imageView.setImageResource(headerTitle.getIconImg());
 
         return convertView;
     }

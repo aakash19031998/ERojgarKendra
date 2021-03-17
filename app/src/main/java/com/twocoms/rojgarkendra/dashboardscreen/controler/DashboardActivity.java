@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.model.NavMenuModel;
 import com.twocoms.rojgarkendra.dashboardscreen.view.ExpandableListAdapter;
 import com.twocoms.rojgarkendra.dashboardscreen.view.ExpandableListViewAdapter1;
+import com.twocoms.rojgarkendra.userprofilescreen.sample.controler.UserProfileActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +43,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     ExpandableListAdapter listAdapter;
 //    ExpandableListViewAdapter1 listAdapter1;
     ImageView menu;
+    ImageView userProfileBtn;
 //    public NavMenuModel navMenuModel;
 
 
@@ -59,6 +62,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         navigationView = (NavigationView) findViewById(R.id.nv_navigation_view);
         expandableListView = (ExpandableListView) findViewById(R.id.left_drawer);
         navigationView.setNavigationItemSelectedListener(this);
+        userProfileBtn = (ImageView)findViewById(R.id.user_profile_img);
 
         //prepareListData();
 
@@ -123,6 +127,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        userProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DashboardActivity.this, UserProfileActivity.class);
+                startActivity(intent);
             }
         });
 

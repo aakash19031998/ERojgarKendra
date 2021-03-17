@@ -57,7 +57,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
         otpStr  = intent.getStringExtra("otp");
         mobile_no = intent.getStringExtra("mobile_no");
         explainableText = (TextView)findViewById(R.id.explainabletext);
-        explainableText.setText("Please wait.\nWe will auto verify\nthe OTP sent to\n+91"+mobile_no);
+        explainableText.setText("Please wait.\nWe will auto verify the OTP sent to +91"+mobile_no);
         et1 = findViewById(R.id.et1);
         et2 = findViewById(R.id.et2);
         et3 = findViewById(R.id.et3);
@@ -133,7 +133,6 @@ public class VerifyOtpActivity extends AppCompatActivity {
         countDownTimer = new CountDownTimer(timeInMilliseconds, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-
                 String text = String.format(Locale.getDefault(), "Your OTP will expire in %02d: %02d min",
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60,
                         TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60);
@@ -211,20 +210,20 @@ public class VerifyOtpActivity extends AppCompatActivity {
                 !et3.getText().toString().equals("") &&
                 !et4.getText().toString().equals("")) {
 
-            verifybutton.setBackground(getResources().getDrawable(R.drawable.verify_enable));
+            verifybutton.setBackground(getResources().getDrawable(R.drawable.sign_up_enable));
             isVerifiedEnabled = true;
 
 
         } else {
-            verifybutton.setBackground(getResources().getDrawable(R.drawable.verify_disble));
+            verifybutton.setBackground(getResources().getDrawable(R.drawable.sign_up_disble));
             isVerifiedEnabled = false;
         }
     }
 
 
-    void verifyOtpClicked(){
-
-    }
+//    void verifyOtpClicked(){
+//
+//    }
 
 
     private BroadcastReceiver mServiceReceiver = new BroadcastReceiver(){
@@ -237,6 +236,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
                 et2.setText(splitted[1]);
                 et3.setText(splitted[2]);
                 et4.setText(splitted[3]);
+                et4.requestFocus();
                 callVerifyOTP();
             }catch (Exception e){
                 e.printStackTrace();
@@ -262,8 +262,6 @@ public class VerifyOtpActivity extends AppCompatActivity {
         Log.v("entered Otp", enteredOtpStr);
 
         if (Validation.checkIfEmptyOrNot(et1.getText().toString()) || Validation.checkIfEmptyOrNot(et2.getText().toString()) || Validation.checkIfEmptyOrNot(et3.getText().toString()) || Validation.checkIfEmptyOrNot(et4.getText().toString()) ){
-            CommonMethod.showToast("Please Enter Valid Otp",VerifyOtpActivity.this);
-        }else if (!enteredOtpStr.equals(otpStr)){
             CommonMethod.showToast("Please Enter Valid Otp",VerifyOtpActivity.this);
         }else {
 //            Intent intent = new Intent(this, RegisterUserDataActivity.class);
@@ -298,7 +296,8 @@ public class VerifyOtpActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(result);
                         if (jsonObject.getBoolean("success")){
                             JSONObject dataStr = jsonObject.getJSONObject("data");
-                            otpStr = dataStr.getString("otp");
+                            JSONObject otpJson = dataStr.getJSONObject("otpInfo");
+                            otpStr = otpJson.getString("otp");
                             String msgStr = jsonObject.getString("message");
                             Intent intent = new Intent(VerifyOtpActivity.this, RegisterUserDataActivity.class);
                             intent.putExtra("mobile_no",mobile_no);

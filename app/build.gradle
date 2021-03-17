@@ -14,8 +14,9 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildFeatures {
-        viewBinding true
+        viewBinding = true
     }
 
     buildTypes {
@@ -28,6 +29,8 @@ android {
         repositories {
             google()
             jcenter()
+            maven { url "https://jitpack.io" }
+
         }
     }
 }
@@ -45,10 +48,19 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.android.gms:play-services-auth-api-phone:17.4.0'
-
     implementation 'com.android.volley:volley:1.1.0'
-
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
+    implementation 'com.github.yalantis:ucrop:2.2.6-native'
+    //dexter permissions
+    implementation "com.karumi:dexter:5.0.0"
+    // circular imageview
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.github.bumptech.glide:annotations:4.7.1'
+    implementation('com.github.bumptech.glide:okhttp3-integration:4.0.0') {
+        exclude group: 'glide-parent'
+    }
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
 }

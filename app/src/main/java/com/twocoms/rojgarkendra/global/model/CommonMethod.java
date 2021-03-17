@@ -3,9 +3,12 @@ package com.twocoms.rojgarkendra.global.model;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -24,12 +27,17 @@ import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataAct
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -392,6 +400,86 @@ public class CommonMethod {
 
     }
 
+    public static int getExifOrientation(String filepath) {
+        int degree = 0;
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(filepath);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        if (exif != null) {
+            int orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION, -1);
+            if (orientation != -1) {
+
+                switch (orientation) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        degree = 90;
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        degree = 180;
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        degree = 270;
+                        break;
+                }
+
+            }
+        }
+
+        return degree;
+    }
+    public static String saveimagetosdcard(Context ctx, Bitmap photo) {
+
+
+        FileOutputStream output;
+        File file;
+        file = getOutputMediaFile();
+        try {
+
+            output = new FileOutputStream(getOutputMediaFile());
+
+
+            photo.compress(Bitmap.CompressFormat.PNG, 100, output);
+            output.flush();
+            output.close();
+            /*
+             * Toast.makeText(ctx,
+             * "Image Saved to "+getOutputMediaFile().getAbsolutePath(),
+             * Toast.LENGTH_SHORT) .show()
+             */;
+        }
+
+        catch (Exception e) {
+            Toast.makeText(ctx, "Try Again.", Toast.LENGTH_SHORT).show();
+
+            e.printStackTrace();
+        }
+        return file.getAbsolutePath();
+    }
+
+    public static File getOutputMediaFile() {
+
+
+        File mediaStorageDir = Environment.getExternalStorageDirectory();
+
+
+        File dir = new File(mediaStorageDir.getAbsolutePath() + "/Purlieu/");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+
+        File mediaFile;
+
+        mediaFile = new File(dir.getPath() + File.separator + "IMG_"
+                + timeStamp + ".png");
+
+        return mediaFile;
+    }
 
 
 }
