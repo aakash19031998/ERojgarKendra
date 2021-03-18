@@ -1145,9 +1145,11 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                             JSONObject object = (JSONObject) jsonArray.get(i);
                             String stateName = object.getString("StateName");
                             int stateCode = object.getInt("StCode");
-                            listStates.add(stateName);
-                            states[i] = stateName;
-                            statesCode[i] = String.valueOf(stateCode);
+                            if(!stateName.equals("empty")) {
+                                listStates.add(stateName);
+                                states[i] = stateName;
+                                statesCode[i] = String.valueOf(stateCode);
+                            }
                         }
 
                         ArrayAdapter adapter1 = new ArrayAdapter<String>(RegisterUserDataActivity.this, R.layout.drop_down_item, states);
