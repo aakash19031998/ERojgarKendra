@@ -59,9 +59,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.submenu);
 
-        ImageView imageView = convertView.findViewById(R.id.child_icon);
+        ImageView imageView1 = (ImageView) convertView.findViewById(R.id.child_icon);
 
-        imageView.setImageResource(childData.getIconImg());
+        imageView1.setImageResource(childData.getIconImg());
 
         txtListChild.setText(childData.getIconName());
         return convertView;
@@ -109,11 +109,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.grpItem);
+        ImageView imageView = (ImageView)convertView.findViewById(R.id.header_icon);
+
         lblListHeader.setText(headerTitle.getIconName());
-
-        ImageView imageView = convertView.findViewById(R.id.header_icon);
-
-        //imageView.setImageResource(headerTitle.getIconImg());
+        imageView.setImageResource(headerTitle.getIconImg());
 
         return convertView;
     }

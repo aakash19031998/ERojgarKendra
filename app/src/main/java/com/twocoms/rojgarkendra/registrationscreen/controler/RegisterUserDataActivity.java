@@ -21,9 +21,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -63,6 +65,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -108,6 +111,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
     String[] statesCode;
     ArrayList<String> listStates;
     String state_code = "";
+    private Calendar mcalendar;
 
     //    String dobToServer;
     @Override
@@ -130,6 +134,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         eduJobStr = intent.getStringExtra("eduJob");
         permissionStatus = getSharedPreferences("permissionStatus", MODE_PRIVATE);
         listStates = new ArrayList<>();
+        mcalendar = Calendar.getInstance();
 
         qualificationList.add("10");
         qualificationList.add("10 + 2 ");
@@ -148,8 +153,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         registerUserDataBinding.experinaceEditTextLnr.setFocusable(false);
         registerUserDataBinding.experinaceEditText.setFocusable(false);
         registerUserDataBinding.phoneNumberEditText.setText(mobile_no);
-        registerUserDataBinding.phoneNumberEditText.setEnabled(false);
-        //registerUserDataBinding.phoneNumberEditText.setFocusable(false);
+        registerUserDataBinding.phoneNumberEditText.setFocusable(false);
         //Enable or Disable Save Botton
         enableOrDisableSaveBtn();
         //Device Id (Token Id)
@@ -223,20 +227,26 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
     void onClick() {
 
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
+        final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
+                mcalendar.set(Calendar.YEAR, year);
+                mcalendar.set(Calendar.MONTH, monthOfYear);
+                mcalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                String myFormat = "yyyy-MM-dd";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                registerUserDataBinding.dobKnownEditText.setText(sdf.format(mcalendar.getTime()));
+
+                //check age of the user
             }
 
         };
+
+
 
         registerUserDataBinding.dobKnownEditText.setOnClickListener(new View.OnClickListener() {
 
@@ -244,9 +254,13 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 registerUserDataBinding.dobKnownEditText.setText("");
-                new DatePickerDialog(RegisterUserDataActivity.this, date, myCalendar
+                /*new DatePickerDialog(RegisterUserDataActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();*/
+                DatePickerDialog dialog = new DatePickerDialog(RegisterUserDataActivity.this, datePickerListener, mcalendar
+                        .get(Calendar.YEAR), mcalendar.get(Calendar.MONTH), mcalendar.get(Calendar.DAY_OF_MONTH));
+                dialog.getDatePicker().setMaxDate((long) (new Date().getTime()- 60 * 60 * 1000 * 24 * 30.41666666 * 12 * 18));//7 * 24 * 60 * 60 * 1000  604800000L
+                dialog.show();
             }
         });
 
@@ -337,18 +351,32 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             }
         });
 
+       // registerUserDataBinding.experinaceYearsEditText.setFilters(new InputFilter[]{ new InputFilterMin(10)});
+
+        /*registerUserDataBinding.experinaceYearsEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() == 1 && s.toString().startsWith("0")){
+
+                }
+            }
+        });*/
+
+
 
     }
 
 
-    private void updateLabel() {
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        registerUserDataBinding.dobKnownEditText.setText(sdf.format(myCalendar.getTime()));
-//        String myFormatToServer = "yyyy-MM-dd"; //In which you need put here
-//        SimpleDateFormat sdfServer = new SimpleDateFormat(myFormatToServer, Locale.US);
-//        dobToServer = sdf.format(myCalendar.getTime());
-    }
 
     public boolean checkGenderRadioGrp() {
         if (registerUserDataBinding.genderGrp.getCheckedRadioButtonId() == -1) {

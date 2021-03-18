@@ -1,8 +1,10 @@
 package com.twocoms.rojgarkendra.global.model;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.media.ExifInterface;

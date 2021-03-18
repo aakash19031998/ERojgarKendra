@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="2dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/_5sdp"
+    android:layout_centerHorizontal="true">
 
 
 
@@ -19,10 +21,11 @@
         />
 
     <ImageView
+        android:layout_margin="@dimen/_8sdp"
         android:layout_alignParentRight="true"
         android:id="@+id/header_icon"
-        android:layout_width="@dimen/_15sdp"
-        android:layout_height="@dimen/_15sdp"
+        android:layout_width="@dimen/_13sdp"
+        android:layout_height="@dimen/_13sdp"
         android:src="@drawable/downarrow"/>
 
 

@@ -1,74 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_header"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_130sdp"
-    android:background="@drawable/nav_header_background"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?attr/selectableItemBackgroundBorderless"
-    android:orientation="horizontal"
-    android:padding="16dp"
-    android:gravity="center_vertical"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
-    
-    
-    <LinearLayout
-        android:id="@+id/image_lnr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <ImageView
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:background="@drawable/circle_border"
-            android:src="@drawable/male_icon"
-
-            android:layout_gravity="center"
-            android:padding="@dimen/_10sdp"/>
-
-    </LinearLayout>
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/nav_header_bg">
 
 
     <LinearLayout
-        android:id="@+id/detail_lnr"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/_10sdp">
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_130sdp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
 
-        <TextView
-            android:id="@+id/nav_header_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="@dimen/_10sdp"
-            android:text="SATYAM VISHWAKARMA"
-            android:textColor="@android:color/black" />
+            <RelativeLayout
+                android:id="@+id/relative_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/nav_header_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_10sdp"
-            android:text="9699101091"
-            android:textColor="@android:color/black" />
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/user_img"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/icons_profile" />
 
-        <TextView
-            android:id="@+id/nav_header_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_10sdp"
-            android:text="satyam@gmail.com"
-           android:textColor="@android:color/black" />
 
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aakash Vishwakarma"
+                    android:textSize="@dimen/_14sdp"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                   />
+                <TextView
+                    android:id="@+id/user_phone_no"
+                    android:layout_below="@id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9930848424"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@android:color/white"
+                    />
+
+                <ImageView
+
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/icon_verified_acc"
+                    android:layout_below="@id/user_name"
+                    android:layout_toRightOf="@id/user_phone_no"/>
+
+            </RelativeLayout>
+
+
+
+
+
+        </LinearLayout>
     </LinearLayout>
 
-
-
-
-
-</LinearLayout>
+</RelativeLayout>

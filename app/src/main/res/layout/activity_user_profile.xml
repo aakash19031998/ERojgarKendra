@@ -1,9 +1,603 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".userprofilescreen.sample.controler.UserProfileActivity">
+    tools:context=".registrationscreen.controler.RegisterUserDataActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/backbutton"
+        android:layout_width="@dimen/_34sdp"
+        android:layout_height="@dimen/_34sdp"
+        android:text="Back"
+        android:textSize="36sp"
+        android:src="@drawable/backbutton"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:padding="6dp"
+        android:visibility="gone"
+        android:textStyle="bold" />
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/explainabletext">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/profile_headre"
+                layout="@layout/user_profile_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mobile_edit_text_inputlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                android:layout_marginTop="10dp"
+                app:hintTextColor="@android:color/black"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_name"
+                    android:hint="Name" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_email_icon"
+                    android:singleLine="true"
+                    android:hint="Email Id" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/state_edit_text_lnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:padding="@dimen/_10sdp"
+                    android:id="@+id/state_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/bg_reg_drop_down"
+                    android:maxLines="1"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_state"
+                    android:singleLine="true"
+                    android:hint="State" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/city_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_city"
+                    android:singleLine="true"
+                    android:hint="City/District" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/language_known_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_language"
+                    android:singleLine="true"
+                    android:hint="Language known" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/gender_background_drawable"
+                android:layout_marginRight="10dp"
+                android:padding="@dimen/_3sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender :- "
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="@dimen/_13sdp"/>
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/gender_grp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/bg_reg_male"
+                        android:textStyle="bold"
+                        android:tag="Male"
+                        />
+
+                    <RadioButton
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:id="@+id/female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:tag="Female"
+                        android:drawableLeft="@drawable/bg_reg_female"
+
+                        />
+
+
+
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dob_known_edit_text_lnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dob_known_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_calendar"
+                    android:hint="Date of birth" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_number_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_mobile_app_icon"
+                    android:maxLines="1"
+                    android:hint="Phone Number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/qualification_type_edit_text_lnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:padding="@dimen/_10sdp"
+                    android:id="@+id/qualification_type_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_qualificatiion"
+                    android:drawableRight="@drawable/bg_reg_drop_down"
+                    android:hint="Qualification Type" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/experinace_edit_text_lnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:padding="@dimen/_10sdp"
+                    android:id="@+id/experinace_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_experience_year"
+                    android:drawableRight="@drawable/bg_reg_drop_down"
+                    android:hint="Experienced" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/experinace_years_edit_text_lnr"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/experinace_years_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_experience_year"
+                    android:hint="Experience in years " />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/designation_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_designation"
+                    android:hint="Designation/Job Role" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                app:boxStrokeColor="@color/reg_tc_bg"-->
+            <!--                android:layout_marginLeft="10dp"-->
+            <!--                android:layout_marginRight="10dp"-->
+            <!--                android:layout_toRightOf="@+id/header1"-->
+            <!--                app:hintTextColor="@android:color/black"-->
+            <!--                android:layout_marginTop="6dp"-->
+            <!--                android:hint="Roll"-->
+            <!--                android:layout_toLeftOf="@+id/proceddbuttonlayout"-->
+            <!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
+
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/roll_edit_text"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:inputType="text"-->
+            <!--                    android:maxLines="1"-->
+            <!--                    android:drawablePadding="10dp"-->
+            <!--                    android:drawableLeft="@drawable/bg_reg_roll"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    />-->
+
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/salary_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:drawablePadding="10dp"
+                    android:inputType="number"
+                    android:drawableLeft="@drawable/bg_reg_salary"
+                    android:singleLine="true"
+                    android:hint="Salary" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/centre_name_edit_text_lnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/centre_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Centre name"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_centre_name"
+                    android:singleLine="true"
+                    android:focusable="false"
+                    android:maxLines="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/project_name_edit_text_lnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/project_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:drawablePadding="10dp"
+                    android:focusable="false"
+
+                    android:drawableLeft="@drawable/bg_reg_project_name"
+                    android:singleLine="true"
+                    android:hint="Project name" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/batch_name_edit_text_lnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/batch_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:drawablePadding="10dp"
+                    android:focusable="false"
+
+                    android:drawableLeft="@drawable/bg_reg_branch_name"
+                    android:hint="Batch name" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/course_name_edit_text_lnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/course_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/bg_reg_course"
+                    android:singleLine="true"
+                    android:focusable="false"
+                    android:hint="Course name" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/upload_cv_lnr"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp"
+                app:boxStrokeColor="@color/reg_tc_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/header1"
+                app:hintTextColor="@android:color/black"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:background="@drawable/gender_background_drawable"
+                android:layout_toLeftOf="@+id/proceddbuttonlayout">
+
+                <ImageView
+                    android:id="@+id/upload_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bg_reg_upload"
+                    android:gravity="center"
+
+                    android:foregroundGravity="center_horizontal"
+                    />
+
+                <TextView
+                    android:id="@+id/upload_cv_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_15sdp"
+                    android:text="Upload CV"
+                    android:singleLine="true"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/upload_cv"
+                    android:textColor="@android:color/black" />
+
+
+
+
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/savebutton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_34sdp"
+                android:text="SAVE"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/white"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:background="@drawable/verify_enable"
+                android:padding="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@+id/resendotpbutton"></TextView>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>
