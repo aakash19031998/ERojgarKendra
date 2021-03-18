@@ -197,6 +197,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/bg_reg_male"
                         android:textStyle="bold"
+                        android:tag="Male"
                         />
 
                     <RadioButton
@@ -205,6 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
+                        android:tag="Female"
                         android:drawableLeft="@drawable/bg_reg_female"
 
                         />
@@ -291,7 +293,7 @@
                     android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/bg_reg_qualificatiion"
                     android:drawableRight="@drawable/bg_reg_drop_down"
-                    android:hint="Qualification_type" />
+                    android:hint="Qualification Type" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -323,6 +325,8 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/experinace_years_edit_text_lnr"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
@@ -368,35 +372,35 @@
                     android:maxLines="1"
                     android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/bg_reg_designation"
-                    android:hint="Designation" />
+                    android:hint="Designation/Job Role" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_toRightOf="@+id/header1"
-                app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
-                android:hint="Roll"
-                android:layout_toLeftOf="@+id/proceddbuttonlayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:boxStrokeColor="@color/reg_tc_bg"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:layout_toRightOf="@+id/header1"-->
+<!--                app:hintTextColor="@android:color/black"-->
+<!--                android:layout_marginTop="6dp"-->
+<!--                android:hint="Roll"-->
+<!--                android:layout_toLeftOf="@+id/proceddbuttonlayout"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/roll_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/bg_reg_roll"
-                    android:singleLine="true"
-                    />
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/roll_edit_text"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="text"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:drawablePadding="10dp"-->
+<!--                    android:drawableLeft="@drawable/bg_reg_roll"-->
+<!--                    android:singleLine="true"-->
+<!--                    />-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -416,6 +420,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:drawablePadding="10dp"
+                    android:inputType="number"
                     android:drawableLeft="@drawable/bg_reg_salary"
                     android:singleLine="true"
                     android:hint="Salary" />
@@ -443,6 +448,7 @@
                     android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/bg_reg_centre_name"
                     android:singleLine="true"
+                    android:focusable="false"
                     android:maxLines="1"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -466,6 +472,8 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:drawablePadding="10dp"
+                    android:focusable="false"
+
                     android:drawableLeft="@drawable/bg_reg_project_name"
                     android:singleLine="true"
                     android:hint="Project name" />
@@ -492,6 +500,8 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:drawablePadding="10dp"
+                    android:focusable="false"
+
                     android:drawableLeft="@drawable/bg_reg_branch_name"
                     android:hint="Batch name" />
 
@@ -518,6 +528,7 @@
                     android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/bg_reg_course"
                     android:singleLine="true"
+                    android:focusable="false"
                     android:hint="Course name" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -577,7 +588,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:gravity="center"
-                android:background="@drawable/verify_disble"
+                android:background="@drawable/verify_enable"
                 android:padding="10dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="20dp"

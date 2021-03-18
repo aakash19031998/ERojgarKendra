@@ -7,7 +7,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,13 +17,11 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
-
 import com.google.android.material.navigation.NavigationView;
 import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.model.NavMenuModel;
 import com.twocoms.rojgarkendra.dashboardscreen.view.ExpandableListAdapter;
-import com.twocoms.rojgarkendra.dashboardscreen.view.ExpandableListViewAdapter1;
-import com.twocoms.rojgarkendra.userprofilescreen.sample.controler.UserProfileActivity;
+import com.twocoms.rojgarkendra.myprofile.controler.UserProfileActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

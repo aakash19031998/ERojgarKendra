@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -359,24 +360,25 @@ public class ServiceHandler {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
                     if (loadingDialog != null && loadingDialog.isShowing())
                         loadingDialog.dismiss();
 
-                    if (error == null) {
-                        Toast.makeText(context, "Something went wrong please try again!", Toast.LENGTH_SHORT).show();
+               byte [] data =      error.networkResponse.data;
 
+//                    byte[] bytes = "hello world".getBytes();
+//creates a string from the byte array without specifying character encoding
+                    String s = new String(data);
+
+                    Log.v("NetworkResponse",s);
+                    if (error.getMessage() == null) {
+                        Toast.makeText(context, "Something went wrong please try again!", Toast.LENGTH_SHORT).show();
                     } else if (error instanceof TimeoutError) {
-                        Toast.makeText(context, "timeout", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                        Toast.makeText(context, "Time out error", Toast.LENGTH_SHORT).show();
+                    } else {
                         Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                     Log.d("Error", error.toString());
-
-
-
                 }
             }) {
 //                @Override

@@ -1,8 +1,8 @@
-package com.twocoms.rojgarkendra.userprofilescreen.sample.controler;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.twocoms.rojgarkendra.myprofile.controler;
 
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.twocoms.rojgarkendra.R;
 

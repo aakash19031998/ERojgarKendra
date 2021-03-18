@@ -24,7 +24,7 @@ public class MyFirebaseMessagingService1 extends FirebaseMessagingService {
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         Log.v("devicetoken",s);
-        GlobalPreferenceManager.saveStringForKey(this, "firebasekey", s);
+        GlobalPreferenceManager.saveStringForKey(this, AppConstant.KEY_DEVICE_TOKEN, s);
     }
 
     @Override

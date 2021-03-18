@@ -62,5 +62,5 @@ dependencies {
         exclude group: 'glide-parent'
     }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-
+    implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
 }

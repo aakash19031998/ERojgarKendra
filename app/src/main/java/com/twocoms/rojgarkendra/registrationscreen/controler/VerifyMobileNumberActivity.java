@@ -263,7 +263,7 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
         final JSONObject Json = new JSONObject();
 
         try {
-            Json.put("contact", mobile_edit_text.getText().toString());
+            Json.put(AppConstant.KEY_CONTACT, mobile_edit_text.getText().toString());
             //Json.put("Messege","HAVELLS APP VERIFICATION");
             Log.v("JSONURL", Json.toString());
             ServiceHandler serviceHandler = new ServiceHandler(VerifyMobileNumberActivity.this);
@@ -282,8 +282,13 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
                             intent.putExtra("otp",otpStr);
                             startActivity(intent);
                         }
+                        else {
+                            CommonMethod.showToast(jsonObject.getString("message"), VerifyMobileNumberActivity.this);
+
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, VerifyMobileNumberActivity.this);
                     }
 
 

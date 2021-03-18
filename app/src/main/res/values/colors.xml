@@ -7,6 +7,7 @@
     <color name="disable_otp">#E3DDDD</color>
 
     <color name="app_colour_name">#d54731</color>
+    <color name="indicator_colour_name">#EFC7BF</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="icon_color">#f0c7c0</color>
@@ -16,4 +17,5 @@
     <color name="profile_desc">#D1D1FF</color>
     <color name="bg_meta_container">#000000</color>
     <color name="profile_default_tint">#e0e0e0</color>
+    <color name="red"></color>
 </resources>
