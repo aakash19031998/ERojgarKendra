@@ -26,6 +26,7 @@ import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.global.model.ServiceHandler;
 import com.twocoms.rojgarkendra.global.model.Validation;
+import com.twocoms.rojgarkendra.myprofile.controler.UserProfileActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -348,8 +349,14 @@ public class VerifyOtpActivity extends AppCompatActivity {
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_EXPERIANCE_YEARS, dataStr.getString(AppConstant.KEY_EXPERIANCE_YEARS));
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_EXPERIANCE_MONTH, dataStr.getString(AppConstant.KEY_EXPERIANCE_MONTH));
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_SALARY, dataStr.getString(AppConstant.KEY_SALARY));
-                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
-                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
+                                    if (dataStr.has(AppConstant.KEY_PROFILE_URL)) {
+                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
+                                    }
+                                    if (dataStr.has(AppConstant.KEY_RESUME_URL)) {
+                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this,AppConstant.KEY_RESUME_URL,dataStr.getString(AppConstant.KEY_RESUME_URL));
+                                    }
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_IS_REGISTER, dataStr.getString(AppConstant.KEY_IS_REGISTER));

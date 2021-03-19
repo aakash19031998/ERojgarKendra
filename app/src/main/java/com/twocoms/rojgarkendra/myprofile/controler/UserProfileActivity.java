@@ -1,17 +1,37 @@
 package com.twocoms.rojgarkendra.myprofile.controler;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.util.Base64;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.RadioButton;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
+import com.bumptech.glide.Glide;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.twocoms.rojgarkendra.R;
 
 import com.twocoms.rojgarkendra.databinding.ActivityUserProfileBinding;
@@ -19,13 +39,30 @@ import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.global.model.ServiceHandler;
+import com.twocoms.rojgarkendra.global.model.Validation;
+import com.twocoms.rojgarkendra.registrationscreen.controler.ImagePickerActivity;
+
+import com.twocoms.rojgarkendra.registrationscreen.controler.VerifyMobileNumberActivity;
+import com.twocoms.rojgarkendra.registrationscreen.controler.VerifyOtpActivity;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -38,6 +75,29 @@ public class UserProfileActivity extends AppCompatActivity {
     String responseMsg;
     String eduJobStr;
     String projectId = "", courseId = "", batchId = "", centreId = "";
+    String userProfileImgStr="";
+    String userResumeUrlStr = "";
+    public static final int REQUEST_IMAGE = 100;
+    private AlertDialog dialog;
+    String img_user_profile_base_64 = "";
+    String fileBAse64Str = "";
+    String docFilePath;
+    String android_id;
+    private ArrayList<String> qualificationList = new ArrayList<>();
+    private ArrayList<String> expList = new ArrayList<>();
+    String mobile_no, radioBtnText, radioButtonSmallText;
+    String name = "", email = "", stateName = "",stateId = "",city = "",languageKnown = "",gender = "",dob = "", phoneNumber = "",
+            qualificationType = "",experiance = "", role = "",salary = "",projectName = "",courseName ="", batchName = "",centreName = "";
+
+    String name1 = "", email1 = "", stateName1 = "",stateId1 = "",city1= "",languageKnown1 = "",gender1 = "",dob1 = "", phoneNumber1 = "",
+            qualificationType1 = "",experiance1 = "", role1 = "",salary1 = "",projectName1 = "",courseName1 ="", batchName1 = "",centreName1 = "";
+    String emailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    private Calendar mcalendar;
+    boolean isradioBtnChecked = false;
+    RadioButton radioButtonGender;
+    private static String imageEncoded;
+    boolean isProfileImgUpdated = false;
+    boolean isCVUpadted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +114,27 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     void initialization(){
+        //userDataBinding.mainLnr.setAlpha((float) 0.5);
+
+        qualificationList.add("10");
+        qualificationList.add("10 + 2 ");
+        qualificationList.add("Diploma");
+        qualificationList.add("Graduation");
+        qualificationList.add("Post Graduation");
+
+        expList.add("Yes");
+        expList.add("No");
+
+        mcalendar = Calendar.getInstance();
         userId = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_USER_ID,"");
         eduJobStr = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_IS_EDURP,"");
         listStates = new ArrayList<>();
         getProfileDetails();
+
         //getStates();
         setVisibilty();
         onCick();
-
+        setdisable();
 
     }
 
@@ -71,9 +144,392 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 userDataBinding.profileHeadre.nameNoLnr.setVisibility(View.GONE);
                 userDataBinding.savebutton.setVisibility(View.VISIBLE);
+                userDataBinding.profileHeadre.cancel.setVisibility(View.VISIBLE);
+                userDataBinding.profileHeadre.edit.setVisibility(View.GONE);
+                userDataBinding.nameEditTextLnr.setVisibility(View.VISIBLE);
+                userDataBinding.phoneNumberEditTextLnr.setVisibility(View.VISIBLE);
+                //userDataBinding.mainLnr.setAlpha((float) 1.0);
+                setEnable();
             }
         });
+
+        userDataBinding.profileHeadre.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userDataBinding.profileHeadre.nameNoLnr.setVisibility(View.VISIBLE);
+                userDataBinding.savebutton.setVisibility(View.GONE);
+                userDataBinding.profileHeadre.edit.setVisibility(View.VISIBLE);
+                userDataBinding.profileHeadre.cancel.setVisibility(View.GONE);
+                userDataBinding.nameEditTextLnr.setVisibility(View.GONE);
+                userDataBinding.phoneNumberEditTextLnr.setVisibility(View.GONE);
+                //userDataBinding.mainLnr.setAlpha((float) 0.5);
+                setdisable();
+            }
+        });
+
+        userDataBinding.profileHeadre.userImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProfileImageClick();
+            }
+        });
+
+        userDataBinding.uploadCvTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDocument();
+            }
+        });
+
+        userDataBinding.savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                 if (validation()) {
+                    updateUserDetails(jsonUpdateUser());
+                    //jsonUpdateUser();
+                }
+            }
+        });
+
+        userDataBinding.profileHeadre.backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        userDataBinding.qualificationTypeEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayAdapter adapter = new ArrayAdapter<String>(UserProfileActivity.this, R.layout.drop_down_item, qualificationList);
+                userDataBinding.qualificationTypeEditText.setAdapter(adapter);
+                {
+                    userDataBinding.qualificationTypeEditText.showDropDown();
+                }
+            }
+        });
+
+        userDataBinding.experinaceEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayAdapter adapter = new ArrayAdapter<String>(UserProfileActivity.this, R.layout.drop_down_item, expList);
+                userDataBinding.experinaceEditText.setAdapter(adapter);
+                {
+                    userDataBinding.experinaceEditText.showDropDown();
+                }
+            }
+        });
+
+        final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                mcalendar.set(Calendar.YEAR, year);
+                mcalendar.set(Calendar.MONTH, monthOfYear);
+                mcalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                String myFormat = "yyyy-MM-dd";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                userDataBinding.dobKnownEditText.setText(sdf.format(mcalendar.getTime()));
+
+
+            }
+
+        };
+
+        userDataBinding.dobKnownEditText.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //userDataBinding.dobKnownEditText.setText("");
+                DatePickerDialog dialog = new DatePickerDialog(UserProfileActivity.this, datePickerListener, mcalendar
+                        .get(Calendar.YEAR), mcalendar.get(Calendar.MONTH), mcalendar.get(Calendar.DAY_OF_MONTH));
+                dialog.getDatePicker().setMaxDate((long) (new Date().getTime()- 60 * 60 * 1000 * 24 * 30.41666666 * 12 * 18));//7 * 24 * 60 * 60 * 1000  604800000L
+                dialog.show();
+            }
+        });
+
+        userDataBinding.stateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getStates();
+            }
+        });
+
+        userDataBinding.stateEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int j = listStates.indexOf(userDataBinding.stateEditText.getText().toString());
+                state_code = statesCode[j];
+                Log.v("statecode", state_code);
+            }
+        });
+        userDataBinding.experinaceEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (userDataBinding.experinaceEditText.getText().toString().equals("Yes")) {
+                    userDataBinding.experinaceYearsEditText.setVisibility(View.VISIBLE);
+                    //userDataBinding.experinaceYearsEditText.setText("");
+                    userDataBinding.experinaceYearsEditTextLnr.setVisibility(View.VISIBLE);
+                } else {
+                    userDataBinding.experinaceYearsEditText.setVisibility(View.GONE);
+                    //userDataBinding.experinaceYearsEditText.setText("");
+                    userDataBinding.experinaceYearsEditTextLnr.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        userDataBinding.downloadCv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!userResumeUrlStr.equals("") && !userResumeUrlStr.equals("null")) {
+                    String fullPath = String.format(Locale.ENGLISH, userResumeUrlStr, "PDF_URL_HERE");
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(fullPath));
+                    startActivity(browserIntent);
+                }
+            }
+        });
+
+
     }
+
+    void setdisable(){
+        userDataBinding.profileHeadre.userImg.setFocusable(false);
+        userDataBinding.profileHeadre.userImg.setEnabled(false);
+        userDataBinding.nameEditText.setFocusable(false);
+        userDataBinding.nameEditText.setEnabled(false);
+        userDataBinding.emailEditText.setFocusable(false);
+        userDataBinding.emailEditText.setEnabled(false);
+        userDataBinding.stateEditText.setFocusable(false);
+        userDataBinding.stateEditText.setEnabled(false);
+        userDataBinding.cityEditText.setFocusable(false);
+        userDataBinding.cityEditText.setEnabled(false);
+        userDataBinding.languageKnownEditText.setFocusable(false);
+        userDataBinding.languageKnownEditText.setEnabled(false);
+        userDataBinding.genderGrp.setFocusable(false);
+        userDataBinding.genderGrp.setEnabled(false);
+        userDataBinding.male.setFocusable(false);
+        userDataBinding.male.setEnabled(false);
+        userDataBinding.female.setFocusable(false);
+        userDataBinding.female.setEnabled(false);
+        userDataBinding.dobKnownEditText.setFocusable(false);
+        userDataBinding.dobKnownEditText.setEnabled(false);
+        userDataBinding.phoneNumberEditText.setFocusable(false);
+        userDataBinding.phoneNumberEditText.setEnabled(false);
+        userDataBinding.qualificationTypeEditText.setFocusable(false);
+        userDataBinding.qualificationTypeEditText.setEnabled(false);
+        userDataBinding.experinaceEditText.setFocusable(false);
+        userDataBinding.experinaceEditText.setEnabled(false);
+        userDataBinding.experinaceYearsEditText.setFocusable(false);
+        userDataBinding.experinaceYearsEditText.setEnabled(false);
+        userDataBinding.designationEditText.setFocusable(false);
+        userDataBinding.designationEditText.setEnabled(false);
+        userDataBinding.salaryEditText.setFocusable(false);
+        userDataBinding.salaryEditText.setEnabled(false);
+        userDataBinding.uploadCvLnr.setFocusable(false);
+        userDataBinding.uploadCvLnr.setEnabled(false);
+        userDataBinding.uploadCv.setFocusable(false);
+        userDataBinding.uploadCv.setEnabled(false);
+        userDataBinding.uploadCvTxt.setFocusable(false);
+        userDataBinding.uploadCvTxt.setEnabled(false);
+        if (eduJobStr.equals("Y")){
+            userDataBinding.centreNameEditText.setFocusable(false);
+            userDataBinding.centreNameEditText.setEnabled(false);
+            userDataBinding.batchNameEditText.setFocusable(false);
+            userDataBinding.batchNameEditText.setEnabled(false);
+            userDataBinding.projectNameEditText.setFocusable(false);
+            userDataBinding.projectNameEditText.setEnabled(false);
+            userDataBinding.courseNameEditText.setFocusable(false);
+            userDataBinding.courseNameEditText.setEnabled(false);
+        }
+    }
+
+    void setEnable(){
+        userDataBinding.profileHeadre.userImg.setFocusable(true);
+        userDataBinding.profileHeadre.userImg.setEnabled(true);
+        userDataBinding.nameEditText.setFocusable(true);
+        userDataBinding.nameEditText.setEnabled(true);
+        userDataBinding.nameEditText.setFocusableInTouchMode(true);
+        userDataBinding.emailEditText.setFocusable(true);
+        userDataBinding.emailEditText.setEnabled(true);
+        userDataBinding.emailEditText.setFocusableInTouchMode(true);
+        userDataBinding.stateEditText.setFocusable(false);
+        userDataBinding.stateEditText.setEnabled(true);
+        userDataBinding.cityEditText.setFocusable(true);
+        userDataBinding.cityEditText.setEnabled(true);
+        userDataBinding.cityEditText.setFocusableInTouchMode(true);
+        userDataBinding.languageKnownEditText.setFocusable(true);
+        userDataBinding.languageKnownEditText.setEnabled(true);
+        userDataBinding.languageKnownEditText.setFocusableInTouchMode(true);
+        userDataBinding.genderGrp.setFocusable(true);
+        userDataBinding.genderGrp.setEnabled(true);
+        userDataBinding.male.setFocusable(true);
+        userDataBinding.male.setEnabled(true);
+        userDataBinding.female.setFocusable(true);
+        userDataBinding.female.setEnabled(true);
+        userDataBinding.dobKnownEditText.setFocusable(false);
+        userDataBinding.dobKnownEditText.setEnabled(true);
+        userDataBinding.dobKnownEditText.setFocusableInTouchMode(false);
+        userDataBinding.phoneNumberEditText.setFocusable(false);
+        userDataBinding.phoneNumberEditText.setEnabled(true);
+        userDataBinding.qualificationTypeEditText.setFocusable(false);
+        userDataBinding.qualificationTypeEditText.setEnabled(true);
+        userDataBinding.experinaceEditText.setFocusable(false);
+        userDataBinding.experinaceEditText.setEnabled(true);
+        userDataBinding.experinaceYearsEditText.setFocusable(true);
+        userDataBinding.experinaceYearsEditText.setEnabled(true);
+        userDataBinding.experinaceYearsEditText.setFocusableInTouchMode(true);
+        userDataBinding.designationEditText.setFocusable(true);
+        userDataBinding.designationEditText.setEnabled(true);
+        userDataBinding.designationEditText.setFocusableInTouchMode(true);
+        userDataBinding.salaryEditText.setFocusable(true);
+        userDataBinding.salaryEditText.setEnabled(true);
+        userDataBinding.salaryEditText.setFocusableInTouchMode(true);
+        userDataBinding.uploadCvLnr.setFocusable(true);
+        userDataBinding.uploadCvLnr.setEnabled(true);
+        userDataBinding.uploadCv.setFocusable(true);
+        userDataBinding.uploadCv.setEnabled(true);
+        userDataBinding.uploadCv.setFocusableInTouchMode(true);
+        userDataBinding.uploadCvTxt.setFocusable(true);
+        userDataBinding.uploadCvTxt.setEnabled(true);
+        userDataBinding.uploadCvTxt.setFocusableInTouchMode(true);
+        if (eduJobStr.equals("Y")){
+            userDataBinding.centreNameEditText.setFocusable(false);
+            userDataBinding.centreNameEditText.setEnabled(true);
+            userDataBinding.batchNameEditText.setFocusable(false);
+            userDataBinding.batchNameEditText.setEnabled(true);
+            userDataBinding.projectNameEditText.setFocusable(false);
+            userDataBinding.projectNameEditText.setEnabled(true);
+            userDataBinding.courseNameEditText.setFocusable(false);
+            userDataBinding.courseNameEditText.setEnabled(true);
+        }
+    }
+
+
+    public boolean validation() {
+        if (eduJobStr.equals("Y")) {
+            if (Validation.checkIfEmptyOrNot(userDataBinding.nameEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Name", UserProfileActivity.this);
+                return false;
+            } else if (userDataBinding.emailEditText.getText().toString().isEmpty()) {
+                CommonMethod.showToast("Please Enter Email Id", UserProfileActivity.this);
+                return false;
+            } else if (!userDataBinding.emailEditText.getText().toString().matches(emailPattern)) {
+                CommonMethod.showToast("Please Enter Valid Email Id", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.stateEditText.getText().toString())) {
+                CommonMethod.showToast("Please Select State", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.cityEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter City/District", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.languageKnownEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Language Known", UserProfileActivity.this);
+                return false;
+            } else if (!checkGenderRadioGrp()) {
+                CommonMethod.showToast("Please select Gender", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.dobKnownEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter DOB", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.phoneNumberEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Phone", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.qualificationTypeEditText.getText().toString())) {
+                CommonMethod.showToast("Please Select Qualification", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.experinaceEditText.getText().toString())) {
+                CommonMethod.showToast("Please Select Experience", UserProfileActivity.this);
+                return false;
+            } else if (userDataBinding.experinaceYearsEditText.getVisibility() == View.VISIBLE) {
+                if (Validation.checkIfEmptyOrNot(userDataBinding.experinaceYearsEditText.getText().toString())) {
+                    CommonMethod.showToast("Please Enter Experience Year", UserProfileActivity.this);
+                    return false;
+                }
+            }  else if (Validation.checkIfEmptyOrNot(userDataBinding.designationEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Designation", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.salaryEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Salary", UserProfileActivity.this);
+                return false;
+            }
+        } else {
+            if (Validation.checkIfEmptyOrNot(userDataBinding.nameEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Name", UserProfileActivity.this);
+                return false;
+            } else if (userDataBinding.emailEditText.getText().toString().isEmpty()) {
+                CommonMethod.showToast("Please Enter Email Id", UserProfileActivity.this);
+                return false;
+            } else if (!userDataBinding.emailEditText.getText().toString().matches(emailPattern)) {
+                CommonMethod.showToast("Please Enter Valid Email Id", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.stateEditText.getText().toString())) {
+                CommonMethod.showToast("Please Select State", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.cityEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter City/District", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.languageKnownEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Language Known", UserProfileActivity.this);
+                return false;
+            } else if (!checkGenderRadioGrp()) {
+                CommonMethod.showToast("Please select Gender", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.dobKnownEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter DOB", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.phoneNumberEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Phone", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.qualificationTypeEditText.getText().toString())) {
+                CommonMethod.showToast("Please Select Qualification", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.experinaceEditText.getText().toString())) {
+                CommonMethod.showToast("Please Select Experience", UserProfileActivity.this);
+                return false;
+            } else if (userDataBinding.experinaceYearsEditText.getVisibility() == View.VISIBLE) {
+                if (Validation.checkIfEmptyOrNot(userDataBinding.experinaceYearsEditText.getText().toString())) {
+                    CommonMethod.showToast("Please Enter Experience Year", UserProfileActivity.this);
+                    return false;
+                }
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.designationEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Designation", UserProfileActivity.this);
+                return false;
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.salaryEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Salary", UserProfileActivity.this);
+                return false;
+            }
+
+        }
+        return true;
+    }
+
+    public boolean checkGenderRadioGrp() {
+        if (userDataBinding.genderGrp.getCheckedRadioButtonId() == -1) {
+            isradioBtnChecked = false;
+            //CommonMethod.showToast("Please select Gender", RegisterUserDataActivity.this);
+            // no radio buttons are checked
+            return false;
+        } else {
+            // one of the radio buttons is checked
+
+            radioButtonGender = (RadioButton) findViewById(userDataBinding.genderGrp.getCheckedRadioButtonId());
+
+            radioBtnText = radioButtonGender.getTag().toString();
+            if (radioBtnText.equals("Male")) {
+                radioButtonSmallText = "M";
+            } else {
+                radioButtonSmallText = "F";
+            }
+            return true;
+        }
+
+    }
+
 
 
     void getProfileDetails() {
@@ -96,6 +552,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_EMAIL_ID,object.getString(AppConstant.KEY_EMAIL_ID));
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_CONTACT,object.getString(AppConstant.KEY_CONTACT));
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_CONTACT_VERIFIED,object.getString(AppConstant.KEY_CONTACT_VERIFIED));
+                        GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_STATE_NAME,object.getString(AppConstant.KEY_STATE_NAME));
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.STATE_ID,object.getString(AppConstant.STATE_ID));
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_CITY,object.getString(AppConstant.KEY_CITY));
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_DOB,object.getString(AppConstant.KEY_DOB));
@@ -109,9 +566,13 @@ public class UserProfileActivity extends AppCompatActivity {
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_IS_EDURP,object.getString(AppConstant.KEY_IS_EDURP));
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_WALLET_AMOUNT,object.getString(AppConstant.KEY_WALLET_AMOUNT));
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_LANGUAGE_KNOWN,object.getString(AppConstant.KEY_LANGUAGE_KNOWN));
-//                        GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_PROFILE_URL,object.getString(AppConstant.KEY_PROFILE_URL));
-//                        GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_RESUME_URL,object.getString(AppConstant.KEY_RESUME_URL));
-                        if (object.getString("eduErp").equals("Y")){
+                        if (object.has(AppConstant.KEY_PROFILE_URL)) {
+                            GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_PROFILE_URL, object.getString(AppConstant.KEY_PROFILE_URL));
+                        }
+                        if (object.has(AppConstant.KEY_RESUME_URL)) {
+                           GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_RESUME_URL,object.getString(AppConstant.KEY_RESUME_URL));
+                        }
+                            if (object.getString("eduErp").equals("Y")){
                             GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_COURSE_ID,object.getString(AppConstant.KEY_COURSE_ID));
                             GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_CENTRE_ID,object.getString(AppConstant.KEY_CENTRE_ID));
                             GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this,AppConstant.KEY_PROJECT_ID,object.getString(AppConstant.KEY_PROJECT_ID));
@@ -169,16 +630,16 @@ public class UserProfileActivity extends AppCompatActivity {
                             JSONObject object = (JSONObject) jsonArray.get(i);
                             String stateName = object.getString("StateName");
                             int stateCode = object.getInt("StCode");
-                            if(!stateName.equals("empty")) {
+                            //if(!stateName.equals("empty")) {
                                 listStates.add(stateName);
                                 states[i] = stateName;
                                 statesCode[i] = String.valueOf(stateCode);
-                            }
+                           // }
                         }
 
-                       /* ArrayAdapter adapter1 = new ArrayAdapter<String>(UserProfileActivity.this, R.layout.drop_down_item, states);
+                        ArrayAdapter adapter1 = new ArrayAdapter<String>(UserProfileActivity.this, R.layout.drop_down_item, states);
                         userDataBinding.stateEditText.setAdapter(adapter1);
-                        userDataBinding.stateEditText.showDropDown();*/
+                        userDataBinding.stateEditText.showDropDown();
 
                     }
                 } catch (JSONException e) {
@@ -191,34 +652,49 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     void setDataUserProfile(){
-        String name = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_NAME, "");
-        String email = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_EMAIL_ID, "");
-        String stateName = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_STATE_NAME, "");
-        String stateId = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.STATE_ID, "");
-        String city = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_CITY, "");
-        String languageKnown = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_LANGUAGE_KNOWN, "");
-        String gender = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_GENDER, "");
-        String dob = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_DOB, "");
-        String phoneNumber = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_CONTACT, "");
-        String qualificationType = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_QUALIFICATION_TYPE, "");
-        String experiance = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_EXPERIANCE_YEARS, "");
-        String role = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_ROLE, "");
-        String salary = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_SALARY, "");
-        String projectName = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_PROJECT_NAME, "");
-        String courseName = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_COURSE_NAME, "");
-        String batchName = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_BATCH_NAME, "");
-        String centreName = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_CENTRE_NAME, "");
+         name = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_NAME, "");
+         email = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_EMAIL_ID, "");
+         stateName = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_STATE_NAME, "");
+         stateId = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.STATE_ID, "");
+         city = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_CITY, "");
+         languageKnown = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_LANGUAGE_KNOWN, "");
+         gender = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_GENDER, "");
+         dob = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_DOB, "");
+         phoneNumber = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_CONTACT, "");
+         qualificationType = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_QUALIFICATION_TYPE, "");
+         experiance = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_EXPERIANCE_YEARS, "");
+         role = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_ROLE, "");
+         salary = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_SALARY, "");
+         projectName = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_PROJECT_NAME, "");
+         courseName = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_COURSE_NAME, "");
+         batchName = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_BATCH_NAME, "");
+         centreName = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_CENTRE_NAME, "");
         projectId = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_PROJECT_ID, "");
         courseId = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_COURSE_ID, "");
         batchId = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_BATCH_ID, "");
         centreId = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_CENTRE_ID, "");
+        userProfileImgStr = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_PROFILE_URL,"");
+        userResumeUrlStr = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_RESUME_URL,"");
+
+        Glide.with(this)
+                .load(userProfileImgStr)
+                .into(userDataBinding.profileHeadre.userImg);
+
+        if (!userResumeUrlStr.equals("") && !userResumeUrlStr.equals("null")){
+            userDataBinding.uploadCvTxt.setText("My Resume");
+            userDataBinding.downloadCv.setVisibility(View.VISIBLE);
+        }else {
+            userDataBinding.uploadCvTxt.setText("Upload Resume");
+            userDataBinding.downloadCv.setVisibility(View.GONE);
+        }
+
         userDataBinding.nameEditText.setText(name);
         userDataBinding.profileHeadre.nameText.setText(name);
         userDataBinding.emailEditText.setText(email);
         if (!stateName.equals("") && !stateName.equals("null")) {
             userDataBinding.stateEditText.setText(stateName);
         }
-        if (!stateName.equals("") && !stateName.equals("null")) {
+        if (!stateId.equals("") && !stateId.equals("null")) {
             this.state_code = stateId;
 
         }
@@ -317,6 +793,400 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
+    void getUpadtedFields(){
+        name1 = userDataBinding.nameEditText.getText().toString().trim();
+        email1 = userDataBinding.emailEditText.getText().toString().trim();
+        stateName1 = userDataBinding.stateEditText.getText().toString().trim();
+        stateName1 = userDataBinding.stateEditText.getText().toString().trim();
+        city1 = userDataBinding.cityEditText.getText().toString().trim();
+        languageKnown1 = userDataBinding.languageKnownEditText.getText().toString().trim();
+        dob1 = userDataBinding.dobKnownEditText.getText().toString().trim();
+        phoneNumber1 = userDataBinding.phoneNumberEditText.getText().toString().trim();
+        qualificationType1 = userDataBinding.qualificationTypeEditText.getText().toString().trim();
+        experiance1 = userDataBinding.experinaceYearsEditText.getText().toString().trim();
+        role1 = userDataBinding.designationEditText.getText().toString().trim();
+        salary1 = userDataBinding.salaryEditText.getText().toString().trim();
+    }
 
 
+
+    JSONObject jsonUpdateUser() {
+        getUpadtedFields();
+        JSONObject Json = new JSONObject();
+        if (eduJobStr.equals("Y")) {
+            try {
+                if (!name1.equals(name)){
+                    Json.put(AppConstant.KEY_NAME, name1);
+                }
+                if(!email1.equals(email)){
+                    Json.put(AppConstant.KEY_EMAIL_ID, email1);
+                }
+                if(!state_code.equals(GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.STATE_ID,""))){
+                    Json.put(AppConstant.STATE_ID, state_code);
+                }
+                if(!city1.equals(city)){
+                    Json.put(AppConstant.KEY_CITY, city1);
+                }
+                if(!languageKnown1.equals(languageKnown)){
+                    Json.put(AppConstant.KEY_LANGUAGE_KNOWN, languageKnown1);
+                }
+                if(!dob1.equals(dob)){
+                    Json.put(AppConstant.KEY_DOB, dob1);
+                }
+                if(!phoneNumber1.equals(phoneNumber)){
+                    Json.put(AppConstant.KEY_CONTACT, phoneNumber1);
+                }
+                if (!radioButtonSmallText.equals(GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_GENDER,""))){
+                    Json.put(AppConstant.KEY_GENDER, radioButtonSmallText);
+                }
+                if(!qualificationType1.equals(qualificationType)){
+                    Json.put(AppConstant.KEY_QUALIFICATION_TYPE, qualificationType1);
+                }
+                if(!experiance1.equals(experiance)){
+                    Json.put(AppConstant.KEY_EXPERIANCE_YEARS, experiance1);
+                    Json.put(AppConstant.KEY_EXPERIANCE_MONTH, "0");
+                }
+                if(!role1.equals(role)){
+                    Json.put(AppConstant.KEY_ROLE, role);
+                }
+                if(!salary1.equals(salary)){
+                    Json.put(AppConstant.KEY_SALARY, salary);
+                }
+                Json.put(AppConstant.KEY_DEVICE_ID, android_id);
+                Json.put(AppConstant.KEY_OS_TYPE, "A");
+                Json.put(AppConstant.KEY_ROLE, userDataBinding.designationEditText.getText().toString());
+                Json.put(AppConstant.KEY_NOTIFICATION_ID, GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_DEVICE_TOKEN,""));
+                Json.put(AppConstant.KEY_CENTRE_ID, centreId);
+                Json.put(AppConstant.KEY_PROJECT_ID, projectId);
+                Json.put(AppConstant.KEY_BATCH_ID, batchId);
+                Json.put(AppConstant.KEY_COURSE_ID, courseId);
+                if (isProfileImgUpdated) {
+                    Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
+                }
+                if (isCVUpadted){
+                    Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
+                }
+
+
+                Log.v("json", Json.toString());
+//                CommonMethod.showToast("Json",UserProfileActivity.this);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            try {
+                if (!name1.equals(name)){
+                    Json.put(AppConstant.KEY_NAME, name1);
+                }
+                if(!email1.equals(email)){
+                    Json.put(AppConstant.KEY_EMAIL_ID, email1);
+                }
+                if(!state_code.equals(GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.STATE_ID,""))){
+                    Json.put(AppConstant.STATE_ID, state_code);
+                }
+                if(!city1.equals(city)){
+                    Json.put(AppConstant.KEY_CITY, city1);
+                }
+                if(!languageKnown1.equals(languageKnown)){
+                    Json.put(AppConstant.KEY_LANGUAGE_KNOWN, languageKnown1);
+                }
+                if(!dob1.equals(dob)){
+                    Json.put(AppConstant.KEY_DOB, dob1);
+                }
+                if(!phoneNumber1.equals(phoneNumber)){
+                    Json.put(AppConstant.KEY_CONTACT, phoneNumber1);
+                }
+                if (!radioButtonSmallText.equals(GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_GENDER,""))){
+                    Json.put(AppConstant.KEY_GENDER, radioButtonSmallText);
+                }
+                if(!qualificationType1.equals(qualificationType)){
+                    Json.put(AppConstant.KEY_QUALIFICATION_TYPE, qualificationType1);
+                }
+                if(!experiance1.equals(experiance)){
+                    Json.put(AppConstant.KEY_EXPERIANCE_YEARS, experiance1);
+                    Json.put(AppConstant.KEY_EXPERIANCE_MONTH, "0");
+                }
+                if(!role1.equals(role)){
+                    Json.put(AppConstant.KEY_ROLE, role);
+                }
+                if(!salary1.equals(salary)){
+                    Json.put(AppConstant.KEY_SALARY, salary);
+                }
+                Json.put(AppConstant.KEY_DEVICE_ID, android_id);
+                Json.put(AppConstant.KEY_OS_TYPE, "A");
+                Json.put(AppConstant.KEY_ROLE, userDataBinding.designationEditText.getText().toString());
+                Json.put(AppConstant.KEY_NOTIFICATION_ID, GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_DEVICE_TOKEN,""));
+                if (isProfileImgUpdated) {
+                    Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
+                }
+                if (isCVUpadted){
+                    Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
+                }
+                Log.v("json", Json.toString());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return Json;
+    }
+
+
+
+    void updateUserDetails(JSONObject Json) {
+
+            Log.v("JSONURL", Json.toString());
+            ServiceHandler serviceHandler = new ServiceHandler(UserProfileActivity.this);
+            serviceHandler.StringRequest(Request.Method.PUT, Json.toString(), AppConstant.UPDATE_USER_DETAILS+userId, true, new ServiceHandler.VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+
+                    Log.v("Response1",result);
+
+                    getProfileDetails();
+                    userDataBinding.profileHeadre.nameNoLnr.setVisibility(View.VISIBLE);
+                    userDataBinding.savebutton.setVisibility(View.GONE);
+                    userDataBinding.profileHeadre.edit.setVisibility(View.VISIBLE);
+                    userDataBinding.profileHeadre.cancel.setVisibility(View.GONE);
+                    userDataBinding.nameEditTextLnr.setVisibility(View.GONE);
+                    userDataBinding.phoneNumberEditTextLnr.setVisibility(View.GONE);
+                    //userDataBinding.mainLnr.setAlpha((float) 0.5);
+                    setdisable();
+
+                }
+            });
+
+
+    }
+
+
+    void onProfileImageClick() {
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                            showImagePickerOptions();
+                        }
+
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            showSettingsDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
+    private void showImagePickerOptions() {
+        ImagePickerActivity.showImagePickerOptions(this, new ImagePickerActivity.PickerOptionListener() {
+            @Override
+            public void onTakeCameraSelected() {
+                launchCameraIntent();
+            }
+
+            @Override
+            public void onChooseGallerySelected() {
+                launchGalleryIntent();
+            }
+        });
+    }
+
+    private void launchCameraIntent() {
+        Intent intent = new Intent(UserProfileActivity.this, ImagePickerActivity.class);
+        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_IMAGE_CAPTURE);
+
+        // setting aspect ratio
+        intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1);
+
+        // setting maximum bitmap width and height
+        intent.putExtra(ImagePickerActivity.INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT, true);
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 1000);
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 1000);
+
+        startActivityForResult(intent, REQUEST_IMAGE);
+    }
+
+    private void launchGalleryIntent() {
+        Intent intent = new Intent(UserProfileActivity.this, ImagePickerActivity.class);
+        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_GALLERY_IMAGE);
+
+        // setting aspect ratio
+        intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1);
+        startActivityForResult(intent, REQUEST_IMAGE);
+    }
+
+    private void showSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserProfileActivity.this);
+        builder.setTitle(getString(R.string.dialog_permission_title));
+        builder.setMessage(getString(R.string.dialog_permission_message));
+
+        builder.setPositiveButton(getString(R.string.go_to_settings), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.cancel();
+                openSettings();
+            }
+        });
+
+        builder.setPositiveButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+
+    }
+
+    private void openSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, 101);
+    }
+
+    private void getDocument() {
+       /* Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/msword,application/pdf");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        // Only the system receives the ACTION_OPEN_DOCUMENT, so no need to test.
+        startActivityForResult(intent, REQUEST_CODE_DOC);*/
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
+    }
+
+    private String getFileNameByUri(Context context, Uri uri) {
+        String filepath = "";//default fileName
+        //Uri filePathUri = uri;
+        File file;
+        if (uri.getScheme().toString().compareTo("content") == 0) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{android.provider.MediaStore.Images.ImageColumns.DATA, MediaStore.Images.Media.ORIENTATION}, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+            cursor.moveToFirst();
+
+            String mImagePath = cursor.getString(column_index);
+            cursor.close();
+            filepath = mImagePath;
+
+        } else if (uri.getScheme().compareTo("file") == 0) {
+            try {
+                file = new File(new URI(uri.toString()));
+                if (file.exists())
+                    filepath = file.getAbsolutePath();
+
+            } catch (URISyntaxException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else {
+            filepath = uri.getPath();
+        }
+        return filepath;
+    }
+
+    public static String fileBase64Convert(String string) {
+
+        byte[] data;
+        String base64 = "";
+
+        try {
+
+            data = string.getBytes("UTF-8");
+
+            base64 = Base64.encodeToString(data, Base64.DEFAULT);
+
+            Log.i("Base 64 ", base64);
+
+        } catch (UnsupportedEncodingException e) {
+
+            e.printStackTrace();
+
+        }
+
+        return base64;
+    }
+
+    private String decodeBase64(String coded) {
+        byte[] valueDecoded = new byte[0];
+        try {
+            valueDecoded = Base64.decode(coded.getBytes("UTF-8"), Base64.DEFAULT);
+        } catch (UnsupportedEncodingException e) {
+        }
+        return new String(valueDecoded);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                Uri uri = data.getParcelableExtra("path");
+                try {
+                    // You can update this bitmap to your server
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    img_user_profile_base_64 = encodeTobase64(bitmap);
+                    userDataBinding.profileHeadre.userImg.setImageBitmap(bitmap);
+                    isProfileImgUpdated = true;
+                    // loading profile image from local cache
+//                    loadProfile(uri.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                Uri fileuri = data.getData();
+                docFilePath = getFileNameByUri(this, fileuri);
+                Log.v("document", docFilePath);
+                String filename = docFilePath.substring(docFilePath.lastIndexOf("/") + 1);
+                userDataBinding.uploadCvTxt.setText(filename);
+                fileBAse64Str = fileBase64Convert(docFilePath);
+                Log.v("base64FIle", fileBAse64Str);
+                String decodeStr = decodeBase64(fileBAse64Str);
+                Log.v("decode", decodeStr);
+                isCVUpadted = true;
+
+            }
+        }
+    }
+
+    public static String encodeTobase64(Bitmap image) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+        byte[] b = baos.toByteArray();
+        imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+        Log.d("Image Log Encoded:", imageEncoded);
+        return imageEncoded;
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        Log.v("Device Id", android_id);
+
+    }
 }

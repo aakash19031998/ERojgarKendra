@@ -16,6 +16,7 @@ public class AppConstant {
     public static final String CREATE_USER =BASE_URL+"create_user" ;
     public static final String GET_STATE =BASE_URL+"states" ;
     public static final String GET_USER_DETAILS =BASE_URL+"candidate_detail/" ;
+    public static final String UPDATE_USER_DETAILS =BASE_URL+"update_user/" ;
 //    public static final String IS_VERIFIED_MAIN = "isverifiedmain";
     public static final String SOMETHING_WENT_WRONG = "Something went wrong please try again...!!!";
     public static final String KEY_NAME ="name" ;
