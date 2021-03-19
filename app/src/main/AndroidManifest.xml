@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme_New">
-        <activity android:name=".registrationscreen.controler.GetStartedActivity"></activity>
+        <activity android:name=".successstoryscreen.SuccessStoriesActivity"></activity>
+        <activity android:name=".interviewscreen.controler.AppliedApplicationActivity" />
+        <activity android:name=".interviewscreen.controler.UpcomingInterviewActivity" />
+        <activity android:name=".goodiesscreen.controler.MyGoodiesStoreActivity" />
+        <activity android:name=".goodiesscreen.controler.MyOrdersActivity" />
+        <activity android:name=".documentsscreen.controler.MyDocumentsActivity" />
+        <activity android:name=".registrationscreen.controler.GetStartedActivity" />
         <activity android:name=".SplashScreenActvity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -80,13 +86,13 @@
             </intent-filter>
         </service>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

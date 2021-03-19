@@ -6,17 +6,24 @@ import java.util.ArrayList;
 public class NavMenuModel {
 
     String iconName = "";
-    int iconImg = -1; // menu icon resource id
+    int iconImg = -1;
+    int leftImg = -1;// menu icon resource id
+
+
+    String id = "";
 
     public String getIconName() {
         return iconName;
     }
+
     public void setIconName(String iconName) {
         this.iconName = iconName;
     }
+
     public int getIconImg() {
         return iconImg;
     }
+
     public void setIconImg(int iconImg) {
         this.iconImg = iconImg;
     }
@@ -30,5 +37,21 @@ public class NavMenuModel {
     }
 
     ArrayList<NavMenuModel> allSubMenu = new ArrayList<>();
+
+    public int getLeftImg() {
+        return leftImg;
+    }
+
+    public void setLeftImg(int leftImg) {
+        this.leftImg = leftImg;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
 }

@@ -7,6 +7,12 @@
     android:layout_centerHorizontal="true">
 
 
+    <ImageView
+        android:layout_margin="@dimen/_8sdp"
+        android:id="@+id/left_icon"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp"
+        android:src="@drawable/downarrow"/>
 
 
     <TextView
@@ -16,7 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_12sdp"
+        android:layout_toRightOf="@+id/left_icon"
         android:textColor="@android:color/black"
+        android:layout_toLeftOf="@+id/header_icon"
         android:textStyle="bold"
         />
 

@@ -62,5 +62,41 @@ public class AppConstant {
     public static final String KEY_="otp" ;
     public static final String KEY_ROLE="role" ;
 
+    public static final String ID_JOBS ="JOBS" ;
+    public static final String ID_INTERVIEW ="INTERVIEW" ;
+    public static final String ID_MY_DOCUMENTS ="MYDOCUMENTS" ;
+    public static final String ID_SUCCESS_STORIES ="SUCCESSSTORIES" ;
+    public static final String ID_GOODIES_STORE ="GOODIESSTORES" ;
+    public static final String ID_LOGOUT ="LOGOUT" ;
+    public static final String ID_MATCHING_VACANCIES ="MATCHINGVACANCIES" ;
+    public static final String ID_ALL_JOBS ="ALLJOBS" ;
+    public static final String ID_HOT_JOBS ="HOTJOBS" ;
+    public static final String ID_JOBS_APPLIED_BY_BATCHMATES ="JOBSBYBATCHMATE" ;
+    public static final String ID_POPULARJOBS ="POPULARJOBS" ;
+    public static final String ID_UPCOMING_INTERVIEW ="UPCOMINGINTERVIEW" ;
+    public static final String ID_ALL_APPLIED_APPLICATION ="APPLIEDAPPLICATION" ;
+    public static final String ID_MY_GOODIES_STORES ="MYGOODIESSTORES" ;
+    public static final String ID_MY_ORDERS ="MYORDERS" ;
+
+
+    public static final String NAME_JOBS ="Job Board" ;
+    public static final String NAME_INTERVIEW ="Interview" ;
+    public static final String NAME_MY_DOCUMENTS ="My Documents" ;
+    public static final String NAME_SUCCESS_STORIES ="Success Stories" ;
+    public static final String NAME_GOODIES_STORE ="Goodies Store" ;
+    public static final String NAME_LOGOUT ="Logout" ;
+
+    public static final String NAME_MATCHING_VACANCIES ="Matching Vacancies" ;
+    public static final String NAME_ALL_JOBS ="All Jobs" ;
+    public static final String NAME_HOT_JOBS ="Hot Jobs" ;
+    public static final String NAME_JOBS_APPLIED_BY_BATCHMATES ="Most Applied Jobs" ;
+    public static final String NAME_POPULARJOBS ="Popular Jobs" ;
+    public static final String NAME_UPCOMING_INTERVIEW ="Upcoming Interviews" ;
+    public static final String NAME_ALL_APPLIED_APPLICATION ="All applications" ;
+    public static final String NAME_MY_GOODIES_STORES ="EduErp Goodies Store" ;
+    public static final String NAME_MY_ORDERS ="My Orders" ;
+    public static final String EXIT_TEXT = "Are you sure you want to close the app?";
+    public static final String LOGOUT_TEXT = "Are you sure you want to logout from the app?";
+
 
 }

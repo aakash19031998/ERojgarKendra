@@ -9,10 +9,11 @@
 
     <ImageView
         android:id="@+id/child_icon"
-        android:layout_width="@dimen/_15sdp"
-        android:layout_height="@dimen/_15sdp"
-        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp"
+        android:layout_marginLeft="@dimen/_24sdp"
         android:layout_marginTop="@dimen/_8sdp"
+
         android:src="@drawable/downarrow"/>
 
     <TextView

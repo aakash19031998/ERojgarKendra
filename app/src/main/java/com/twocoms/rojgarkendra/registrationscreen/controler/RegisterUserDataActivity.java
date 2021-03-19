@@ -247,7 +247,6 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         };
 
 
-
         registerUserDataBinding.dobKnownEditText.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -259,7 +258,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();*/
                 DatePickerDialog dialog = new DatePickerDialog(RegisterUserDataActivity.this, datePickerListener, mcalendar
                         .get(Calendar.YEAR), mcalendar.get(Calendar.MONTH), mcalendar.get(Calendar.DAY_OF_MONTH));
-                dialog.getDatePicker().setMaxDate((long) (new Date().getTime()- 60 * 60 * 1000 * 24 * 30.41666666 * 12 * 18));//7 * 24 * 60 * 60 * 1000  604800000L
+                dialog.getDatePicker().setMaxDate((long) (new Date().getTime() - 60 * 60 * 1000 * 24 * 30.41666666 * 12 * 18));//7 * 24 * 60 * 60 * 1000  604800000L
                 dialog.show();
             }
         });
@@ -326,11 +325,8 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
                 if (validation()) {
                     userRegistration(jsonUserRegistration());
-
 //                    jsonUserRegistration();
                 }
-//                Intent intent = new Intent(RegisterUserDataActivity.this, DashboardActivity.class);
-//                startActivity(intent);
             }
         });
 
@@ -351,7 +347,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             }
         });
 
-       // registerUserDataBinding.experinaceYearsEditText.setFilters(new InputFilter[]{ new InputFilterMin(10)});
+        // registerUserDataBinding.experinaceYearsEditText.setFilters(new InputFilter[]{ new InputFilterMin(10)});
 
         /*registerUserDataBinding.experinaceYearsEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -373,9 +369,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         });*/
 
 
-
     }
-
 
 
     public boolean checkGenderRadioGrp() {
@@ -421,7 +415,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 Json.put(AppConstant.KEY_OS_TYPE, "A");
                 Json.put(AppConstant.KEY_IS_EDURP, "Y");
                 Json.put(AppConstant.KEY_ROLE, registerUserDataBinding.designationEditText.getText().toString());
-                Json.put(AppConstant.KEY_NOTIFICATION_ID, GlobalPreferenceManager.getStringForKey(RegisterUserDataActivity.this,AppConstant.KEY_DEVICE_TOKEN,""));
+                Json.put(AppConstant.KEY_NOTIFICATION_ID, GlobalPreferenceManager.getStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_DEVICE_TOKEN, ""));
                 Json.put(AppConstant.KEY_CENTRE_ID, centreId);
                 Json.put(AppConstant.KEY_PROJECT_ID, projectId);
                 Json.put(AppConstant.KEY_BATCH_ID, batchId);
@@ -454,7 +448,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 Json.put(AppConstant.KEY_DEVICE_ID, android_id);
                 Json.put(AppConstant.KEY_OS_TYPE, "A");
                 Json.put(AppConstant.KEY_IS_EDURP, "N");
-                Json.put(AppConstant.KEY_NOTIFICATION_ID, GlobalPreferenceManager.getStringForKey(RegisterUserDataActivity.this,AppConstant.KEY_DEVICE_TOKEN,""));
+                Json.put(AppConstant.KEY_NOTIFICATION_ID, GlobalPreferenceManager.getStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_DEVICE_TOKEN, ""));
                 Json.put("language_known", registerUserDataBinding.languageKnownEditText.getText().toString());
                 Json.put("role", registerUserDataBinding.designationEditText.getText().toString());
                 Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
@@ -509,7 +503,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                     CommonMethod.showToast("Please Enter Experience Year", RegisterUserDataActivity.this);
                     return false;
                 }
-            }  else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.designationEditText.getText().toString())) {
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.designationEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter Designation", RegisterUserDataActivity.this);
                 return false;
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.salaryEditText.getText().toString())) {
@@ -604,8 +598,13 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                         GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_IS_REGISTER, "Y");
 //                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.thi);
 //                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_IS_REGISTER, dataStr.getString(AppConstant.KEY_IS_REGISTER));
-                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
-                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
+                        if (dataStr.has(AppConstant.KEY_PROFILE_URL)) {
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
+                        }
+                        if (dataStr.has(AppConstant.KEY_RESUME_URL)) {
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
+                        }
+
                         GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_WALLET_AMOUNT, dataStr.getString(AppConstant.KEY_WALLET_AMOUNT));
                         if (dataStr.getString("eduErp").equals("Y")) {
 //                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_COURSE_NAME, dataStr.getString(AppConstant.KEY_COURSE_NAME));
@@ -1173,7 +1172,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                             JSONObject object = (JSONObject) jsonArray.get(i);
                             String stateName = object.getString("StateName");
                             int stateCode = object.getInt("StCode");
-                            if(!stateName.equals("empty")) {
+                            if (!stateName.equals("empty")) {
                                 listStates.add(stateName);
                                 states[i] = stateName;
                                 statesCode[i] = String.valueOf(stateCode);

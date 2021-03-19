@@ -21,7 +21,7 @@ import java.util.List;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
-//    private List<String> _listDataHeader; // header titles
+    //    private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
 //    private HashMap<String, List<String>> _listDataChild;
     public ArrayList<NavMenuModel> allMenus;
@@ -48,7 +48,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        NavMenuModel childData = (NavMenuModel) getChild(groupPosition,childPosition);
+        NavMenuModel childData = (NavMenuModel) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -61,7 +61,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         ImageView imageView1 = (ImageView) convertView.findViewById(R.id.child_icon);
 
-        imageView1.setImageResource(childData.getIconImg());
+        if (childData.getIconImg() == -1) {
+            imageView1.setVisibility(View.GONE);
+        } else {
+            imageView1.setImageResource(childData.getIconImg());
+        }
 
         txtListChild.setText(childData.getIconName());
         return convertView;
@@ -109,10 +113,26 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.grpItem);
-        ImageView imageView = (ImageView)convertView.findViewById(R.id.header_icon);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.header_icon);
+        ImageView left_icon = (ImageView) convertView.findViewById(R.id.left_icon);
+
 
         lblListHeader.setText(headerTitle.getIconName());
-        imageView.setImageResource(headerTitle.getIconImg());
+        if (headerTitle.getIconImg() == -1) {
+            imageView.setVisibility(View.INVISIBLE);
+        } else {
+            imageView.setImageResource(headerTitle.getIconImg());
+            imageView.setVisibility(View.VISIBLE);
+
+        }
+        if (headerTitle.getLeftImg() == -1) {
+            left_icon.setVisibility(View.INVISIBLE);
+        } else {
+            left_icon.setVisibility(View.VISIBLE);
+            left_icon.setImageResource(headerTitle.getLeftImg());
+
+        }
+
 
         return convertView;
     }

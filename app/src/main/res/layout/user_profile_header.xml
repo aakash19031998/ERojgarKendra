@@ -95,6 +95,8 @@
                 android:layout_height="wrap_content"
                 android:text="Aakash Vishwakarma"
                 android:textStyle="bold"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="@android:color/white" />
 
@@ -107,6 +109,17 @@
                     android:textStyle="bold"
                     android:textSize="@dimen/_14sdp"
                     android:textColor="@android:color/white" />
+
+                <ImageView
+
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/icon_verified_acc"
+                    android:layout_below="@id/name_text"
+                    android:layout_toRightOf="@id/no_text"/>
+
+
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
