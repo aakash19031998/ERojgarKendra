@@ -32,22 +32,14 @@ public class SplashScreenActvity extends AppCompatActivity {
 
                 if (GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_CONTACT_VERIFIED, "").equals("1") &&
                         GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_IS_REGISTER, "").equals("Y")) {
-//                    if (getIntent().getStringExtra("comingFrom") != null && getIntent().getStringExtra("comingFrom").equals("notification")) {
-//                        Intent mainIntent = new Intent(context, DermatologyConferenceCalendarActivity.class);
-//                        startActivity(mainIntent);
-//                        finish();
-//                    } else {
                     Intent mainIntent = new Intent(SplashScreenActvity.this, DashboardActivity.class);
                     startActivity(mainIntent);
                     finish();
-//                    }
                 } else {
-                    Intent intent = new Intent(SplashScreenActvity.this, GetStartedActivity.class);
+                    Intent intent = new Intent(SplashScreenActvity.this, DashboardActivity.class);
                     startActivity(intent);
                     finish();
                 }
-
-
             }
         }, 3000);
     }

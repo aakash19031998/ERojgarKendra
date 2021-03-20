@@ -55,8 +55,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -989,10 +991,15 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 Log.v("document", docFilePath);
                 String filename = docFilePath.substring(docFilePath.lastIndexOf("/") + 1);
                 registerUserDataBinding.uploadCvTxt.setText(filename);
-                fileBAse64Str = fileBase64Convert(docFilePath);
+//                fileBAse64Str = fileBase64Convert(docFilePath);
+                try {
+                    fileBAse64Str = encodeFileToBase64Binary(loadFileAsBytesArray(docFilePath));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 Log.v("base64FIle", fileBAse64Str);
-                String decodeStr = decodeBase64(fileBAse64Str);
-                Log.v("decode", decodeStr);
+//                String decodeStr = decodeBase64(fileBAse64Str);
+//                Log.v("decode", decodeStr);
 
             }
         }
@@ -1190,6 +1197,23 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+
+    private String encodeFileToBase64Binary(byte[] allData) {
+        String encoded = Base64.encodeToString(allData,Base64.NO_WRAP);
+        return encoded;
+    }
+
+    public static byte[] loadFileAsBytesArray(String fileName) throws Exception {
+        File file = new File(fileName);
+        int length = (int) file.length();
+        BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
+        byte[] bytes = new byte[length];
+        reader.read(bytes, 0, length);
+        reader.close();
+        return bytes;
 
     }
 }

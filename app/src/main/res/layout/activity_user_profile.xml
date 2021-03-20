@@ -24,6 +24,7 @@
 
 
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/explainabletext">
@@ -550,6 +551,7 @@
                 app:hintTextColor="@android:color/black"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
+                android:layout_marginBottom="6dp"
                 android:background="@drawable/gender_background_drawable"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout">
 
@@ -605,7 +607,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_34sdp"
                 android:text="SAVE"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="14dp"
                 android:textColor="@android:color/white"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"

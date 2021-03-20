@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -23,6 +24,7 @@ import android.widget.DatePicker;
 import android.widget.RadioButton;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
@@ -50,18 +52,26 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static java.nio.file.Paths.get;
 
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -676,6 +686,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userProfileImgStr = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_PROFILE_URL,"");
         userResumeUrlStr = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_RESUME_URL,"");
 
+
         Glide.with(this)
                 .load(userProfileImgStr)
                 .into(userDataBinding.profileHeadre.userImg);
@@ -833,9 +844,10 @@ public class UserProfileActivity extends AppCompatActivity {
                 if(!dob1.equals(dob)){
                     Json.put(AppConstant.KEY_DOB, dob1);
                 }
-                if(!phoneNumber1.equals(phoneNumber)){
-                    Json.put(AppConstant.KEY_CONTACT, phoneNumber1);
-                }
+
+                Json.put(AppConstant.KEY_CONTACT, phoneNumber1);
+                Json.put(AppConstant.KEY_USER_ID, userId);
+
                 if (!radioButtonSmallText.equals(GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_GENDER,""))){
                     Json.put(AppConstant.KEY_GENDER, radioButtonSmallText);
                 }
@@ -894,9 +906,10 @@ public class UserProfileActivity extends AppCompatActivity {
                 if(!dob1.equals(dob)){
                     Json.put(AppConstant.KEY_DOB, dob1);
                 }
-                if(!phoneNumber1.equals(phoneNumber)){
-                    Json.put(AppConstant.KEY_CONTACT, phoneNumber1);
-                }
+
+                Json.put(AppConstant.KEY_CONTACT, phoneNumber1);
+                Json.put(AppConstant.KEY_USER_ID, userId);
+
                 if (!radioButtonSmallText.equals(GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_GENDER,""))){
                     Json.put(AppConstant.KEY_GENDER, radioButtonSmallText);
                 }
@@ -952,6 +965,12 @@ public class UserProfileActivity extends AppCompatActivity {
                     userDataBinding.profileHeadre.cancel.setVisibility(View.GONE);
                     userDataBinding.nameEditTextLnr.setVisibility(View.GONE);
                     userDataBinding.phoneNumberEditTextLnr.setVisibility(View.GONE);
+                    //Auto Scroll the Scroll view to top
+                    userDataBinding.scroll.post(new Runnable() {
+                        public void run() {
+                            userDataBinding.scroll.fullScroll(userDataBinding.scroll.FOCUS_UP);
+                        }
+                    });
                     //userDataBinding.mainLnr.setAlpha((float) 0.5);
                     setdisable();
 
@@ -1098,27 +1117,45 @@ public class UserProfileActivity extends AppCompatActivity {
         return filepath;
     }
 
-    public static String fileBase64Convert(String string) {
 
-        byte[] data;
-        String base64 = "";
 
-        try {
 
-            data = string.getBytes("UTF-8");
-
-            base64 = Base64.encodeToString(data, Base64.DEFAULT);
-
-            Log.i("Base 64 ", base64);
-
-        } catch (UnsupportedEncodingException e) {
-
-            e.printStackTrace();
-
-        }
-
-        return base64;
-    }
+//    public static String fileBase64Convert(String string) {
+//
+//        byte[] data;
+//        String base64 = "";
+//
+//        try {
+//
+//            data=
+//
+//
+//
+////            File pdfFile = new File(filePath);
+////            byte[] encoded = Files.readAllBytes(Paths.get(pdfFile.getAbsolutePath()));
+////            Base64.Encoder enc = Base64.getEncoder();
+////            byte[] strenc = enc.encode(encoded);
+////            String encode = new String(strenc, "UTF-8");
+////            Base64.Decoder dec = Base64.getDecoder();
+////            byte[] strdec = dec.decode(encode);
+////            OutputStream out = new FileOutputStream("/home/user/out.pdf");
+////            out.write(strdec);
+////            out.close();
+////
+////            data = string.getBytes("UTF-8");
+//
+//            base64 = Base64.encodeToString(data, Base64.DEFAULT);
+//
+//            Log.i("Base 64 ", base64);
+//
+//        } catch (UnsupportedEncodingException e) {
+//
+//            e.printStackTrace();
+//
+//        }
+//
+//        return base64;
+//    }
 
     private String decodeBase64(String coded) {
         byte[] valueDecoded = new byte[0];
@@ -1130,6 +1167,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1155,15 +1193,22 @@ public class UserProfileActivity extends AppCompatActivity {
                 Log.v("document", docFilePath);
                 String filename = docFilePath.substring(docFilePath.lastIndexOf("/") + 1);
                 userDataBinding.uploadCvTxt.setText(filename);
-                fileBAse64Str = fileBase64Convert(docFilePath);
-                Log.v("base64FIle", fileBAse64Str);
-                String decodeStr = decodeBase64(fileBAse64Str);
-                Log.v("decode", decodeStr);
+                try {
+                    fileBAse64Str = encodeFileToBase64Binary(loadFileAsBytesArray(docFilePath));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+//                fileBAse64Str = (docFilePath);
+//                Log.v("base64FIle", fileBAse64Str);
+//                String decodeStr = decodeBase64(fileBAse64Str);
+//                Log.v("decode", decodeStr);
                 isCVUpadted = true;
 
             }
         }
     }
+
 
     public static String encodeTobase64(Bitmap image) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -1173,6 +1218,22 @@ public class UserProfileActivity extends AppCompatActivity {
 
         Log.d("Image Log Encoded:", imageEncoded);
         return imageEncoded;
+
+    }
+
+    private String encodeFileToBase64Binary(byte[] allData) {
+        String encoded = Base64.encodeToString(allData,Base64.NO_WRAP);
+        return encoded;
+    }
+
+    public static byte[] loadFileAsBytesArray(String fileName) throws Exception {
+        File file = new File(fileName);
+        int length = (int) file.length();
+        BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
+        byte[] bytes = new byte[length];
+        reader.read(bytes, 0, length);
+        reader.close();
+        return bytes;
 
     }
 

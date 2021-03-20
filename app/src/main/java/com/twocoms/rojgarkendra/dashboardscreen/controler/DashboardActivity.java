@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +25,7 @@ import com.twocoms.rojgarkendra.dashboardscreen.model.NavMenuModel;
 import com.twocoms.rojgarkendra.dashboardscreen.view.ExpandableListAdapter;
 import com.twocoms.rojgarkendra.documentsscreen.controler.MyDocumentsActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
+import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.goodiesscreen.controler.MyGoodiesStoreActivity;
 import com.twocoms.rojgarkendra.goodiesscreen.controler.MyOrdersActivity;
@@ -47,7 +50,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     String eduStr = "";
     ImageView userProfileImg;
     String profileURlStr = "";
-
+    String nameStr = "", userNoStr = "";
+    TextView nameText, noText;
+    LinearLayout userProfile, userWithoutLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +71,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         navigationView.setNavigationItemSelectedListener(this);
         userProfileBtn = (ImageView) findViewById(R.id.user_profile_img);
         eduStr = GlobalPreferenceManager.getStringForKey(DashboardActivity.this, AppConstant.KEY_IS_EDURP, "");
-        profileURlStr = GlobalPreferenceManager.getStringForKey(DashboardActivity.this, AppConstant.KEY_PROFILE_URL, "").trim();
         userProfileImg = (ImageView) findViewById(R.id.user_img);
+        nameText = (TextView) findViewById(R.id.user_name);
+        noText = (TextView) findViewById(R.id.user_phone_no);
 
-        Glide.with(this)
-                .load(profileURlStr)
-                .into(userProfileImg);
-        //prepareListData();
+        userProfile = findViewById(R.id.userProfile);
+        userWithoutLogin = findViewById(R.id.userWithoutLogin);
 
         prepareListData1();
         listAdapter = new ExpandableListAdapter(DashboardActivity.this, listDataHeader1);
@@ -138,14 +142,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
-        userProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DashboardActivity.this, UserProfileActivity.class);
-                startActivity(intent);
-
-            }
-        });
+//        userProfileBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(DashboardActivity.this, UserProfileActivity.class);
+//                startActivity(intent);
+//
+//            }
+//        });
 
     }
 
@@ -246,41 +250,49 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         ArrayList<NavMenuModel> allSUbmenu;
 
-        NavMenuModel item2 = new NavMenuModel();
-        item2.setIconName(AppConstant.NAME_INTERVIEW);
-        item2.setIconImg(R.drawable.bg_nav_dropdown);
-        item2.setLeftImg(R.drawable.icons_interview);
-        item2.setId(AppConstant.ID_INTERVIEW);
-        // Adding data header
-        listDataHeader1.add(item2);
-
-        ArrayList<NavMenuModel> allSUbmenu2 = new ArrayList<>();
-
-        NavMenuModel navMenuModel6 = new NavMenuModel();
-        navMenuModel6.setIconImg(R.drawable.icon_my_interview);
-        navMenuModel6.setIconName(AppConstant.NAME_UPCOMING_INTERVIEW);
-        navMenuModel6.setId(AppConstant.ID_UPCOMING_INTERVIEW);
-
-        allSUbmenu2.add(navMenuModel6);
-
-        NavMenuModel navMenuModel7 = new NavMenuModel();
-        navMenuModel7.setIconImg(R.drawable.icons_all_application);
-        navMenuModel7.setIconName(AppConstant.NAME_ALL_APPLIED_APPLICATION);
-        navMenuModel7.setId(AppConstant.ID_ALL_APPLIED_APPLICATION);
-        allSUbmenu2.add(navMenuModel7);
-        item2.setAllSubMenu(allSUbmenu2);
+        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
 
 
-        NavMenuModel item3 = new NavMenuModel();
-        item3.setIconName(AppConstant.NAME_MY_DOCUMENTS);
-        item3.setId(AppConstant.ID_MY_DOCUMENTS);
-        item3.setLeftImg(R.drawable.icons_my_documents);
+            NavMenuModel item2 = new NavMenuModel();
+            item2.setIconName(AppConstant.NAME_INTERVIEW);
+            item2.setIconImg(R.drawable.bg_nav_dropdown);
+            item2.setLeftImg(R.drawable.icons_interview);
+            item2.setId(AppConstant.ID_INTERVIEW);
+            // Adding data header
+            listDataHeader1.add(item2);
+
+            ArrayList<NavMenuModel> allSUbmenu2 = new ArrayList<>();
+
+            NavMenuModel navMenuModel6 = new NavMenuModel();
+            navMenuModel6.setIconImg(R.drawable.icon_my_interview);
+            navMenuModel6.setIconName(AppConstant.NAME_UPCOMING_INTERVIEW);
+            navMenuModel6.setId(AppConstant.ID_UPCOMING_INTERVIEW);
+
+            allSUbmenu2.add(navMenuModel6);
+
+            NavMenuModel navMenuModel7 = new NavMenuModel();
+            navMenuModel7.setIconImg(R.drawable.icons_all_application);
+            navMenuModel7.setIconName(AppConstant.NAME_ALL_APPLIED_APPLICATION);
+            navMenuModel7.setId(AppConstant.ID_ALL_APPLIED_APPLICATION);
+            allSUbmenu2.add(navMenuModel7);
+            item2.setAllSubMenu(allSUbmenu2);
+
+        }
+
+        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
+
+            NavMenuModel item3 = new NavMenuModel();
+            item3.setIconName(AppConstant.NAME_MY_DOCUMENTS);
+            item3.setId(AppConstant.ID_MY_DOCUMENTS);
+            item3.setLeftImg(R.drawable.icons_my_documents);
+
 
 //            item3.setIconImg(R.drawable.bg_nav_exp_right);
-        // Adding data header
-        listDataHeader1.add(item3);
-        allSUbmenu = new ArrayList<>();
-        item3.setAllSubMenu(allSUbmenu);
+            // Adding data header
+            listDataHeader1.add(item3);
+            allSUbmenu = new ArrayList<>();
+            item3.setAllSubMenu(allSUbmenu);
+        }
 
         NavMenuModel item4 = new NavMenuModel();
         item4.setIconName(AppConstant.NAME_SUCCESS_STORIES);
@@ -306,23 +318,30 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         navMenuModel10.setId(AppConstant.ID_MY_GOODIES_STORES);
         allSUbmenu.add(navMenuModel10);
 
-        NavMenuModel navMenuModel11 = new NavMenuModel();
-        navMenuModel11.setIconImg(R.drawable.icon_my_orders);
-        navMenuModel11.setIconName(AppConstant.NAME_MY_ORDERS);
-        navMenuModel11.setId(AppConstant.ID_MY_ORDERS);
-        allSUbmenu.add(navMenuModel11);
+        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
+
+            NavMenuModel navMenuModel11 = new NavMenuModel();
+            navMenuModel11.setIconImg(R.drawable.icon_my_orders);
+            navMenuModel11.setIconName(AppConstant.NAME_MY_ORDERS);
+            navMenuModel11.setId(AppConstant.ID_MY_ORDERS);
+            allSUbmenu.add(navMenuModel11);
+        }
 
         item5.setAllSubMenu(allSUbmenu);
 
-        NavMenuModel item6 = new NavMenuModel();
-        item6.setIconName(AppConstant.NAME_LOGOUT);
-        item6.setId(AppConstant.ID_LOGOUT);
-        item6.setLeftImg(R.drawable.icon_logout);
+        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
+            NavMenuModel item6 = new NavMenuModel();
+            item6.setIconName(AppConstant.NAME_LOGOUT);
+            item6.setId(AppConstant.ID_LOGOUT);
+            item6.setLeftImg(R.drawable.icon_logout);
+
+            listDataHeader1.add(item6);
+
+            allSUbmenu = new ArrayList<>();
+            item6.setAllSubMenu(allSUbmenu);
+        }
 
         // Adding data header
-        listDataHeader1.add(item6);
-        allSUbmenu = new ArrayList<>();
-        item6.setAllSubMenu(allSUbmenu);
 
 
     }
@@ -365,7 +384,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 break;
 
             case AppConstant.ID_MY_ORDERS:
-                openMyGoodiesScreen();
+                openMyOrders();
                 break;
 
             case AppConstant.ID_LOGOUT:
@@ -476,4 +495,61 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showHideNavigationView();
+    }
+
+
+    void openProfileActivity() {
+        Intent intent = new Intent(DashboardActivity.this, UserProfileActivity.class);
+        startActivity(intent);
+        drawerLayout.closeDrawers();
+    }
+
+    void showHideNavigationView() {
+        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
+            userProfileBtn.setVisibility(View.VISIBLE);
+            userProfile.setVisibility(View.VISIBLE);
+            userWithoutLogin.setVisibility(View.GONE);
+            nameStr = GlobalPreferenceManager.getStringForKey(DashboardActivity.this, AppConstant.KEY_NAME, "").trim();
+            userNoStr = GlobalPreferenceManager.getStringForKey(DashboardActivity.this, AppConstant.KEY_CONTACT, "").trim();
+            profileURlStr = GlobalPreferenceManager.getStringForKey(DashboardActivity.this, AppConstant.KEY_PROFILE_URL, "").trim();
+            nameText.setText(nameStr);
+            noText.setText(userNoStr);
+            Glide.with(this)
+                    .load(profileURlStr)
+                    .into(userProfileImg);
+
+            userProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openProfileActivity();
+                }
+            });
+
+            userProfileBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openProfileActivity();
+                }
+            });
+
+
+        } else {
+            userProfile.setVisibility(View.GONE);
+            userWithoutLogin.setVisibility(View.VISIBLE);
+            userProfileBtn.setVisibility(View.GONE);
+            userWithoutLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CommonMethod.openGetStartedActivity(DashboardActivity.this);
+                    finish();
+                }
+            });
+
+        }
+    }
 }

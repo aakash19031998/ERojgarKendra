@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.media.ExifInterface;
@@ -24,6 +25,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.twocoms.rojgarkendra.registrationscreen.controler.GetStartedActivity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataActivity;
 
 import org.json.JSONArray;
@@ -47,7 +49,6 @@ import java.util.Locale;
  */
 
 public class CommonMethod {
-
 
 
     public static void showToast(String message, Context context) {
@@ -355,12 +356,10 @@ public class CommonMethod {
 //
 
 
-    public static boolean isOnline(Context context)
-    {
+    public static boolean isOnline(Context context) {
         boolean connected = false;
 
-        try
-        {
+        try {
             ConnectivityManager connectivityManager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -370,9 +369,7 @@ public class CommonMethod {
             return connected;
 
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("CheckConnectivity Exception: " + e.getMessage());
             Log.v("connectivity", e.toString());
         }
@@ -380,7 +377,7 @@ public class CommonMethod {
     }
 
 
-    void getFCMToken(final Context context){
+    void getFCMToken(final Context context) {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -432,6 +429,7 @@ public class CommonMethod {
 
         return degree;
     }
+
     public static String saveimagetosdcard(Context ctx, Bitmap photo) {
 
 
@@ -450,10 +448,9 @@ public class CommonMethod {
              * Toast.makeText(ctx,
              * "Image Saved to "+getOutputMediaFile().getAbsolutePath(),
              * Toast.LENGTH_SHORT) .show()
-             */;
-        }
-
-        catch (Exception e) {
+             */
+            ;
+        } catch (Exception e) {
             Toast.makeText(ctx, "Try Again.", Toast.LENGTH_SHORT).show();
 
             e.printStackTrace();
@@ -481,6 +478,23 @@ public class CommonMethod {
                 + timeStamp + ".png");
 
         return mediaFile;
+    }
+
+
+    public static boolean checkUserLoggedInOrRegister(Context context) {
+        boolean isRegUser = false;
+        if (GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_CONTACT_VERIFIED, "").equals("1") &&
+                GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_IS_REGISTER, "").equals("Y")) {
+            isRegUser = true;
+        }
+        return isRegUser;
+    }
+
+
+    public static void openGetStartedActivity(Context context) {
+        Intent intent = new Intent(context, GetStartedActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
     }
 
 
