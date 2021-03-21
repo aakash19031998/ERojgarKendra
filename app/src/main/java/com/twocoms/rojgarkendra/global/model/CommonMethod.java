@@ -12,6 +12,7 @@ import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -38,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -514,5 +516,46 @@ public class CommonMethod {
         context.startActivity(intent);
     }
 
+
+    public static String roundNumbertoNextPossibleValue(String value) {
+        double valueToBeRoundedOff = Double.parseDouble(value);
+        int a = (int) Math.round(valueToBeRoundedOff);
+        return "" + a;
+
+    }
+
+
+    public static String parseDateToFormat(String time) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        String outputPattern = "MMMM d, yyyy";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = "";
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public static boolean checkTodaysDate(String time) {
+        boolean checkTodaysDate = false;
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        Date date = null;
+
+        try {
+            date = inputFormat.parse(time);
+            checkTodaysDate = DateUtils.isToday(date.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return checkTodaysDate;
+    }
 
 }

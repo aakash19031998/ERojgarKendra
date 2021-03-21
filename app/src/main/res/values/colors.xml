@@ -18,4 +18,5 @@
     <color name="bg_meta_container">#000000</color>
     <color name="profile_default_tint">#e0e0e0</color>
     <color name="red"></color>
+    <color name="default_color_android">#808080</color>
 </resources>

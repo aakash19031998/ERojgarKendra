@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +32,8 @@ import com.twocoms.rojgarkendra.goodiesscreen.controler.MyGoodiesStoreActivity;
 import com.twocoms.rojgarkendra.goodiesscreen.controler.MyOrdersActivity;
 import com.twocoms.rojgarkendra.interviewscreen.controler.AppliedApplicationActivity;
 import com.twocoms.rojgarkendra.interviewscreen.controler.UpcomingInterviewActivity;
+import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgAllJobs;
+import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgHotJob;
 import com.twocoms.rojgarkendra.myprofile.controler.UserProfileActivity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.GetStartedActivity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataActivity;
@@ -46,14 +49,16 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     NavigationView navigationView;
     ArrayList<NavMenuModel> listDataHeader1;
     ExpandableListAdapter listAdapter;
-    ImageView menu;
-    ImageView userProfileBtn;
+    public static ImageView menu;
+    public static ImageView userProfileBtn;
+    public static ImageView backButton, homeBtn;
     String eduStr = "";
-    ImageView userProfileImg;
+    public static ImageView userProfileImg;
     String profileURlStr = "";
     String nameStr = "", userNoStr = "";
     TextView nameText, noText;
     LinearLayout userProfile, userWithoutLogin;
+    public static boolean isFragment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         menu = (ImageView) findViewById(R.id.menu);
+        backButton = (ImageView) findViewById(R.id.backbutton);
+        homeBtn = (ImageView) findViewById(R.id.home_img);
         navigationView = (NavigationView) findViewById(R.id.nv_navigation_view);
         expandableListView = (ExpandableListView) findViewById(R.id.left_drawer);
         navigationView.setNavigationItemSelectedListener(this);
@@ -152,6 +159,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 //            }
 //        });
 
+        openHotJobScreen();
     }
 
 
@@ -354,6 +362,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 break;
 
             case AppConstant.ID_HOT_JOBS:
+                openHotJobScreen();
                 break;
 
             case AppConstant.ID_POPULARJOBS:
@@ -363,6 +372,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 break;
 
             case AppConstant.ID_ALL_JOBS:
+                openAllJobScreen();
+
                 break;
 
             case AppConstant.ID_UPCOMING_INTERVIEW:
@@ -393,6 +404,22 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 openLogoutDialogue();
                 break;
         }
+    }
+
+    void openAllJobScreen() {
+        drawerLayout.closeDrawers();
+        getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgAllJobs()).addToBackStack(null).commit();
+
+    }
+
+    void openHotJobScreen() {
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.closeDrawers();
+            getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgHotJob()).addToBackStack(null).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgHotJob()).addToBackStack(null).commit();
+        }
+
     }
 
     void openMyGoodiesScreen() {
@@ -466,34 +493,43 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-            drawerLayout.closeDrawers();
-        } else {
-            drawerLayout.closeDrawers();
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-            builder1.setMessage(AppConstant.EXIT_TEXT);
-            builder1.setTitle(getResources().getString(R.string.app_name));
-            builder1.setCancelable(true);
-            builder1.setPositiveButton(
-                    "Yes",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                            finish();
-                        }
-                    });
+//        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+//            drawerLayout.closeDrawers();
+//        } else if (isFragment){
+//            super.onBackPressed();
+//        } else{
 
-            builder1.setNegativeButton(
-                    "No",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
+//        }
 
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
-        }
+        exitAppDialogue();
+    }
+
+
+    void exitAppDialogue() {
+        drawerLayout.closeDrawers();
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage(AppConstant.EXIT_TEXT);
+        builder1.setTitle(getResources().getString(R.string.app_name));
+        builder1.setCancelable(true);
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        finish();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 
 

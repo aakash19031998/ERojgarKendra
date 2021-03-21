@@ -8,10 +8,24 @@
     android:layout_height="match_parent"
     tools:context=".dashboardscreen.controler.DashboardActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <include layout="@layout/toolbar_layout"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/cantainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"/>
+
+    </RelativeLayout>
+
+
 
     <include
         layout="@layout/navigation_drawer"/>
@@ -37,6 +51,9 @@
 
 
     </com.google.android.material.navigation.NavigationView>-->
+
+
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

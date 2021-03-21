@@ -32,4 +32,6 @@
     <string name="go_to_settings">GOTO SETTINGS</string>
     <string name="get_right_job">Get the Right Job</string>
     <string name="job_acc_skill">Jobs according to <br> your Skills</br></string>
+    <string name="Rs">\u20B9</string>
+
 </resources>
