@@ -33,6 +33,7 @@ import com.twocoms.rojgarkendra.interviewscreen.controler.AppliedApplicationActi
 import com.twocoms.rojgarkendra.interviewscreen.controler.UpcomingInterviewActivity;
 import com.twocoms.rojgarkendra.myprofile.controler.UserProfileActivity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.GetStartedActivity;
+import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataActivity;
 import com.twocoms.rojgarkendra.successstoryscreen.SuccessStoriesActivity;
 
 import java.util.ArrayList;
@@ -545,8 +546,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             userWithoutLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    CommonMethod.openGetStartedActivity(DashboardActivity.this);
-                    finish();
+                    if (CommonMethod.checkUserVerifiedOrNot(DashboardActivity.this)) {
+                        Intent intent = new Intent(DashboardActivity.this, RegisterUserDataActivity.class);
+                        startActivity(intent);
+                    } else {
+                        CommonMethod.openGetStartedActivity(DashboardActivity.this);
+                        finish();
+                    }
                 }
             });
 

@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.GetStartedActivity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataActivity;
 
@@ -491,8 +492,24 @@ public class CommonMethod {
     }
 
 
+    public static boolean checkUserVerifiedOrNot(Context context) {
+        boolean isVerified = false;
+        if (GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_CONTACT_VERIFIED, "").equals("1")) {
+            isVerified = true;
+        }
+        return isVerified;
+    }
+
+
     public static void openGetStartedActivity(Context context) {
         Intent intent = new Intent(context, GetStartedActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
+    }
+
+
+    public static void openDashBoardActivity(Context context) {
+        Intent intent = new Intent(context, DashboardActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }

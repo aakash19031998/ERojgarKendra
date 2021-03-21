@@ -42,4 +42,27 @@
         <item name="android:color">#8BC34A</item>
     </style>
 
+
+    <style name="radionbutton_female"
+        parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:background">@drawable/radiobutton_drawable_female</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="radionbutton_male"
+        parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:background">@drawable/radiobutton_drawable_male</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
 </resources>

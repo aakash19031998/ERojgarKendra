@@ -760,8 +760,8 @@ public class ServiceHandler {
 
                         dialog.dismiss();
 
-                        Intent i = new Intent(context, DashboardActivity.class);
-                        context.startActivity(i);
+//                        Intent i = new Intent(context, DashboardActivity.class);
+//                        context.startActivity(i);
 
 
                     }

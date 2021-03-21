@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
+import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.registrationscreen.model.SliderItemModel;
 import com.twocoms.rojgarkendra.registrationscreen.view.SliderApdater;
@@ -82,7 +83,8 @@ public class GetStartedActivity extends AppCompatActivity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToActivity();
+//                navigateToActivity();
+                CommonMethod.openDashBoardActivity(GetStartedActivity.this);
             }
         });
     }
@@ -105,7 +107,6 @@ public class GetStartedActivity extends AppCompatActivity {
     }
 
     void navigateToActivity(){
-
             Intent mainIntent = new Intent(GetStartedActivity.this, VerifyMobileNumberActivity.class);
             startActivity(mainIntent);
             finish();

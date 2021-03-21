@@ -303,7 +303,8 @@ public class VerifyOtpActivity extends AppCompatActivity {
                             JSONObject otpJson = dataStr.getJSONObject("otpInfo");
                             String contactInfo = otpJson.getString("contact");
                             otpStr = otpJson.getString("otp");
-                           // String msgStr = jsonObject.getString("message");
+                            GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CONTACT_VERIFIED, "1");
+                            // String msgStr = jsonObject.getString("message");
                             if (dataStr.has("is_register") && dataStr.has("eduErp")) {
                                 if (dataStr.getString("is_register").equals("N")) {
                                     if (dataStr.getString("eduErp").equals("Y")) {
@@ -331,7 +332,6 @@ public class VerifyOtpActivity extends AppCompatActivity {
                                         GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_IS_REGISTER, dataStr.getString(AppConstant.KEY_IS_REGISTER));
                                         GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_LANGUAGE_KNOWN, dataStr.getString(AppConstant.KEY_LANGUAGE_KNOWN));
                                         GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_ROLE, dataStr.getString(AppConstant.KEY_ROLE));
-
                                     }
                                     navigateToRegister(contactInfo, dataStr.getString("eduErp"));
                                 } else {
@@ -355,7 +355,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
                                         GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
                                     }
                                     if (dataStr.has(AppConstant.KEY_RESUME_URL)) {
-                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this,AppConstant.KEY_RESUME_URL,dataStr.getString(AppConstant.KEY_RESUME_URL));
+                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
                                     }
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));
@@ -399,15 +399,17 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
     void navigateToRegister(String mobileNumber, String isEduRp) {
         Intent intent = new Intent(VerifyOtpActivity.this, RegisterUserDataActivity.class);
-        intent.putExtra("mobile_no", mobileNumber);
-        intent.putExtra("eduJob", isEduRp);
+        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this,AppConstant.KEY_IS_EDURP,isEduRp);
+        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this,AppConstant.KEY_CONTACT,mobileNumber);
         startActivity(intent);
+        finish();
     }
 
     void navigateToDashBoard() {
         Intent intent = new Intent(VerifyOtpActivity.this, DashboardActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        finish();
     }
 
 

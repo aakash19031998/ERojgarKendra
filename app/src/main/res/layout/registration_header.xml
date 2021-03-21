@@ -1,75 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/app_colour_name">
-
-    <ImageView
-        android:layout_width="@dimen/dimen_20dp"
-        android:layout_height="@dimen/dimen_20dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:layout_marginRight="@dimen/_6sdp"
-        android:visibility="gone"
-        android:src="@drawable/icon_edit"></ImageView>
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_140sdp"
+    android:background="@drawable/image_job_card">
 
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/relative_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent">
 
-        <TextView
-
-            android:id="@+id/explainabletext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Complete your profile "
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_below="@+id/backbutton" />
-
-
-
-
-
-
-        <LinearLayout
-            android:padding="@dimen/_10sdp"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@id/linebg">
 
 
             <RelativeLayout
-                android:id="@+id/relative_img"
+                android:id="@+id/mobile_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name_visiting_card"
+                android:visibility="gone"
+                android:layout_marginTop="10dp">
 
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:id="@+id/user_img"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_80sdp"
-                    android:background="@drawable/icons_profile" />
+                <ImageView
+                    android:id="@+id/icon_mobile"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/bg_reg_mobile_app_icon"></ImageView>
 
+                <TextView
+                    android:id="@+id/mobile_number_visitingcard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_6sdp"
+                    android:layout_toRightOf="@+id/icon_mobile"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp"
+                   ></TextView>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/email_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mobile_layout"
+                android:visibility="gone"
+
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_email"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/bg_reg_email_icon"></ImageView>
+
+                <TextView
+                    android:id="@+id/email_id_visitingcard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_toRightOf="@+id/icon_email"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp"></TextView>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/designation_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/email_layout"
+                android:visibility="gone"
+
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_designation"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/bg_reg_designation"></ImageView>
+
+                <TextView
+                    android:id="@+id/designation_visitingcard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_toRightOf="@+id/icon_designation"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp"></TextView>
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/location_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/designation_layout"
+                android:visibility="gone"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_location"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/bg_reg_city"></ImageView>
+
+                <TextView
+                    android:id="@+id/location_visitingcard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_toRightOf="@+id/icon_location"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp"></TextView>
 
             </RelativeLayout>
 
 
             <TextView
-                android:layout_marginTop="@dimen/_10sdp"
+                android:id="@+id/name_visiting_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Uplaod your Profile Photo"
-                android:textStyle="normal"
-                android:textSize="@dimen/_10sdp"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-    </LinearLayout>
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"></TextView>
+
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/linebg"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/user_img"
+            android:background="@color/white"></TextView>
+
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/user_img"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:layout_marginRight="@dimen/_4sdp"
+            android:background="@drawable/icons_profile" />
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -51,6 +51,7 @@ import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.global.model.ServiceHandler;
 import com.twocoms.rojgarkendra.global.model.Validation;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -131,9 +132,15 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
 
     void initialization() {
-        Intent intent = getIntent();
-        mobile_no = intent.getStringExtra("mobile_no");
-        eduJobStr = intent.getStringExtra("eduJob");
+//        Intent intent = getIntent();
+        mobile_no = GlobalPreferenceManager.getStringForKey(this,AppConstant.KEY_CONTACT,"");
+        eduJobStr = GlobalPreferenceManager.getStringForKey(this,AppConstant.KEY_IS_EDURP,"");
+//        if (eduJobStr.equals("Y")){
+//            registerUserDataBinding.coursenameHeader.setVisibility(View.VISIBLE);
+//        }else{
+//            registerUserDataBinding.coursenameHeader.setVisibility(View.GONE);
+//
+//        }
         permissionStatus = getSharedPreferences("permissionStatus", MODE_PRIVATE);
         listStates = new ArrayList<>();
         mcalendar = Calendar.getInstance();
@@ -155,13 +162,30 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         registerUserDataBinding.experinaceEditTextLnr.setFocusable(false);
         registerUserDataBinding.experinaceEditText.setFocusable(false);
         registerUserDataBinding.phoneNumberEditText.setText(mobile_no);
+        setMobileDataCard();
         registerUserDataBinding.phoneNumberEditText.setFocusable(false);
         //Enable or Disable Save Botton
         enableOrDisableSaveBtn();
+
         //Device Id (Token Id)
         android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         Log.v("Device Id", android_id);
+
+        registerUserDataBinding.skipbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommonMethod.openDashBoardActivity(RegisterUserDataActivity.this);
+            }
+        });
+
+        registerUserDataBinding.backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         setVisibilty();
     }
 
@@ -178,7 +202,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 registerUserDataBinding.qualificationTypeEditText.addTextChangedListener(watcher);
                 registerUserDataBinding.experinaceEditText.addTextChangedListener(watcher);
                 registerUserDataBinding.experinaceYearsEditText.addTextChangedListener(watcher);
-                registerUserDataBinding.designationEditText.addTextChangedListener(watcher);
+
 //                registerUserDataBinding.rollEditText.addTextChangedListener(watcher);
                 registerUserDataBinding.salaryEditText.addTextChangedListener(watcher);
                 registerUserDataBinding.centreNameEditText.addTextChangedListener(watcher);
@@ -191,7 +215,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 registerUserDataBinding.stateEditText.addTextChangedListener(watcher1);
                 registerUserDataBinding.cityEditText.addTextChangedListener(watcher1);
                 registerUserDataBinding.languageKnownEditText.addTextChangedListener(watcher1);
-                registerUserDataBinding.designationEditText.addTextChangedListener(watcher1);
+
                 registerUserDataBinding.dobKnownEditText.addTextChangedListener(watcher1);
                 registerUserDataBinding.qualificationTypeEditText.addTextChangedListener(watcher1);
                 registerUserDataBinding.experinaceEditText.addTextChangedListener(watcher1);
@@ -212,12 +236,16 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 registerUserDataBinding.projectNameEditTextLnr.setVisibility(View.VISIBLE);
                 registerUserDataBinding.batchNameEditTextLnr.setVisibility(View.VISIBLE);
                 registerUserDataBinding.courseNameEditTextLnr.setVisibility(View.VISIBLE);
+                registerUserDataBinding.coursenameHeader.setVisibility(View.VISIBLE);
+                registerUserDataBinding.courseNameBottomLine.setVisibility(View.GONE);
                 setDataOnEduErp();
             } else {
                 registerUserDataBinding.centreNameEditTextLnr.setVisibility(View.GONE);
                 registerUserDataBinding.projectNameEditTextLnr.setVisibility(View.GONE);
                 registerUserDataBinding.batchNameEditTextLnr.setVisibility(View.GONE);
                 registerUserDataBinding.courseNameEditTextLnr.setVisibility(View.GONE);
+                registerUserDataBinding.coursenameHeader.setVisibility(View.GONE);
+                registerUserDataBinding.courseNameBottomLine.setVisibility(View.GONE);
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -470,17 +498,17 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             if (Validation.checkIfEmptyOrNot(registerUserDataBinding.nameEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter Name", RegisterUserDataActivity.this);
                 return false;
-            } else if (registerUserDataBinding.emailEditText.getText().toString().isEmpty()) {
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.phoneNumberEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Phone No", RegisterUserDataActivity.this);
+                return false;
+            }else if (registerUserDataBinding.emailEditText.getText().toString().isEmpty()) {
                 CommonMethod.showToast("Please Enter Email Id", RegisterUserDataActivity.this);
                 return false;
             } else if (!registerUserDataBinding.emailEditText.getText().toString().matches(emailPattern)) {
                 CommonMethod.showToast("Please Enter Valid Email Id", RegisterUserDataActivity.this);
                 return false;
-            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.stateEditText.getText().toString())) {
-                CommonMethod.showToast("Please Select State", RegisterUserDataActivity.this);
-                return false;
-            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.cityEditText.getText().toString())) {
-                CommonMethod.showToast("Please Enter City/District", RegisterUserDataActivity.this);
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.dobKnownEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter DOB", RegisterUserDataActivity.this);
                 return false;
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.languageKnownEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter Language Known", RegisterUserDataActivity.this);
@@ -488,13 +516,13 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             } else if (!checkGenderRadioGrp()) {
                 CommonMethod.showToast("Please select Gender", RegisterUserDataActivity.this);
                 return false;
-            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.dobKnownEditText.getText().toString())) {
-                CommonMethod.showToast("Please Enter DOB", RegisterUserDataActivity.this);
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.stateEditText.getText().toString())) {
+                CommonMethod.showToast("Please Select State", RegisterUserDataActivity.this);
                 return false;
-            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.phoneNumberEditText.getText().toString())) {
-                CommonMethod.showToast("Please Enter Phone", RegisterUserDataActivity.this);
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.cityEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter City/District", RegisterUserDataActivity.this);
                 return false;
-            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.qualificationTypeEditText.getText().toString())) {
+            }   else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.qualificationTypeEditText.getText().toString())) {
                 CommonMethod.showToast("Please Select Qualification", RegisterUserDataActivity.this);
                 return false;
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.experinaceEditText.getText().toString())) {
@@ -516,17 +544,17 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             if (Validation.checkIfEmptyOrNot(registerUserDataBinding.nameEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter Name", RegisterUserDataActivity.this);
                 return false;
-            } else if (registerUserDataBinding.emailEditText.getText().toString().isEmpty()) {
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.phoneNumberEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter Phone No", RegisterUserDataActivity.this);
+                return false;
+            }else if (registerUserDataBinding.emailEditText.getText().toString().isEmpty()) {
                 CommonMethod.showToast("Please Enter Email Id", RegisterUserDataActivity.this);
                 return false;
             } else if (!registerUserDataBinding.emailEditText.getText().toString().matches(emailPattern)) {
                 CommonMethod.showToast("Please Enter Valid Email Id", RegisterUserDataActivity.this);
                 return false;
-            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.stateEditText.getText().toString())) {
-                CommonMethod.showToast("Please Select State", RegisterUserDataActivity.this);
-                return false;
-            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.cityEditText.getText().toString())) {
-                CommonMethod.showToast("Please Enter City/District", RegisterUserDataActivity.this);
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.dobKnownEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter DOB", RegisterUserDataActivity.this);
                 return false;
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.languageKnownEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter Language Known", RegisterUserDataActivity.this);
@@ -534,13 +562,13 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             } else if (!checkGenderRadioGrp()) {
                 CommonMethod.showToast("Please select Gender", RegisterUserDataActivity.this);
                 return false;
-            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.dobKnownEditText.getText().toString())) {
-                CommonMethod.showToast("Please Enter DOB", RegisterUserDataActivity.this);
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.stateEditText.getText().toString())) {
+                CommonMethod.showToast("Please Select State", RegisterUserDataActivity.this);
                 return false;
-            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.phoneNumberEditText.getText().toString())) {
-                CommonMethod.showToast("Please Enter Phone", RegisterUserDataActivity.this);
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.cityEditText.getText().toString())) {
+                CommonMethod.showToast("Please Enter City/District", RegisterUserDataActivity.this);
                 return false;
-            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.qualificationTypeEditText.getText().toString())) {
+            }   else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.qualificationTypeEditText.getText().toString())) {
                 CommonMethod.showToast("Please Select Qualification", RegisterUserDataActivity.this);
                 return false;
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.experinaceEditText.getText().toString())) {
@@ -558,7 +586,6 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 CommonMethod.showToast("Please Enter Salary", RegisterUserDataActivity.this);
                 return false;
             }
-
         }
         return true;
     }
@@ -657,17 +684,38 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-//            if (registerUserDataBinding.nameEditText.getText().toString().length() == 0 || registerUserDataBinding.emailEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.stateEditText.getText().toString().length() == 0 || registerUserDataBinding.cityEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.languageKnownEditText.toString().trim().length() == 0 || registerUserDataBinding.dobKnownEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.phoneNumberEditText.getText().toString().length() == 0 || registerUserDataBinding.qualificationTypeEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.experinaceEditText.getText().toString().length() == 0 || registerUserDataBinding.experinaceYearsEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.designationEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.salaryEditText.getText().toString().length() == 0) {
-//                registerUserDataBinding.savebutton.setBackground(getResources().getDrawable(R.drawable.verify_disble));
-//            } else {
-//                registerUserDataBinding.savebutton.setBackground(getResources().getDrawable(R.drawable.verify_enable));
-//            }
+
+            if (!registerUserDataBinding.nameEditText.getText().toString().equals("")) {
+                registerUserDataBinding.registationHeadre.nameVisitingCard.setText(registerUserDataBinding.nameEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.nameVisitingCard.setVisibility(View.VISIBLE);
+            } else {
+                registerUserDataBinding.registationHeadre.nameVisitingCard.setText(registerUserDataBinding.nameEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.nameVisitingCard.setVisibility(View.GONE);
+            }
+
+            if (!registerUserDataBinding.emailEditText.getText().toString().equals("")) {
+                registerUserDataBinding.registationHeadre.emailIdVisitingcard.setText(registerUserDataBinding.emailEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.emailLayout.setVisibility(View.VISIBLE);
+            } else {
+                registerUserDataBinding.registationHeadre.emailIdVisitingcard.setText(registerUserDataBinding.emailEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.emailLayout.setVisibility(View.GONE);
+            }
+
+            if (!registerUserDataBinding.designationEditText.getText().toString().equals("")) {
+                registerUserDataBinding.registationHeadre.designationVisitingcard.setText(registerUserDataBinding.designationEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.designationLayout.setVisibility(View.VISIBLE);
+            } else {
+                registerUserDataBinding.registationHeadre.designationVisitingcard.setText(registerUserDataBinding.designationEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.designationLayout.setVisibility(View.GONE);
+            }
+
+            if (!registerUserDataBinding.cityEditText.getText().toString().equals("")) {
+                registerUserDataBinding.registationHeadre.locationVisitingcard.setText(registerUserDataBinding.cityEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.locationLayout.setVisibility(View.VISIBLE);
+            } else {
+                registerUserDataBinding.registationHeadre.locationVisitingcard.setText(registerUserDataBinding.cityEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.locationLayout.setVisibility(View.GONE);
+            }
         }
     };
 
@@ -685,17 +733,40 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-//            if (registerUserDataBinding.nameEditText.getText().toString().length() == 0 || registerUserDataBinding.emailEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.stateEditText.getText().toString().length() == 0 || registerUserDataBinding.cityEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.languageKnownEditText.toString().trim().length() == 0 || registerUserDataBinding.dobKnownEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.phoneNumberEditText.getText().toString().length() == 0 || registerUserDataBinding.qualificationTypeEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.experinaceEditText.getText().toString().length() == 0 || registerUserDataBinding.experinaceYearsEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.designationEditText.getText().toString().length() == 0 ||
-//                    registerUserDataBinding.salaryEditText.getText().toString().length() == 0) {
-//                registerUserDataBinding.savebutton.setBackground(getResources().getDrawable(R.drawable.verify_disble));
-//            } else {
-//                registerUserDataBinding.savebutton.setBackground(getResources().getDrawable(R.drawable.verify_enable));
-//            }
+
+            if (!registerUserDataBinding.nameEditText.getText().toString().equals("")) {
+                registerUserDataBinding.registationHeadre.nameVisitingCard.setText(registerUserDataBinding.nameEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.nameVisitingCard.setVisibility(View.VISIBLE);
+            } else {
+                registerUserDataBinding.registationHeadre.nameVisitingCard.setText(registerUserDataBinding.nameEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.nameVisitingCard.setVisibility(View.GONE);
+            }
+
+            if (!registerUserDataBinding.emailEditText.getText().toString().equals("")) {
+                registerUserDataBinding.registationHeadre.emailIdVisitingcard.setText(registerUserDataBinding.emailEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.emailLayout.setVisibility(View.VISIBLE);
+            } else {
+                registerUserDataBinding.registationHeadre.emailIdVisitingcard.setText(registerUserDataBinding.emailEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.emailLayout.setVisibility(View.GONE);
+            }
+
+            if (!registerUserDataBinding.designationEditText.getText().toString().equals("")) {
+                registerUserDataBinding.registationHeadre.designationVisitingcard.setText(registerUserDataBinding.designationEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.designationLayout.setVisibility(View.VISIBLE);
+            } else {
+                registerUserDataBinding.registationHeadre.designationVisitingcard.setText(registerUserDataBinding.designationEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.designationLayout.setVisibility(View.GONE);
+            }
+
+            if (!registerUserDataBinding.cityEditText.getText().toString().equals("")) {
+                registerUserDataBinding.registationHeadre.locationVisitingcard.setText(registerUserDataBinding.cityEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.locationLayout.setVisibility(View.VISIBLE);
+            } else {
+                registerUserDataBinding.registationHeadre.locationVisitingcard.setText(registerUserDataBinding.cityEditText.getText().toString());
+                registerUserDataBinding.registationHeadre.locationLayout.setVisibility(View.GONE);
+            }
+
+
         }
     };
 
@@ -1202,7 +1273,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
 
     private String encodeFileToBase64Binary(byte[] allData) {
-        String encoded = Base64.encodeToString(allData,Base64.NO_WRAP);
+        String encoded = Base64.encodeToString(allData, Base64.NO_WRAP);
         return encoded;
     }
 
@@ -1215,5 +1286,13 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         reader.close();
         return bytes;
 
+    }
+
+
+    void setMobileDataCard() {
+        if (!registerUserDataBinding.phoneNumberEditText.getText().toString().equals("")) {
+            registerUserDataBinding.registationHeadre.mobileNumberVisitingcard.setText(registerUserDataBinding.phoneNumberEditText.getText().toString());
+            registerUserDataBinding.registationHeadre.mobileLayout.setVisibility(View.VISIBLE);
+        }
     }
 }
