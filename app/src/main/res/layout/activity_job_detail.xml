@@ -6,10 +6,551 @@
     android:layout_height="match_parent"
     tools:context=".successstoryscreen.SuccessStoriesActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/success_stories_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_6sdp">
+
+
+                <LinearLayout
+                    android:id="@+id/job_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:id="@+id/salary_text_card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <!--            <TextView-->
+                        <!--                android:id="@+id/salary_img"-->
+                        <!--                android:layout_width="@dimen/_16sdp"-->
+                        <!--                android:layout_height="@dimen/_16sdp"-->
+                        <!--                android:src="@drawable/bg_rupees"-->
+                        <!--                android:text="@string/Rs"-->
+                        <!--                android:textSize="@dimen/_17sdp"-->
+                        <!--                android:layout_marginTop="@dimen/_5sdp"-->
+                        <!--                android:layout_marginLeft="@dimen/_5sdp"/>-->
+
+
+                        <TextView
+                            android:id="@+id/date_job_posted"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:text="Posted on : 29-03-2020"
+                            android:textSize="@dimen/_9sdp"></TextView>
+
+
+                        <TextView
+                            android:id="@+id/salary_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:text="Salary"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_19sdp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/client_card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp">
+
+                        <!--                <ImageView-->
+                        <!--                    android:id="@+id/client_img"-->
+                        <!--                    android:layout_width="@dimen/_16sdp"-->
+                        <!--                    android:layout_height="@dimen/_16sdp"-->
+                        <!--                    android:layout_marginLeft="@dimen/_5sdp"-->
+                        <!--                    android:src="@drawable/icons_client_name"/>-->
+
+                        <TextView
+                            android:id="@+id/client_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:text="Client Name"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_14sdp" />
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/job_text_card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp">
+
+                        <!--            <ImageView-->
+                        <!--                android:id="@+id/job_img"-->
+                        <!--                android:layout_width="@dimen/_16sdp"-->
+                        <!--                android:layout_height="@dimen/_16sdp"-->
+                        <!--                android:layout_marginLeft="@dimen/_5sdp"-->
+                        <!--                android:src="@drawable/icon_job_type"/>-->
+
+                        <TextView
+                            android:id="@+id/job_type_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:text="Job Types"
+                            android:textColor="@color/default_color_android"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/location_card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp">
+
+                        <ImageView
+                            android:id="@+id/location_img"
+                            android:layout_width="@dimen/_14sdp"
+                            android:layout_height="@dimen/_14sdp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:src="@drawable/icon_city_jobs" />
+
+                        <TextView
+                            android:id="@+id/location_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_toRightOf="@id/location_img"
+                            android:text="Job Location"
+                            android:textColor="@color/default_color_android"
+                            android:textSize="@dimen/_9sdp" />
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/vacancy_card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/_4sdp">
+
+                        <ImageView
+                            android:id="@+id/vacancy_img"
+                            android:layout_width="@dimen/_14sdp"
+                            android:layout_height="@dimen/_14sdp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:src="@drawable/icons_job_openings" />
+
+                        <TextView
+                            android:id="@+id/vacancy_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_toRightOf="@id/vacancy_img"
+                            android:text="350 Openings"
+                            android:textColor="@color/default_color_android"
+                            android:textSize="@dimen/_9sdp" />
+
+
+                    </RelativeLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginLeft="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginRight="@dimen/_4sdp"
+                        android:background="@color/default_color_android"></View>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_14sdp"
+                            android:layout_height="@dimen/_14sdp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:src="@drawable/icon_job_description" />
+
+                        <TextView
+                            android:id="@+id/job_description_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/default_color_android"
+                            android:text="JOB DESCRIPTION :"></TextView>
+
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/job_desciption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/default_color_android"
+                        android:text="Loram Ipsum"></TextView>
+
+
+                       <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_14sdp"
+                            android:layout_height="@dimen/_14sdp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:src="@drawable/icon_reponsibility_job_detail" />
+
+
+                    <TextView
+                        android:id="@+id/job_responsibilty_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:textSize="@dimen/_11sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/default_color_android"
+                        android:text="JOB RESPONSILITY :"></TextView>
+
+                       </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/job_responsiblity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/default_color_android"
+                        android:text="Loram Ipsum"></TextView>
+
+
+                       <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_14sdp"
+                            android:layout_height="@dimen/_14sdp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:src="@drawable/icon_job_benefit" />
+
+
+                    <TextView
+                        android:id="@+id/job_benefit_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:textSize="@dimen/_11sdp"
+                        android:textStyle="bold"
+                        android:text="JOB BENEFIT :"></TextView>
+                       </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/job_benefit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/default_color_android"
+                        android:text="Loram Ipsum"></TextView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginLeft="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginRight="@dimen/_4sdp"
+                        android:background="@color/default_color_android"></View>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RelativeLayout
+                                android:id="@+id/skillsheader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_6sdp">
+
+                                <ImageView
+                                    android:id="@+id/icon_skills_required"
+                                    android:layout_width="@dimen/_14sdp"
+                                    android:layout_height="@dimen/_14sdp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:src="@drawable/icon_skills_required" />
+
+                                <TextView
+                                    android:id="@+id/job_skillsrequired_header"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:textSize="@dimen/_11sdp"
+                                    android:textStyle="bold"
+                                    android:layout_toRightOf="@+id/icon_skills_required"
+                                    android:text="SKILLS REQUIRED :"></TextView>
+
+                            </RelativeLayout>
+
+
+                            <TextView
+                                android:id="@+id/job_skills"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:textSize="@dimen/_10sdp"
+                                android:layout_below="@+id/skillsheader"
+                                android:textColor="@color/default_color_android"
+                                android:text="Loram Ipsum"></TextView>
+
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+
+
+                               <RelativeLayout
+                                android:id="@+id/prefer_gender"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_6sdp">
+
+                                <ImageView
+                                    android:id="@+id/prefer_gender_icon"
+                                    android:layout_width="@dimen/_14sdp"
+                                    android:layout_height="@dimen/_14sdp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:src="@drawable/icon_male_female" />
+
+
+                            <TextView
+                                android:id="@+id/job_prefered_gender_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:textSize="@dimen/_11sdp"
+                                android:textStyle="bold"
+                                android:layout_toRightOf="@+id/prefer_gender_icon"
+                                android:text="PREFERRED GENDER :"></TextView>
+
+                               </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/job_preferred_gender"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:textSize="@dimen/_10sdp"
+                                android:layout_below="@+id/prefer_gender"
+                                android:textColor="@color/default_color_android"
+                                android:text="Loram Ipsum"></TextView>
+
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+
+                            <RelativeLayout
+                                android:id="@+id/experiance_required"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_6sdp">
+
+                                <ImageView
+                                    android:id="@+id/experinaced_required"
+                                    android:layout_width="@dimen/_14sdp"
+                                    android:layout_height="@dimen/_14sdp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:src="@drawable/icon_work_experinace" />
+
+
+
+                            <TextView
+                                android:id="@+id/job_experainced_required_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:textSize="@dimen/_11sdp"
+                                android:layout_toRightOf="@+id/experinaced_required"
+                                android:textStyle="bold"
+                                android:text="EXPERIANCED REQUIRED :"></TextView>
+
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/job_experinace_required"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:textSize="@dimen/_10sdp"
+                                android:layout_below="@+id/experiance_required"
+                                android:textColor="@color/default_color_android"
+                                android:text="Loram Ipsum"></TextView>
+
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+
+                             <RelativeLayout
+                                android:id="@+id/minimum_qualification"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_6sdp">
+
+                                <ImageView
+                                    android:id="@+id/minimum_qualification_icon"
+                                    android:layout_width="@dimen/_14sdp"
+                                    android:layout_height="@dimen/_14sdp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:src="@drawable/icon_qualification_detail" />
+
+
+                            <TextView
+                                android:id="@+id/job_minimum_qualification_required_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:textSize="@dimen/_11sdp"
+                                android:textStyle="bold"
+                                android:layout_toRightOf="@+id/minimum_qualification_icon"
+                                android:text="MINIMUM QUALIFICATION REQUIRED :"></TextView>
+
+                             </RelativeLayout>
+                            <TextView
+                                android:id="@+id/job_minimum_qualification_required"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:textSize="@dimen/_10sdp"
+                                android:layout_below="@+id/minimum_qualification"
+                                android:textColor="@color/default_color_android"
+                                android:text="Loram Ipsum"></TextView>
+
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+                    <Button
+                        android:id="@+id/apply_jobs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Apply For Job"
+                        android:textAllCaps="false"
+                        android:layout_marginRight="@dimen/_6sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
     <include
         android:id="@+id/success_stories_toolbar"
         layout="@layout/toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
