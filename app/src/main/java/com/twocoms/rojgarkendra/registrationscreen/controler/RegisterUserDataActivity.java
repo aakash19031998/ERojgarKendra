@@ -133,8 +133,8 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
     void initialization() {
 //        Intent intent = getIntent();
-        mobile_no = GlobalPreferenceManager.getStringForKey(this,AppConstant.KEY_CONTACT,"");
-        eduJobStr = GlobalPreferenceManager.getStringForKey(this,AppConstant.KEY_IS_EDURP,"");
+        mobile_no = GlobalPreferenceManager.getStringForKey(this, AppConstant.KEY_CONTACT, "");
+        eduJobStr = GlobalPreferenceManager.getStringForKey(this, AppConstant.KEY_IS_EDURP, "");
 //        if (eduJobStr.equals("Y")){
 //            registerUserDataBinding.coursenameHeader.setVisibility(View.VISIBLE);
 //        }else{
@@ -145,11 +145,22 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         listStates = new ArrayList<>();
         mcalendar = Calendar.getInstance();
 
-        qualificationList.add("10");
-        qualificationList.add("10 + 2 ");
+//        qualificationList.add("5th");
+//        qualificationList.add("6th");
+//        qualificationList.add("7th");
+//        qualificationList.add("8th");
+//        qualificationList.add("9th");
+        qualificationList.add("10th");
+        qualificationList.add("11th");
+        qualificationList.add("12th");
         qualificationList.add("Diploma");
+        qualificationList.add("Advanced Diploma");
         qualificationList.add("Graduation");
         qualificationList.add("Post Graduation");
+        qualificationList.add("Doctoral");
+        qualificationList.add("ITI");
+        qualificationList.add("ITI Dual");
+        qualificationList.add("Others");
 
         expList.add("Yes");
         expList.add("No");
@@ -501,7 +512,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.phoneNumberEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter Phone No", RegisterUserDataActivity.this);
                 return false;
-            }else if (registerUserDataBinding.emailEditText.getText().toString().isEmpty()) {
+            } else if (registerUserDataBinding.emailEditText.getText().toString().isEmpty()) {
                 CommonMethod.showToast("Please Enter Email Id", RegisterUserDataActivity.this);
                 return false;
             } else if (!registerUserDataBinding.emailEditText.getText().toString().matches(emailPattern)) {
@@ -522,7 +533,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.cityEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter City/District", RegisterUserDataActivity.this);
                 return false;
-            }   else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.qualificationTypeEditText.getText().toString())) {
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.qualificationTypeEditText.getText().toString())) {
                 CommonMethod.showToast("Please Select Qualification", RegisterUserDataActivity.this);
                 return false;
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.experinaceEditText.getText().toString())) {
@@ -547,7 +558,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.phoneNumberEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter Phone No", RegisterUserDataActivity.this);
                 return false;
-            }else if (registerUserDataBinding.emailEditText.getText().toString().isEmpty()) {
+            } else if (registerUserDataBinding.emailEditText.getText().toString().isEmpty()) {
                 CommonMethod.showToast("Please Enter Email Id", RegisterUserDataActivity.this);
                 return false;
             } else if (!registerUserDataBinding.emailEditText.getText().toString().matches(emailPattern)) {
@@ -568,7 +579,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.cityEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter City/District", RegisterUserDataActivity.this);
                 return false;
-            }   else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.qualificationTypeEditText.getText().toString())) {
+            } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.qualificationTypeEditText.getText().toString())) {
                 CommonMethod.showToast("Please Select Qualification", RegisterUserDataActivity.this);
                 return false;
             } else if (Validation.checkIfEmptyOrNot(registerUserDataBinding.experinaceEditText.getText().toString())) {
@@ -629,9 +640,15 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 //                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_IS_REGISTER, dataStr.getString(AppConstant.KEY_IS_REGISTER));
                         if (dataStr.has(AppConstant.KEY_PROFILE_URL)) {
                             GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
+                        } else {
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROFILE_URL, "");
+
                         }
                         if (dataStr.has(AppConstant.KEY_RESUME_URL)) {
                             GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
+                        } else {
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_RESUME_URL, "");
+
                         }
 
                         GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_WALLET_AMOUNT, dataStr.getString(AppConstant.KEY_WALLET_AMOUNT));

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,10 +33,13 @@ import com.twocoms.rojgarkendra.interviewscreen.controler.AppliedApplicationActi
 import com.twocoms.rojgarkendra.interviewscreen.controler.UpcomingInterviewActivity;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgAllJobs;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgHotJob;
+import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgJobAppliedByYourBactchMates;
+import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgMatchingvacancies;
+import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgPopulorJobs;
 import com.twocoms.rojgarkendra.myprofile.controler.UserProfileActivity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.GetStartedActivity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataActivity;
-import com.twocoms.rojgarkendra.successstoryscreen.SuccessStoriesActivity;
+import com.twocoms.rojgarkendra.successstoryscreen.controler.SuccessStoriesActivity;
 
 import java.util.ArrayList;
 
@@ -56,9 +58,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     public static ImageView userProfileImg;
     String profileURlStr = "";
     String nameStr = "", userNoStr = "";
-    TextView nameText, noText;
+    TextView nameText, noText, title;
     LinearLayout userProfile, userWithoutLogin;
     public static boolean isFragment = false;
+    private int lastExpandedPosition = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,19 +82,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         expandableListView = (ExpandableListView) findViewById(R.id.left_drawer);
         navigationView.setNavigationItemSelectedListener(this);
         userProfileBtn = (ImageView) findViewById(R.id.user_profile_img);
+        title = (TextView) findViewById(R.id.title);
+
         eduStr = GlobalPreferenceManager.getStringForKey(DashboardActivity.this, AppConstant.KEY_IS_EDURP, "");
         userProfileImg = (ImageView) findViewById(R.id.user_img);
         nameText = (TextView) findViewById(R.id.user_name);
         noText = (TextView) findViewById(R.id.user_phone_no);
-
         userProfile = findViewById(R.id.userProfile);
         userWithoutLogin = findViewById(R.id.userWithoutLogin);
-
         prepareListData1();
         listAdapter = new ExpandableListAdapter(DashboardActivity.this, listDataHeader1);
-
         expandableListView.setAdapter(listAdapter);
-
         // Listview Group click listener
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
@@ -99,6 +101,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                                         int groupPosition, long id) {
                 //Toast.makeText(getApplicationContext(), "Group Clicked " + listDataHeader1.get(groupPosition).getIconName(), Toast.LENGTH_SHORT).show();
                 NavMenuModel navMenuModel = listDataHeader1.get(groupPosition);
+//                if (navMenuModel.getAllSubMenu().size() == 0) {
+//                    parent.setSelected(false);
+//                } else {
+//                    parent.setSelected(true);
+//                }
                 navigateScreenClickedOnDrawer(navMenuModel.getId());
                 return false;
             }
@@ -109,21 +116,25 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             @Override
             public void onGroupExpand(int groupPosition) {
+                if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
+                    expandableListView.collapseGroup(lastExpandedPosition);
+                }
+                lastExpandedPosition = groupPosition;
                 //Toast.makeText(getApplicationContext(), listDataHeader1.get(groupPosition) + " Expanded", Toast.LENGTH_SHORT).show();
             }
         });
 
         // Listview Group collasped listener
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-//                Toast.makeText(getApplicationContext(),
-//                        listDataHeader1.get(groupPosition) + " Collapsed",
-//                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//
+//            @Override
+//            public void onGroupCollapse(int groupPosition) {
+////                Toast.makeText(getApplicationContext(),
+////                        listDataHeader1.get(groupPosition) + " Collapsed",
+////                        Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         // Listview on child click listener
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -138,6 +149,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 .show();*/
                 NavMenuModel navMenuModel = listDataHeader1.get(groupPosition).getAllSubMenu().get(childPosition);
                 navigateScreenClickedOnDrawer(navMenuModel.getId());
+                v.setSelected(true);
+
+//                v.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 return false;
             }
         });
@@ -159,7 +173,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 //            }
 //        });
 
-        openHotJobScreen();
+        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
+            openMatchingJobScreen();
+        } else {
+            openHotJobScreen();
+        }
     }
 
 
@@ -359,6 +377,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     void navigateScreenClickedOnDrawer(String id) {
         switch (id) {
             case AppConstant.ID_MATCHING_VACANCIES:
+                if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
+                    openMatchingJobScreen();
+                } else {
+                    drawerLayout.closeDrawers();
+                    CommonMethod.showDialogueForLoginSignUp(DashboardActivity.this,AppConstant.SIGN_UP_LOGIN_TEXT);
+                }
                 break;
 
             case AppConstant.ID_HOT_JOBS:
@@ -366,9 +390,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 break;
 
             case AppConstant.ID_POPULARJOBS:
+                openPopularJobScreen();
                 break;
 
             case AppConstant.ID_JOBS_APPLIED_BY_BATCHMATES:
+                openJobBatchMatesScreen();
                 break;
 
             case AppConstant.ID_ALL_JOBS:
@@ -409,6 +435,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     void openAllJobScreen() {
         drawerLayout.closeDrawers();
         getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgAllJobs()).addToBackStack(null).commit();
+        setNavigationBarTitle(AppConstant.NAME_ALL_JOBS);
 
     }
 
@@ -419,6 +446,38 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgHotJob()).addToBackStack(null).commit();
         }
+        setNavigationBarTitle(AppConstant.NAME_HOT_JOBS);
+    }
+
+    void openMatchingJobScreen() {
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.closeDrawers();
+            getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgMatchingvacancies()).addToBackStack(null).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgMatchingvacancies()).addToBackStack(null).commit();
+        }
+
+        setNavigationBarTitle(AppConstant.NAME_MATCHING_VACANCIES);
+    }
+
+    void openPopularJobScreen() {
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.closeDrawers();
+            getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgPopulorJobs()).addToBackStack(null).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgPopulorJobs()).addToBackStack(null).commit();
+        }
+        setNavigationBarTitle(AppConstant.NAME_POPULARJOBS);
+    }
+
+    void openJobBatchMatesScreen() {
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.closeDrawers();
+            getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgJobAppliedByYourBactchMates()).addToBackStack(null).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.cantainer, new FrgJobAppliedByYourBactchMates()).addToBackStack(null).commit();
+        }
+        setNavigationBarTitle(AppConstant.NAME_JOBS_APPLIED_BY_BATCHMATES);
 
     }
 
@@ -593,5 +652,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             });
 
         }
+    }
+
+    void setNavigationBarTitle(String title) {
+        this.title.setText(title);
     }
 }

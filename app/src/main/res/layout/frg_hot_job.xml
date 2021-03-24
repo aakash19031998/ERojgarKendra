@@ -6,14 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".jobboardscreen.controler.FrgHotJob">
 
+    <RelativeLayout
+        android:id="@+id/filter_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/_7sdp">
+
+        <ImageView
+            android:id="@+id/filter_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:src="@drawable/bg_filter"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:text="Filter"
+            android:layout_margin="@dimen/_2sdp"
+            android:textSize="@dimen/_14sdp"
+            android:layout_toRightOf="@id/filter_img"
+            android:textStyle="bold"/>
+
+
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyler_hot_job"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/filter_layout"
         android:layout_marginLeft="@dimen/_6sdp"
         android:layout_marginRight="@dimen/_6sdp"
         android:layout_marginTop="@dimen/_6sdp"
         android:orientation="vertical"/>
+
+    <TextView
+        android:id="@+id/novacancytext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/default_color_android"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="No vacancy available"></TextView>
 
 
 </RelativeLayout>

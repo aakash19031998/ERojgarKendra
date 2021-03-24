@@ -54,4 +54,12 @@ public class GlobalPreferenceManager {
     }
 
 
+    public static void clearSharedPref(Context context){
+        SharedPreferences preferences =context.getSharedPreferences(APP_SHARED_PREFERENCES_FILE,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
+
 }

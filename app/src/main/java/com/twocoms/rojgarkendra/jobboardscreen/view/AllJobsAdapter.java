@@ -10,10 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.twocoms.rojgarkendra.R;
+import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
+import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgAllJobs;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.JobDetailActivity;
@@ -61,7 +62,7 @@ public class AllJobsAdapter extends RecyclerView.Adapter<AllJobsAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, JobDetailActivity.class);
-                intent.putExtra("jobId",modelHotJobs.get(position).getId()+"");
+                intent.putExtra("jobId", modelHotJobs.get(position).getId() + "");
                 context.startActivity(intent);
             }
         });
@@ -69,10 +70,10 @@ public class AllJobsAdapter extends RecyclerView.Adapter<AllJobsAdapter.ViewHold
         holder.applyJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CommonMethod.checkUserVerifiedOrNot(context)) {
-
+                if (CommonMethod.checkUserLoggedInOrRegister(context)) {
+                    CommonMethod.showToast("Job Applied", context);
                 } else {
-
+                    CommonMethod.showDialogueForLoginSignUp(frgAllJobs.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
                 }
             }
         });
@@ -85,7 +86,7 @@ public class AllJobsAdapter extends RecyclerView.Adapter<AllJobsAdapter.ViewHold
 //                paginationProgress.setVisibility(View.VISIBLE);
                 // newsAdapter.notifyDataSetChanged();
                 frgAllJobs.currentPages = frgAllJobs.currentPages + 1;
-                frgAllJobs.getHotJobs();
+                frgAllJobs.getAllJobsData();
 //                getNews(currentPages + 1);
                 // searchGetNews(currentPages + 1);
             }

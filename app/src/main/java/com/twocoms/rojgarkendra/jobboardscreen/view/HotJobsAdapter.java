@@ -8,9 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.twocoms.rojgarkendra.R;
+import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
+import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgHotJob;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.JobDetailActivity;
@@ -39,7 +43,7 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder,final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         ModelHotJobs hotJobsModels = modelHotJobs.get(position);
         holder.salaryText.setText(context.getResources().getString(R.string.Rs) + " " + CommonMethod.roundNumbertoNextPossibleValue(hotJobsModels.getSalary()));
@@ -58,7 +62,7 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, JobDetailActivity.class);
-                intent.putExtra("jobId",modelHotJobs.get(position).getId()+"");
+                intent.putExtra("jobId", modelHotJobs.get(position).getId() + "");
                 context.startActivity(intent);
             }
         });
@@ -66,10 +70,10 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
         holder.applyJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CommonMethod.checkUserVerifiedOrNot(context)) {
-
+                if (CommonMethod.checkUserLoggedInOrRegister(context)) {
+                    CommonMethod.showToast("Job Applied", context);
                 } else {
-
+                    CommonMethod.showDialogueForLoginSignUp(frgHotJob.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
                 }
             }
         });
@@ -82,7 +86,7 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
             } else {
 //                paginationProgress.setVisibility(View.VISIBLE);
                 // newsAdapter.notifyDataSetChanged();
-                frgHotJob.currentPages = frgHotJob.currentPages +1;
+                frgHotJob.currentPages = frgHotJob.currentPages + 1;
                 frgHotJob.getHotJobs();
 //                getNews(currentPages + 1);
                 // searchGetNews(currentPages + 1);

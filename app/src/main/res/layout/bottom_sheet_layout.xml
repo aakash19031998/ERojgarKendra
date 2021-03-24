@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_6sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:gravity="center"
+            android:padding="@dimen/_6sdp"
+            android:text="SET FILTER"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/refreshBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:foregroundGravity="center_vertical"
+                android:src="@drawable/bg_refresh"
+                android:padding="@dimen/_12sdp"/>
+
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/scroll_bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <RelativeLayout
+                android:id="@+id/location_bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/gender_lnr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/language_edit_text_lnr"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_3sdp"
+                    app:boxStrokeColor="@color/reg_tc_bg">
+
+
+                    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/gender_grp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/male"
+                            style="@style/radionbutton_male"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:button="@null"
+                            android:checked="false"
+                            android:tag="Male"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/female"
+                            style="@style/radionbutton_female"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_marginLeft="@dimen/_30sdp"
+                            android:button="@null"
+                            android:tag="Female"
+                            android:textStyle="bold" />
+
+
+                    </RadioGroup>
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/apply_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gender_lnr"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:background="@color/app_colour_name"
+                    android:gravity="center"
+                    android:padding="@dimen/_6sdp"
+                    android:text="Apply Filter"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/language_edit_text_lnr"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/skill_edit_text_lnr"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                    android:layout_toRightOf="@+id/header1"
+                    app:boxStrokeColor="@color/reg_tc_bg"
+                    app:hintTextColor="@android:color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/language_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/bg_reg_city"
+                        android:drawablePadding="10dp"
+                        android:hint="Language known"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/city_edit_text_lnr"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                    android:layout_toRightOf="@+id/header1"
+                    app:boxStrokeColor="@color/reg_tc_bg"
+                    app:hintTextColor="@android:color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/city_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/bg_reg_city"
+                        android:drawablePadding="10dp"
+                        android:hint="City/District"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/qualification_type_edit_text_lnr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/city_edit_text_lnr"
+                    app:boxStrokeColor="@color/reg_tc_bg"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/header1"
+                    app:hintTextColor="@android:color/black"
+                    android:layout_marginTop="6dp"
+
+                    android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:padding="@dimen/_10sdp"
+                        android:id="@+id/qualification_type_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:drawablePadding="10dp"
+                        android:drawableLeft="@drawable/bg_reg_qualificatiion"
+                        android:drawableRight="@drawable/bg_reg_drop_down"
+                        android:hint="Qualification Type" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/skill_edit_text_lnr"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/qualification_type_edit_text_lnr"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                    android:layout_toRightOf="@+id/header1"
+                    app:boxStrokeColor="@color/reg_tc_bg"
+                    app:hintTextColor="@android:color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/skill_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/bg_reg_city"
+                        android:drawablePadding="10dp"
+                        android:hint="Skills"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

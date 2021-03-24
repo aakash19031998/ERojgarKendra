@@ -32,10 +32,7 @@ public class Validation {
 
 
     public static boolean isValidMobileNumber(String mobileNumber) {
-        if (mobileNumber.length() == 10
-                && (mobileNumber.charAt(0) == '9' ||
-                mobileNumber.charAt(0) == '8' ||
-                mobileNumber.charAt(0) == '7')) {
+        if (mobileNumber.length() == 10 && (mobileNumber.charAt(0) == '9' || mobileNumber.charAt(0) == '8' || mobileNumber.charAt(0) == '7')) {
             return true;
         } else {
             return false;

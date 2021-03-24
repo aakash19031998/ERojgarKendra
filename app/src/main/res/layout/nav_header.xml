@@ -116,7 +116,7 @@
                     android:id="@+id/user_name_sample"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Login in"
+                    android:text="Login in / Sign Up"
                     android:textSize="@dimen/_12sdp"
                     android:singleLine="true"
                     android:maxLines="1"

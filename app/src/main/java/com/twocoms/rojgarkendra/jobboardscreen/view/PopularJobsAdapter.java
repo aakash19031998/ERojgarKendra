@@ -17,23 +17,23 @@ import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgAllJobs;
-import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgMatchingvacancies;
+import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgPopulorJobs;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.JobDetailActivity;
 import com.twocoms.rojgarkendra.jobboardscreen.model.ModelHotJobs;
 
 import java.util.ArrayList;
 
-public class MatchingJobsAdapter extends RecyclerView.Adapter<MatchingJobsAdapter.ViewHolder> {
+public class PopularJobsAdapter extends RecyclerView.Adapter<PopularJobsAdapter.ViewHolder> {
 
     public Context context;
     public ArrayList<ModelHotJobs> modelHotJobs;
-    FrgMatchingvacancies matchingJobsAdapter;
+    FrgPopulorJobs frgPopulorJobs;
 
 
-    public MatchingJobsAdapter(Context context, ArrayList<ModelHotJobs> modelHotJobs, FrgMatchingvacancies matchingJobsAdapter) {
+    public PopularJobsAdapter(Context context, ArrayList<ModelHotJobs> modelHotJobs, FrgPopulorJobs frgPopulorJobs) {
         this.context = context;
         this.modelHotJobs = modelHotJobs;
-        this.matchingJobsAdapter = matchingJobsAdapter;
+        this.frgPopulorJobs = frgPopulorJobs;
     }
 
     @NonNull
@@ -63,7 +63,7 @@ public class MatchingJobsAdapter extends RecyclerView.Adapter<MatchingJobsAdapte
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, JobDetailActivity.class);
-                intent.putExtra("jobId",modelHotJobs.get(position).getId()+"");
+                intent.putExtra("jobId", modelHotJobs.get(position).getId() + "");
                 context.startActivity(intent);
             }
         });
@@ -72,22 +72,22 @@ public class MatchingJobsAdapter extends RecyclerView.Adapter<MatchingJobsAdapte
             @Override
             public void onClick(View view) {
                 if (CommonMethod.checkUserLoggedInOrRegister(context)) {
-                    CommonMethod.showToast("Job Applied",context);
+                    CommonMethod.showToast("Job Applied", context);
                 } else {
-                        CommonMethod.showDialogueForLoginSignUp(matchingJobsAdapter.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
+                    CommonMethod.showDialogueForLoginSignUp(frgPopulorJobs.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
                 }
             }
         });
 
         if (position == modelHotJobs.size() - 1) {
-            if (matchingJobsAdapter.currentPages == matchingJobsAdapter.numberOfPagesFromServer) {
+            if (frgPopulorJobs.currentPages == frgPopulorJobs.numberOfPagesFromServer) {
                 Log.e("AllDataLoaded", "true");
 //                paginationProgress.setVisibility(View.GONE);
             } else {
 //                paginationProgress.setVisibility(View.VISIBLE);
                 // newsAdapter.notifyDataSetChanged();
-                matchingJobsAdapter.currentPages = matchingJobsAdapter.currentPages + 1;
-                matchingJobsAdapter.getAllJobsData();
+                frgPopulorJobs.currentPages = frgPopulorJobs.currentPages + 1;
+                frgPopulorJobs.getAllJobsData();
 //                getNews(currentPages + 1);
                 // searchGetNews(currentPages + 1);
             }

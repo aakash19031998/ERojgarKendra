@@ -96,9 +96,12 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                // AppSignatureHelper appSignatureHelper = new AppSignatureHelper(VerifyMobileNumberActivity.this);
+                // appSignatureHelper.getAppSignatures();
+
+               GlobalPreferenceManager.clearSharedPref(VerifyMobileNumberActivity.this);
                mobile_no = mobile_edit_text.getText().toString();
-//                AppSignatureHelper appSignatureHelper = new AppSignatureHelper(VerifyMobileNumberActivity.this);
-//                appSignatureHelper.getAppSignatures();
+
                 if (Validation.checkIfEmptyOrNot(mobile_no)){
                     CommonMethod.showToast("Please Enter Mobile Number", VerifyMobileNumberActivity.this);
                 }else if(!Validation.isValidMobileNumber(mobile_no)) {

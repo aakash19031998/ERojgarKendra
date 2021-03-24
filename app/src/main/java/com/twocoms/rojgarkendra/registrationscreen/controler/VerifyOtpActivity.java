@@ -354,8 +354,14 @@ public class VerifyOtpActivity extends AppCompatActivity {
                                     if (dataStr.has(AppConstant.KEY_PROFILE_URL)) {
                                         GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
                                     }
+                                    else {
+                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, "");
+                                    }
                                     if (dataStr.has(AppConstant.KEY_RESUME_URL)) {
                                         GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
+                                    }
+                                    else {
+                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, "");
                                     }
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));

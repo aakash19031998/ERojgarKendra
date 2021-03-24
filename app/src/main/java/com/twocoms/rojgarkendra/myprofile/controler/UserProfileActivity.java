@@ -116,11 +116,24 @@ public class UserProfileActivity extends AppCompatActivity {
         mobile_no = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_CONTACT, "");
         userDataBinding.profileHeader.mobileLayout.setVisibility(View.VISIBLE);
         userDataBinding.profileHeader.mobileNumberVisitingcard.setText(mobile_no);
-        qualificationList.add("10");
-        qualificationList.add("10 + 2 ");
+
+//        qualificationList.add("5th");
+//        qualificationList.add("6th");
+//        qualificationList.add("7th");
+//        qualificationList.add("8th");
+//        qualificationList.add("9th");
+        qualificationList.add("10th");
+        qualificationList.add("11th");
+        qualificationList.add("12th");
         qualificationList.add("Diploma");
+        qualificationList.add("Advanced Diploma");
         qualificationList.add("Graduation");
         qualificationList.add("Post Graduation");
+        qualificationList.add("Doctoral");
+        qualificationList.add("ITI");
+        qualificationList.add("ITI Dual");
+        qualificationList.add("Others");
+
         expList.add("Yes");
         expList.add("No");
         mcalendar = Calendar.getInstance();
@@ -562,8 +575,14 @@ public class UserProfileActivity extends AppCompatActivity {
                         if (object.has(AppConstant.KEY_PROFILE_URL)) {
                             GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_PROFILE_URL, object.getString(AppConstant.KEY_PROFILE_URL));
                         }
+                        else {
+                            GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_PROFILE_URL, "");
+                        }
                         if (object.has(AppConstant.KEY_RESUME_URL)) {
                             GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_RESUME_URL, object.getString(AppConstant.KEY_RESUME_URL));
+                        }
+                        else {
+                            GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_RESUME_URL, "");
                         }
                         if (object.getString("eduErp").equals("Y")) {
                             GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_COURSE_ID, object.getString(AppConstant.KEY_COURSE_ID));
