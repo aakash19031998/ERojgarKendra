@@ -543,7 +543,6 @@ public class UserProfileActivity extends AppCompatActivity {
         serviceHandler.StringRequest(Request.Method.GET, "", AppConstant.GET_USER_DETAILS + userId, true, new ServiceHandler.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
-
                 Log.v("Response", result);
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -1178,11 +1177,11 @@ public class UserProfileActivity extends AppCompatActivity {
                 try {
                     // You can update this bitmap to your server
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    Glide.with(this)
+                            .load(bitmap)
+                            .into(userDataBinding.profileHeader.userImg);
                     img_user_profile_base_64 = encodeTobase64(bitmap);
-                    userDataBinding.profileHeader.userImg.setImageBitmap(bitmap);
                     isProfileImgUpdated = true;
-                    // loading profile image from local cache
-//                    loadProfile(uri.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -1247,8 +1246,7 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-        Log.v("Device Id", android_id);
+                Settings.Secure.ANDROID_ID);Log.v("Device Id", android_id);
 
     }
 

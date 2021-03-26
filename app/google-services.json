@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "611063325270",
-    "project_id": "e-rojgar-kendra",
-    "storage_bucket": "e-rojgar-kendra.appspot.com"
+    "project_number": "418818020257",
+    "project_id": "e-rojgar-kendra-ae9cb",
+    "storage_bucket": "e-rojgar-kendra-ae9cb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:611063325270:android:e944a3913fe890a36dd1f7",
+        "mobilesdk_app_id": "1:418818020257:android:02aad52441a2623608b1e0",
         "android_client_info": {
           "package_name": "com.twocoms.rojgarkendra"
         }
       },
       "oauth_client": [
         {
-          "client_id": "611063325270-0evbe75qv3trsev2p2q5j3p1fotehoql.apps.googleusercontent.com",
+          "client_id": "418818020257-0m973gvdqjp3u9ji5m51imd904g0u1bq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDcqAJbEBahy8feHNCgPerPZPoKdr2fbFU"
+          "current_key": "AIzaSyCw5SU4Y9XNKHWsWuDpiTaJTd7aAlWqIG0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "611063325270-0evbe75qv3trsev2p2q5j3p1fotehoql.apps.googleusercontent.com",
+              "client_id": "418818020257-0m973gvdqjp3u9ji5m51imd904g0u1bq.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

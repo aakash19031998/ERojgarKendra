@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.twocoms.rojgarkendra.R;
+import com.twocoms.rojgarkendra.SplashScreenActvity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataActivity;
 
 public class MyFirebaseMessagingService1 extends FirebaseMessagingService {
@@ -41,7 +42,7 @@ public class MyFirebaseMessagingService1 extends FirebaseMessagingService {
 
     public void showNotification(String title, String message) {
         // Pass the intent to switch to the MainActivity
-        Intent intent = new Intent(this, RegisterUserDataActivity.class);
+        Intent intent = new Intent(this, SplashScreenActvity.class);
         // Assign channel ID
         String channel_id = "notification_channel";
         // Here FLAG_ACTIVITY_CLEAR_TOP flag is set to clear

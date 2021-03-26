@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SubscriptionPlan;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
+//import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
@@ -24,8 +26,13 @@ public class SplashScreenActvity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        FirebaseApp.initializeApp(this);
+
         //FirebaseApp.initializeApp(this);
+//        FirebaseAnalytics.getInstance().get
         splashScreenDisplay(this);
+       Log.v( "FCMTOKEN",GlobalPreferenceManager.getStringForKey(SplashScreenActvity.this,AppConstant.KEY_DEVICE_TOKEN,""));
+        //throw new RuntimeException("Test Crash");
     }
 
     void splashScreenDisplay(final Context context) {

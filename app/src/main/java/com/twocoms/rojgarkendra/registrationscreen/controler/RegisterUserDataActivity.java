@@ -34,6 +34,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -1064,8 +1065,12 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 try {
                     // You can update this bitmap to your server
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    Glide.with(this)
+                            .load(bitmap)
+                            .into(registerUserDataBinding.registationHeadre.userImg);
+
                     img_user_profile_base_64 = encodeTobase64(bitmap);
-                    registerUserDataBinding.registationHeadre.userImg.setImageBitmap(bitmap);
+//                    registerUserDataBinding.registationHeadre.userImg.setImageBitmap(bitmap);
                     // loading profile image from local cache
 //                    loadProfile(uri.toString());
                 } catch (IOException e) {
