@@ -16,6 +16,7 @@ import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
+import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgHotJob;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.JobDetailActivity;
 import com.twocoms.rojgarkendra.jobboardscreen.model.ModelHotJobs;
@@ -28,6 +29,8 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
     Context context;
     ArrayList<ModelHotJobs> modelHotJobs;
     FrgHotJob frgHotJob;
+    String userIdSTr;
+    int vacancyId;
 
     public HotJobsAdapter(Context context, ArrayList<ModelHotJobs> modelHotJobs, FrgHotJob frgHotJob) {
         this.context = context;
@@ -71,7 +74,10 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 if (CommonMethod.checkUserLoggedInOrRegister(context)) {
-                    CommonMethod.showToast("Job Applied", context);
+                   // CommonMethod.showToast("Job Applied", context);
+                    userIdSTr = GlobalPreferenceManager.getStringForKey(context,AppConstant.KEY_USER_ID,"");
+                    vacancyId = modelHotJobs.get(position).getId();
+                    frgHotJob.applyHotJobs(context,userIdSTr,vacancyId);
                 } else {
                     CommonMethod.showDialogueForLoginSignUp(frgHotJob.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
                 }

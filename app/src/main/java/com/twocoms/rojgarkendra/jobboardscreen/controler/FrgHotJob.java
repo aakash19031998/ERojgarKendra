@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -204,5 +205,26 @@ public class FrgHotJob extends Fragment {
             e.printStackTrace();
         }
         return jsonObject.toString();
+    }
+
+    public void applyHotJobs(Context context, String user_id, int vacancy_id){
+        JSONObject Json = new JSONObject();
+        try {
+            Json.put(AppConstant.KEY_APPLY_JOB_USER_ID,user_id);
+            Json.put(AppConstant.KEY_APPLY_JOB_VACANCY_ID,vacancy_id);
+            Log.v("request",Json.toString());
+           ServiceHandler serviceHandler = new ServiceHandler(context);
+           serviceHandler.StringRequest(Request.Method.POST, Json.toString(),AppConstant.APPLY_HOT_JOBS ,true, new ServiceHandler.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+                Log.v("Response", result);
+
+            }
+        });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

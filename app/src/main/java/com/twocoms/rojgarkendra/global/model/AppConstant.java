@@ -23,6 +23,7 @@ public class AppConstant {
     public static final String GET_ALL_JOBS = BASE_URL + "jobs";
 
     public static final String GET_JOBS_DETAIL = BASE_URL + "job_details/";
+    public static final String APPLY_HOT_JOBS = BASE_URL + "applyJob";
     //    public static final String IS_VERIFIED_MAIN = "isverifiedmain";
     public static final String SOMETHING_WENT_WRONG = "Something went wrong please try again...!!!";
     public static final String KEY_NAME = "name";
@@ -221,6 +222,9 @@ public class AppConstant {
     public static final String KEY_VACANCY_DETAIL_CREAETED_AT = "created_at";
     public static final String KEY_VACANCY_DETAIL_STCODE = "StCode";
     public static final String KEY_VACANCY_DETAIL_STATENAME = "StateName";
+
+    public static final String KEY_APPLY_JOB_USER_ID = "user_id";
+    public static final String KEY_APPLY_JOB_VACANCY_ID = "vacancy_id";
 
 
 }
