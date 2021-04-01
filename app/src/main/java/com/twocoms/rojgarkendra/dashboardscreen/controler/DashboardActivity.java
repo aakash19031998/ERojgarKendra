@@ -173,11 +173,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 //            }
 //        });
 
-        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
-            openMatchingJobScreen();
-        } else {
+//        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
+//            openMatchingJobScreen();
+//        } else {
             openHotJobScreen();
-        }
+//        }
     }
 
 

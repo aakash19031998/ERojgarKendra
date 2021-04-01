@@ -186,7 +186,7 @@ public class FrgAllJobs extends Fragment {
                 jsonObject.put("qualification_type", qualificationType);
             }
 
-            jsonObject.put("page", currentPages);
+            jsonObject.put(AppConstant.KEY_PAGE, currentPages);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -194,6 +194,38 @@ public class FrgAllJobs extends Fragment {
         return jsonObject.toString();
     }
 
+    public void applyAllJobs(String user_id, int vacancy_id) {
+        JSONObject Json = new JSONObject();
+        try {
+            Json.put(AppConstant.KEY_APPLY_JOB_USER_ID, user_id);
+            Json.put(AppConstant.KEY_APPLY_JOB_VACANCY_ID, vacancy_id);
+            Log.v("request", Json.toString());
+            ServiceHandler serviceHandler = new ServiceHandler(getActivity());
+            serviceHandler.StringRequest(Request.Method.POST, Json.toString(), AppConstant.APPLY_ALL_JOBS, true, new ServiceHandler.VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.v("Response", result);
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        message = jsonObject.getString(AppConstant.KEY_JOB_DATA_MESSAGE);
+                        if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
+                            CommonMethod.showToast(AppConstant.JOB_APPLIED_SUCCESSFULLY_MESSAGE, getActivity());
+                        } else {
+                            CommonMethod.showToast(message, getActivity());
+                        }
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                        CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, getActivity());
+                    }
+
+
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

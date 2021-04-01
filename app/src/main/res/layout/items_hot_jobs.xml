@@ -47,7 +47,7 @@
                 android:id="@+id/date_job_posted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Posted on : 29-03-2020"
+                android:text="@string/posted_on"
                 android:textSize="@dimen/_7sdp"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="end"></TextView>
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Salary"
+                android:text="@string/salary"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:textSize="@dimen/_17sdp"
                 android:textColor="@android:color/black"/>
@@ -85,7 +85,7 @@
                     android:id="@+id/client_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Client Name"
+                    android:text="@string/client_name"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/colorPrimary"/>
@@ -114,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
-                android:text="Job Types"
+                android:text="@string/job_type"
                 android:textSize="@dimen/_9sdp"
                 android:textStyle="bold"
                 android:textColor="@color/default_color_android"
@@ -158,7 +158,7 @@
                     android:textSize="@dimen/_7sdp"
                     android:textColor="@color/default_color_android"
                     android:layout_centerVertical="true"
-                    android:text="Job Location"
+                    android:text="@string/job_location"
                     />
 
 
@@ -188,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_toRightOf="@id/vacancy_img"
-                    android:text="350 Openings"
+                    android:text="@string/job_opening"
                     android:textColor="@color/default_color_android"
                     android:layout_centerVertical="true"
                     android:textSize="@dimen/_7sdp" />
@@ -215,7 +215,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="View"
+                android:text="@string/view"
                 android:textStyle="bold"
                 android:textAllCaps="false"
                 android:layout_marginRight="@dimen/_10sdp"
@@ -226,7 +226,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Apply"
+                android:text="@string/apply"
                 android:textStyle="bold"
                 android:textAllCaps="false"/>
 

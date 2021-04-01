@@ -77,7 +77,7 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
                    // CommonMethod.showToast("Job Applied", context);
                     userIdSTr = GlobalPreferenceManager.getStringForKey(context,AppConstant.KEY_USER_ID,"");
                     vacancyId = modelHotJobs.get(position).getId();
-                    frgHotJob.applyHotJobs(context,userIdSTr,vacancyId);
+                    frgHotJob.applyAllJobs(userIdSTr,vacancyId);
                 } else {
                     CommonMethod.showDialogueForLoginSignUp(frgHotJob.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
                 }

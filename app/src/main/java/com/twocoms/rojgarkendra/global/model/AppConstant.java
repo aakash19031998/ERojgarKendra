@@ -19,13 +19,22 @@ public class AppConstant {
     public static final String GET_STATE = BASE_URL + "states";
     public static final String GET_USER_DETAILS = BASE_URL + "candidate_detail/";
     public static final String UPDATE_USER_DETAILS = BASE_URL + "update_user/";
-    public static final String GET_HOT_JOBS = BASE_URL + "jobs?";
+    public static final String GET_HOT_JOBS = BASE_URL + "jobs";
     public static final String GET_ALL_JOBS = BASE_URL + "jobs";
 
+    public static final String GET_POPULAR_JOBS = BASE_URL + "popularjob";
+
+
+
+    public static final String GET_APPLIED_AND_UPCOMING_INTERVIEW = BASE_URL + "interview";
+    public static final String ADD_STUDENT_REMARK= BASE_URL + "student_remark";
+
     public static final String GET_JOBS_DETAIL = BASE_URL + "job_details/";
-    public static final String APPLY_HOT_JOBS = BASE_URL + "applyJob";
-    //    public static final String IS_VERIFIED_MAIN = "isverifiedmain";
+    public static final String APPLY_ALL_JOBS = BASE_URL + "applyJob";
+    public static final String GET_ALL_TESTIMONIALS = BASE_URL + "testimonial";
     public static final String SOMETHING_WENT_WRONG = "Something went wrong please try again...!!!";
+
+    public static final String JOB_APPLIED_SUCCESSFULLY_MESSAGE = "Job applied successfully!";
     public static final String KEY_NAME = "name";
     public static final String KEY_CONTACT = "contact";
     public static final String KEY_CONTACT_VERIFIED = "contact_verification";
@@ -84,33 +93,24 @@ public class AppConstant {
     public static final String ID_ALL_APPLIED_APPLICATION = "APPLIEDAPPLICATION";
     public static final String ID_MY_GOODIES_STORES = "MYGOODIESSTORES";
     public static final String ID_MY_ORDERS = "MYORDERS";
-
-
     public static final String NAME_JOBS = "Job Board";
     public static final String NAME_INTERVIEW = "Interview";
     public static final String NAME_MY_DOCUMENTS = "My Documents";
     public static final String NAME_SUCCESS_STORIES = "Success Stories";
     public static final String NAME_GOODIES_STORE = "Goodies Store";
     public static final String NAME_LOGOUT = "Logout";
-
     public static final String NAME_MATCHING_VACANCIES = "Matching Vacancies";
     public static final String NAME_ALL_JOBS = "All Jobs";
     public static final String NAME_HOT_JOBS = "Hot Jobs";
     public static final String NAME_JOBS_APPLIED_BY_BATCHMATES = "Most Applied Jobs";
     public static final String NAME_POPULARJOBS = "Popular Jobs";
     public static final String NAME_UPCOMING_INTERVIEW = "Upcoming Interviews";
-    public static final String NAME_ALL_APPLIED_APPLICATION = "All applications";
+    public static final String NAME_ALL_APPLIED_APPLICATION = "All Applied Applications";
     public static final String NAME_MY_GOODIES_STORES = "EduErp Goodies Store";
     public static final String NAME_MY_ORDERS = "My Orders";
     public static final String EXIT_TEXT = "Are you sure you want to close the app?";
     public static final String LOGOUT_TEXT = "Are you sure you want to logout from the app?";
     public static final String SIGN_UP_LOGIN_TEXT = "Please Login / Sign Up to use the application.";
-    public static final String GENDER_JOB_URL = "gender=";
-    public static final String QUESTION_JOB_URL = "?";
-    public static final String AND_JOB_URL = "?";
-    public static final String CITY_JOB_URL = "city=";
-    public static final String SKILLS_JOB_URL = "skills=";
-    public static final String LANGUAGE_JOB_URL = "language=";
     public static final String KEY_FILTER_GENDER_ALL_JOBS = "alljobsfiltergender";
     public static final String KEY_FILTER_CITY_ALL_JOBS = "alljobsfiltercity";
     public static final String KEY_FILTER_SKILLS_ALL_JOBS = "alljobsfilterskills";
@@ -225,6 +225,29 @@ public class AppConstant {
 
     public static final String KEY_APPLY_JOB_USER_ID = "user_id";
     public static final String KEY_APPLY_JOB_VACANCY_ID = "vacancy_id";
+
+    public static final String KEY_APPLIED_AND_UPCOMING_INTEVIEW_USER_ID = "user_id";
+    public static final String KEY_APPLIED_AND_UPCOMING_INTEVIEW_STUDENT_STATUS = "student_status";
+    public static final String KEY_APPLIED_ID = "applied_id";
+    public static final String KEY_APPLIED_SCHEDULED_DATE = "sheduled_date";
+    public static final String KEY_APPLIED_INTERVIEW_DATE = "interview_date";
+    public static final String KEY_APPLIED_STUDENT_STATUS = "student_status";
+    public static final String KEY_APPLIED_CLIENT_REMARKS = "client_remarks";
+    public static final String KEY_APPLIED_STUDENT_REMARKS = "student_remarks";
+    public static final String KEY_APPLIED_DATE_OF_JOINING = "date_of_joining";
+    public static final String KEY_APPLIED_CLIENT_NAME = "client_name";
+
+    public static final String KEY_APPLIED_DATE = "applied_on";
+    public static final String KEY_APPLIED_ID_REMARK = "applied_id";
+    public static final String KEY_STUDENT_REMARK = "student_remarks";
+
+    public static final String KEY_PAGE = "page";
+
+    public static final String KEY_POSTED_BY = "posted_by";
+    public static final String KEY_POSTED_DATE_TIME = "posted_on";
+
+    public static final String KEY_USER_NAME = "name";
+
 
 
 }

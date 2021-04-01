@@ -19,7 +19,7 @@
             android:id="@+id/maintext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Place"
+            android:text="@string/place_text"
             android:layout_toRightOf="@+id/backbutton"
             android:textColor="@color/app_colour_name"
             android:textSize="@dimen/_12sdp"
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/maintext"
-            android:text="me"
+            android:text="@string/me_text"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"
             android:layout_centerVertical="true"
@@ -53,8 +53,8 @@
             android:text="Back"
             android:textSize="36sp"
             android:src="@drawable/backbutton"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:visibility="visible"
             android:textStyle="bold" />
 
@@ -66,8 +66,8 @@
             android:textSize="36sp"
             android:layout_alignParentRight="true"
             android:src="@drawable/icon_edit"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:visibility="visible"
             android:textStyle="bold" />
         <ImageView
@@ -77,8 +77,8 @@
             android:text="Back"
             android:layout_alignParentRight="true"
             android:src="@drawable/bg_prof_cross"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:visibility="gone" />
 
     </RelativeLayout>
@@ -95,9 +95,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:layout_marginRight="@dimen/_3sdp"
             android:orientation="vertical">
 
 
@@ -118,20 +118,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:textStyle="bold"
-                android:text="PERSONAL DETAILS :"></TextView>
+                android:text="@string/header_personal_details"></TextView>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/mobile_edit_text_inputlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/_8sdp"
                 app:hintTextColor="@android:color/black"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -142,9 +142,9 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_name"
-                    android:hint="Name" />
+                    android:hint="@string/name_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -152,11 +152,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -167,10 +167,10 @@
                     android:inputType="number"
                     android:maxLength="10"
                     android:singleLine="true"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_mobile_app_icon"
                     android:maxLines="1"
-                    android:hint="Phone Number" />
+                    android:hint="@string/phone_no_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -179,11 +179,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -193,10 +193,10 @@
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_email_icon"
                     android:singleLine="true"
-                    android:hint="Email Id" />
+                    android:hint="@string/email_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -205,11 +205,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -219,9 +219,9 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_calendar"
-                    android:hint="Date of birth" />
+                    android:hint="@string/dob_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -230,11 +230,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
@@ -242,10 +242,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_language"
                     android:singleLine="true"
-                    android:hint="Language known" />
+                    android:hint="@string/language_hing" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -256,9 +256,9 @@
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:padding="@dimen/_3sdp"
                 android:gravity="center_vertical">
 
@@ -313,10 +313,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:textStyle="bold"
-                android:text="RESEDENTIAL DETAILS :"></TextView>
+                android:text="@string/header_residential_details"></TextView>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -324,11 +324,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -339,10 +339,10 @@
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/bg_reg_drop_down"
                     android:maxLines="1"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_state"
                     android:singleLine="true"
-                    android:hint="State" />
+                    android:hint="@string/state_hing" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -350,11 +350,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -363,10 +363,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_city"
                     android:singleLine="true"
-                    android:hint="City/District" />
+                    android:hint="@string/city_hing" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -380,12 +380,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
 
-                android:text="QUALIFICATION &amp; EXPERIANCE DETAILS :"></TextView>
+                android:text="@string/header_qualification_details"></TextView>
 
 
 
@@ -394,11 +394,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
 
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -410,10 +410,10 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_qualificatiion"
                     android:drawableRight="@drawable/bg_reg_drop_down"
-                    android:hint="Qualification Type" />
+                    android:hint="@string/qualification_type_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -422,11 +422,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -437,10 +437,10 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_experience_year"
                     android:drawableRight="@drawable/bg_reg_drop_down"
-                    android:hint="Experienced" />
+                    android:hint="@string/exp_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -450,11 +450,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -465,9 +465,9 @@
                     android:inputType="number"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_experience_year"
-                    android:hint="Experience in years " />
+                    android:hint="@string/exp_in_years_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -475,11 +475,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -490,9 +490,9 @@
                     android:inputType="text"
                     android:singleLine="true"
                     android:maxLines="1"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_designation"
-                    android:hint="Designation/Job Role" />
+                    android:hint="@string/designation_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -500,11 +500,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -513,11 +513,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:inputType="number"
                     android:drawableLeft="@drawable/bg_reg_salary"
                     android:singleLine="true"
-                    android:hint="Salary" />
+                    android:hint="@string/salary_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -533,21 +533,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:textStyle="bold"
-                android:text="COURSE DETAILS :"></TextView>
+                android:text="@string/header_course_details"></TextView>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/centre_name_edit_text_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -555,8 +555,8 @@
                     android:id="@+id/centre_name_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Centre name"
-                    android:drawablePadding="10dp"
+                    android:hint="@string/centre_hint"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_centre_name"
                     android:singleLine="true"
                     android:focusable="false"
@@ -569,11 +569,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -582,12 +582,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:focusable="false"
 
                     android:drawableLeft="@drawable/bg_reg_project_name"
                     android:singleLine="true"
-                    android:hint="Project name" />
+                    android:hint="@string/project_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -596,11 +596,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -610,11 +610,11 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:focusable="false"
 
                     android:drawableLeft="@drawable/bg_reg_branch_name"
-                    android:hint="Batch name" />
+                    android:hint="@string/batch_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -623,11 +623,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -636,11 +636,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:drawableLeft="@drawable/bg_reg_course"
                     android:singleLine="true"
                     android:focusable="false"
-                    android:hint="Course name" />
+                    android:hint="@string/course_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -659,11 +659,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:textStyle="bold"
                 android:visibility="gone"
-                android:text="MY RESUME :"></TextView>
+                android:text="@string/header_resume"></TextView>
 
 
             <RelativeLayout
@@ -672,11 +672,11 @@
                 android:layout_height="@dimen/_74sdp"
                 android:visibility="gone"
                 app:boxStrokeColor="@color/reg_tc_bg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_toRightOf="@+id/header1"
                 app:hintTextColor="@android:color/black"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:gravity="center"
                 android:background="@drawable/gender_background_drawable"
                 android:layout_toLeftOf="@+id/proceddbuttonlayout">
@@ -705,11 +705,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_15sdp"
-                    android:text="Upload CV"
+                    android:text="@string/upload_cv"
                     android:singleLine="true"
                     android:gravity="center"
                     android:padding="@dimen/_4sdp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_below="@+id/upload_cv"
                     android:textColor="@color/colorPrimary"
                     />
@@ -719,7 +719,7 @@
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:src="@drawable/bg_reg_download"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_toRightOf="@id/upload_cv_txt"
                     android:layout_below="@+id/upload_cv"
                     android:foregroundGravity="center_horizontal"
@@ -736,17 +736,17 @@
                 android:id="@+id/savebutton"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_34sdp"
-                android:text="SAVE"
+                android:text="@string/save"
                 android:visibility="gone"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:textColor="@android:color/white"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginRight="@dimen/_30sdp"
                 android:gravity="center"
                 android:background="@drawable/verify_enable"
-                android:padding="10dp"
+                android:padding="@dimen/_8sdp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="@dimen/_16sdp"
                 android:layout_below="@+id/resendotpbutton"></TextView>
 
 

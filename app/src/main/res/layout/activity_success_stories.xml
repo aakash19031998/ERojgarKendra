@@ -4,12 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".successstoryscreen.SuccessStoriesActivity">
+    tools:context=".successstoryscreen.controler.SuccessStoriesActivity">
 
     <include
         android:id="@+id/success_stories_toolbar"
         layout="@layout/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_success_stories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/_6sdp"
+        android:layout_marginRight="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_below="@+id/success_stories_toolbar"
+
+        />
+
+    <TextView
+        android:id="@+id/notestimoinals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/default_color_android"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="No Testimonials to show!"></TextView>
+
 
 </RelativeLayout>

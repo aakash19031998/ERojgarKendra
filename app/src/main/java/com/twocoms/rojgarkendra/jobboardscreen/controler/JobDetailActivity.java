@@ -16,6 +16,7 @@ import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.databinding.ActivityJobDetailBinding;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
+import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.global.model.ServiceHandler;
 import com.twocoms.rojgarkendra.jobboardscreen.model.ModelHotJobs;
 import com.twocoms.rojgarkendra.jobboardscreen.model.VacancyDetailModel;
@@ -32,6 +33,7 @@ public class JobDetailActivity extends AppCompatActivity {
     TextView titleToolbar;
     LinearLayout titleLnr;
     String jobId = "";
+    VacancyDetailModel vacancyDetailModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,16 @@ public class JobDetailActivity extends AppCompatActivity {
             }
         });
 
+        jobDetailBinding.applyJobs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(vacancyDetailModel != null) {
+                    String userId = GlobalPreferenceManager.getStringForKey(JobDetailActivity.this, AppConstant.KEY_USER_ID, "");
+                    applyAllJobs(userId, vacancyDetailModel.getVacancy_master_id());
+                }
+            }
+        });
+
 //        backIcon.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -124,7 +136,7 @@ public class JobDetailActivity extends AppCompatActivity {
                     String message = jsonObject.getString(AppConstant.KEY_VACANCY_DETAIL_MESSAGE);
                     if (jsonObject.getBoolean(AppConstant.KEY_VACANCY_DETAIL_SUCCESS)) {
                         JSONObject jsonObjectData = jsonObject.getJSONObject(AppConstant.KEY_VACANCY_DETAIL_OBJ_DATA);
-                        VacancyDetailModel vacancyDetailModel = new VacancyDetailModel();
+                        vacancyDetailModel = new VacancyDetailModel();
                         vacancyDetailModel.setId(jsonObjectData.getInt(AppConstant.KEY_VACANCY_DETAIL_ID));
                         vacancyDetailModel.setVacancy_master_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_VACANCY_MASTER_ID));
                         vacancyDetailModel.setNaps_opportunity_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_NAPS_OPPORTUNITY_ID));
@@ -205,7 +217,7 @@ public class JobDetailActivity extends AppCompatActivity {
         jobDetailBinding.clientText.setText(vacancyDetailModel.getClient_name());
         jobDetailBinding.jobTypeText.setText(vacancyDetailModel.getJob_type());
         jobDetailBinding.locationText.setText(vacancyDetailModel.getCity());
-        jobDetailBinding.vacancyText.setText(CommonMethod.roundNumbertoNextPossibleValue(vacancyDetailModel.getNumber_of_open_positions()+"") + " open position");
+        jobDetailBinding.vacancyText.setText(CommonMethod.roundNumbertoNextPossibleValue(vacancyDetailModel.getNumber_of_open_positions() + "") + " open position");
         jobDetailBinding.jobSkills.setText(vacancyDetailModel.getSkills());
         if (vacancyDetailModel.getGender_preferences().equalsIgnoreCase("male")) {
             jobDetailBinding.jobPreferredGender.setText("Male");
@@ -236,4 +248,39 @@ public class JobDetailActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
+    public void applyAllJobs(String user_id, String vacancy_id) {
+        JSONObject Json = new JSONObject();
+        try {
+            Json.put(AppConstant.KEY_APPLY_JOB_USER_ID, user_id);
+            Json.put(AppConstant.KEY_APPLY_JOB_VACANCY_ID, vacancy_id);
+            Log.v("request", Json.toString());
+            ServiceHandler serviceHandler = new ServiceHandler(JobDetailActivity.this);
+            serviceHandler.StringRequest(Request.Method.POST, Json.toString(), AppConstant.APPLY_ALL_JOBS, true, new ServiceHandler.VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.v("Response", result);
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        String message = jsonObject.getString(AppConstant.KEY_JOB_DATA_MESSAGE);
+                        if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
+                            CommonMethod.showToast(AppConstant.JOB_APPLIED_SUCCESSFULLY_MESSAGE, JobDetailActivity.this);
+                        } else {
+                            CommonMethod.showToast(message, JobDetailActivity.this);
+                        }
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                        CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, JobDetailActivity.this);
+                    }
+
+
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

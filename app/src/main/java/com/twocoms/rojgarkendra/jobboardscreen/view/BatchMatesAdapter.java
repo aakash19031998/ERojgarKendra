@@ -16,6 +16,7 @@ import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
+import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgJobAppliedByYourBactchMates;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgMatchingvacancies;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.JobDetailActivity;
@@ -72,7 +73,12 @@ public class BatchMatesAdapter extends RecyclerView.Adapter<BatchMatesAdapter.Vi
             @Override
             public void onClick(View view) {
                 if (CommonMethod.checkUserLoggedInOrRegister(context)) {
-                    CommonMethod.showToast("Job Applied", context);
+//                    CommonMethod.showToast("Job Applied", context);
+                    String userIdSTr = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_USER_ID, "");
+                    int vacancyId = modelHotJobs.get(position).getId();
+                    jobAppliedByYourBactchMates.applyAllJobs(userIdSTr, vacancyId);
+
+
                 } else {
                     CommonMethod.showDialogueForLoginSignUp(jobAppliedByYourBactchMates.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
                 }

@@ -17,7 +17,7 @@
         android:src="@drawable/backbutton"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
-        android:padding="6dp"
+        android:padding="@dimen/_6sdp"
         android:textStyle="bold" />
 
 
@@ -32,9 +32,9 @@
             android:id="@+id/maintext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Place"
+            android:text="@string/place_text"
             android:textColor="@color/app_colour_name"
-            android:textSize="40dp"
+            android:textSize="@dimen/_30sdp"
             android:textStyle="bold">
 
         </TextView>
@@ -44,9 +44,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/maintext"
-            android:text="me"
+            android:text="@string/me_text"
             android:textColor="@color/black"
-            android:textSize="40dp"
+            android:textSize="@dimen/_30sdp"
             android:textStyle="bold">
 
         </TextView>
@@ -60,10 +60,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Please wait.\nWe will auto verify the OTP sent to +919699101091"
-        android:textSize="20sp"
+        android:textSize="@dimen/_17sdp"
         android:textColor="@android:color/black"
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:layout_below="@+id/app_main_layout"
 
         android:padding="6dp"/>
@@ -75,12 +75,12 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_below="@+id/explainabletext"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="@dimen/_16sdp">
 
         <EditText
             android:id="@+id/et1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_38sdp"
             android:inputType="number"
             android:maxLength="1"
             android:background="@drawable/edt_bg"
@@ -93,8 +93,8 @@
 
         <EditText
             android:id="@+id/et2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_38sdp"
             android:layout_marginLeft="10dp"
             android:maxLength="1"
             android:inputType="number"
@@ -108,8 +108,8 @@
 
         <EditText
             android:id="@+id/et3"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_38sdp"
             android:layout_marginLeft="10dp"
             android:inputType="number"
             android:maxLength="1"
@@ -123,8 +123,8 @@
 
         <EditText
             android:id="@+id/et4"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_38sdp"
             android:layout_marginLeft="10dp"
             android:maxLength="1"
             android:inputType="number"
@@ -144,8 +144,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Didn't receive OTP"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginLeft="@dimen/_14sdp"
         android:visibility="invisible"
         android:layout_below="@+id/inputlayout"></TextView>
 
@@ -153,9 +153,9 @@
         android:id="@+id/otp_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your OTP will expire 1:20 min"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
+        android:text="@string/otp_verify_time_str"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginLeft="@dimen/_16sdp"
         android:layout_centerHorizontal="true"
         android:visibility="visible"
         android:layout_below="@+id/inputlayout"></TextView>
@@ -164,11 +164,11 @@
         android:id="@+id/resendotpbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Resend OTP"
-        android:padding="10dp"
+        android:text="@string/resend_otp"
+        android:padding="@dimen/_8sdp"
         android:textColor="#24a0ed"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/_8sdp"
         android:layout_below="@+id/didnotgetotptext"></TextView>
 
 
@@ -176,13 +176,13 @@
         android:id="@+id/verifybutton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_34sdp"
-        android:text="VERIFY"
-        android:layout_marginTop="20dp"
+        android:text="@string/verify_otp_text"
+        android:layout_marginTop="@dimen/_16sdp"
         android:textColor="@android:color/white"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
         android:gravity="center"
-        android:padding="10dp"
+        android:padding="@dimen/_8sdp"
         android:layout_below="@+id/resendotpbutton"></TextView>
 
 

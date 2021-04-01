@@ -2,7 +2,6 @@ package com.twocoms.rojgarkendra.jobboardscreen.controler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,16 +17,13 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.twocoms.rojgarkendra.R;
-import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.BottomSheetDialog;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.global.model.ServiceHandler;
 import com.twocoms.rojgarkendra.jobboardscreen.model.ModelHotJobs;
-import com.twocoms.rojgarkendra.jobboardscreen.view.AllJobsAdapter;
 import com.twocoms.rojgarkendra.jobboardscreen.view.HotJobsAdapter;
-import com.twocoms.rojgarkendra.myprofile.controler.UserProfileActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -157,20 +153,20 @@ public class FrgHotJob extends Fragment {
     }
 
 
-        void setAdapter() {
-            if (modelHotJobs.size() == 0) {
-                noVacancyText.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-            } else {
-                hotJobsAdapter = new HotJobsAdapter(getActivity(), modelHotJobs, FrgHotJob.this);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                recyclerView.setAdapter(hotJobsAdapter);
-                hotJobsAdapter.notifyDataSetChanged();
-                noVacancyText.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-            }
-
+    void setAdapter() {
+        if (modelHotJobs.size() == 0) {
+            noVacancyText.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            hotJobsAdapter = new HotJobsAdapter(getActivity(), modelHotJobs, FrgHotJob.this);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setAdapter(hotJobsAdapter);
+            hotJobsAdapter.notifyDataSetChanged();
+            noVacancyText.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
+
+    }
 
 
     String getPostParameter() {
@@ -198,7 +194,7 @@ public class FrgHotJob extends Fragment {
             if (!qualificationType.equals("")) {
                 jsonObject.put("qualification_type", qualificationType);
             }
-            jsonObject.put("hotjobs","yes");
+            jsonObject.put("hotjobs", "yes");
             jsonObject.put("page", currentPages);
 
         } catch (JSONException e) {
@@ -207,21 +203,33 @@ public class FrgHotJob extends Fragment {
         return jsonObject.toString();
     }
 
-    public void applyHotJobs(Context context, String user_id, int vacancy_id){
+    public void applyAllJobs(String user_id, int vacancy_id) {
         JSONObject Json = new JSONObject();
         try {
-            Json.put(AppConstant.KEY_APPLY_JOB_USER_ID,user_id);
-            Json.put(AppConstant.KEY_APPLY_JOB_VACANCY_ID,vacancy_id);
-            Log.v("request",Json.toString());
-           ServiceHandler serviceHandler = new ServiceHandler(context);
-           serviceHandler.StringRequest(Request.Method.POST, Json.toString(),AppConstant.APPLY_HOT_JOBS ,true, new ServiceHandler.VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
+            Json.put(AppConstant.KEY_APPLY_JOB_USER_ID, user_id);
+            Json.put(AppConstant.KEY_APPLY_JOB_VACANCY_ID, vacancy_id);
+            Log.v("request", Json.toString());
+            ServiceHandler serviceHandler = new ServiceHandler(getActivity());
+            serviceHandler.StringRequest(Request.Method.POST, Json.toString(), AppConstant.APPLY_ALL_JOBS, true, new ServiceHandler.VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.v("Response", result);
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        message = jsonObject.getString(AppConstant.KEY_JOB_DATA_MESSAGE);
+                        if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
+                            CommonMethod.showToast(AppConstant.JOB_APPLIED_SUCCESSFULLY_MESSAGE, getActivity());
+                        } else {
+                            CommonMethod.showToast(message, getActivity());
+                        }
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                        CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, getActivity());
+                    }
 
-                Log.v("Response", result);
 
-            }
-        });
+                }
+            });
 
         } catch (JSONException e) {
             e.printStackTrace();

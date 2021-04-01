@@ -52,7 +52,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="end"
-                            android:text="Posted on : 29-03-2020"
+                            android:text="@string/posted_on"
                             android:textSize="@dimen/_9sdp"></TextView>
 
 
@@ -61,7 +61,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
-                            android:text="Salary"
+                            android:text="@string/salary"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/_19sdp"
                             android:textStyle="bold" />
@@ -88,7 +88,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
-                            android:text="Client Name"
+                            android:text="@string/client_name"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14sdp" />
 
@@ -114,7 +114,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
-                            android:text="Job Types"
+                            android:text="@string/job_type"
                             android:textColor="@color/default_color_android"
                             android:textSize="@dimen/_11sdp"
                             android:textStyle="bold" />
@@ -143,7 +143,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:layout_toRightOf="@id/location_img"
-                            android:text="Job Location"
+                            android:text="@string/job_location"
                             android:textColor="@color/default_color_android"
                             android:textSize="@dimen/_9sdp" />
 
@@ -173,7 +173,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:layout_toRightOf="@id/vacancy_img"
-                            android:text="350 Openings"
+                            android:text="@string/job_opening"
                             android:textColor="@color/default_color_android"
                             android:textSize="@dimen/_9sdp" />
 
@@ -211,7 +211,7 @@
                             android:textStyle="bold"
                             android:gravity="center_vertical"
                             android:textColor="@color/default_color_android"
-                            android:text="JOB DESCRIPTION :"></TextView>
+                            android:text="@string/header_job_description"></TextView>
 
 
                     </LinearLayout>
@@ -250,7 +250,7 @@
                         android:textSize="@dimen/_11sdp"
                         android:textStyle="bold"
                         android:textColor="@color/default_color_android"
-                        android:text="JOB RESPONSILITY :"></TextView>
+                        android:text="@string/header_responsibilities"></TextView>
 
                        </LinearLayout>
 
@@ -286,7 +286,7 @@
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:textSize="@dimen/_11sdp"
                         android:textStyle="bold"
-                        android:text="JOB BENEFIT :"></TextView>
+                        android:text="@string/header_job_benifit"></TextView>
                        </LinearLayout>
 
                     <TextView
@@ -339,7 +339,7 @@
                                     android:textSize="@dimen/_11sdp"
                                     android:textStyle="bold"
                                     android:layout_toRightOf="@+id/icon_skills_required"
-                                    android:text="SKILLS REQUIRED :"></TextView>
+                                    android:text="@string/header_skill_required"></TextView>
 
                             </RelativeLayout>
 
@@ -395,7 +395,7 @@
                                 android:textSize="@dimen/_11sdp"
                                 android:textStyle="bold"
                                 android:layout_toRightOf="@+id/prefer_gender_icon"
-                                android:text="PREFERRED GENDER :"></TextView>
+                                android:text="@string/header_prefered_gender"></TextView>
 
                                </RelativeLayout>
 
@@ -450,7 +450,7 @@
                                 android:textSize="@dimen/_11sdp"
                                 android:layout_toRightOf="@+id/experinaced_required"
                                 android:textStyle="bold"
-                                android:text="EXPERIANCED REQUIRED :"></TextView>
+                                android:text="@string/header_exp_required"></TextView>
 
                             </RelativeLayout>
 
@@ -504,7 +504,7 @@
                                 android:textSize="@dimen/_11sdp"
                                 android:textStyle="bold"
                                 android:layout_toRightOf="@+id/minimum_qualification_icon"
-                                android:text="MINIMUM QUALIFICATION REQUIRED :"></TextView>
+                                android:text="@string/header_min_qualification_required"></TextView>
 
                              </RelativeLayout>
                             <TextView

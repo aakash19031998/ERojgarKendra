@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="Place"
             android:textColor="@color/app_colour_name"
-            android:textSize="40dp"
+            android:textSize="@dimen/_34sdp"
             android:textStyle="bold">
 
         </TextView>
@@ -33,7 +33,7 @@
             android:layout_toRightOf="@+id/maintext"
             android:text="me"
             android:textColor="@color/black"
-            android:textSize="40dp"
+            android:textSize="@dimen/_34sdp"
             android:textStyle="bold">
 
         </TextView>
@@ -42,16 +42,17 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/place_me_layout"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_330sdp"/>
+        android:layout_below="@+id/place_me_layout"
+        android:layout_above="@+id/indicatorpart"
+       />
 
     <RelativeLayout
-        android:layout_below="@id/viewPager"
+        android:id="@+id/indicatorpart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
 
         <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/indicator"
@@ -59,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:gravity="bottom"
-            android:padding="10dip"
+            android:padding="@dimen/_8sdp"
             app:centered="true"
             app:fillColor="@color/app_colour_name"
             app:pageColor="@color/indicator_colour_name"

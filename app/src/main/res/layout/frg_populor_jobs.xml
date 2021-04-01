@@ -51,7 +51,7 @@
         android:textColor="@color/default_color_android"
         android:gravity="center"
         android:visibility="gone"
-        android:text="No vacancy available"></TextView>
+        android:text="@string/no_vacancy_available"></TextView>
 
 
 </RelativeLayout>
