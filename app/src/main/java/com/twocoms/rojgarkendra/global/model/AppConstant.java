@@ -248,6 +248,8 @@ public class AppConstant {
 
     public static final String KEY_USER_NAME = "name";
 
+    public static final String KEY_INVITE_CODE_VALUE = "invitecodeshared";
+
 
 
 }

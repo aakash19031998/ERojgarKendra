@@ -2,6 +2,7 @@ package com.twocoms.rojgarkendra;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SubscriptionPlan;
@@ -9,9 +10,14 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 //import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
@@ -27,12 +33,30 @@ public class SplashScreenActvity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         FirebaseApp.initializeApp(this);
-
-        //FirebaseApp.initializeApp(this);
-//        FirebaseAnalytics.getInstance().get
         splashScreenDisplay(this);
        Log.v( "FCMTOKEN",GlobalPreferenceManager.getStringForKey(SplashScreenActvity.this,AppConstant.KEY_DEVICE_TOKEN,""));
-        //throw new RuntimeException("Test Crash");
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+                    @Override
+                    public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                        // Get deep link from result (may be null if no link is found)
+                        Uri deepLink = null;
+                        if (pendingDynamicLinkData != null) {
+                            deepLink = pendingDynamicLinkData.getLink();
+                        }
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user == null
+                                && deepLink != null
+                                && deepLink.getBooleanQueryParameter("invitedby", false)) {
+                            String referrerUid = deepLink.getQueryParameter("invitedby");
+                            GlobalPreferenceManager.saveStringForKey(SplashScreenActvity.this,AppConstant.KEY_INVITE_CODE,referrerUid);
+                            Log.v("ReferereId Main :",referrerUid);
+                          //  createAnonymousAccountWithReferrerInfo(referrerUid);
+                        }
+                    }
+                });
+
     }
 
     void splashScreenDisplay(final Context context) {
@@ -52,6 +76,9 @@ public class SplashScreenActvity extends AppCompatActivity {
             }
         }, 3000);
     }
+
+
+//    V1M6BXL8
 
 
     ////Digit hash code

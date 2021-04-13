@@ -30,6 +30,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -97,6 +103,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private static String imageEncoded;
     boolean isProfileImgUpdated = false;
     boolean isCVUpadted = false;
+    Uri mInvitationUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +149,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         listStates = new ArrayList<>();
         getProfileDetails();
+        createReferralLink();
 
         //getStates();
         setVisibilty();
@@ -1386,4 +1394,30 @@ public class UserProfileActivity extends AppCompatActivity {
 
         }
     };
+
+    public void createReferralLink(){
+        String uid = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_REFERAL_CODE,"");
+        String link = "https://mygame.example.com/?invitedby="+uid;
+        FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(Uri.parse(link))
+                .setDomainUriPrefix("https://rojgarkendra.page.link")
+                .setAndroidParameters(
+                        new DynamicLink.AndroidParameters.Builder("com.twocoms.rojgarkendra")
+                                .setMinimumVersion(125)
+                                .build())
+
+                .buildShortDynamicLink()
+                .addOnSuccessListener(new OnSuccessListener<ShortDynamicLink>() {
+                    @Override
+                    public void onSuccess(ShortDynamicLink shortDynamicLink) {
+                         mInvitationUrl = shortDynamicLink.getShortLink();
+                        Log.v("Referral LInk",mInvitationUrl.toString());
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_SEND);
+                        intent.putExtra(Intent.EXTRA_TEXT,mInvitationUrl.toString());
+                        intent.setType("text/plain");
+                        startActivity(intent);
+                    }
+                });
+    }
 }
