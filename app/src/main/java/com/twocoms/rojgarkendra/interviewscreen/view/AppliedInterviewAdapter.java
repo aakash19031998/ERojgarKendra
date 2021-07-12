@@ -44,13 +44,17 @@ public class AppliedInterviewAdapter extends RecyclerView.Adapter<AppliedIntervi
         holder.jobType.setText(appliedAndUpcommingModels.get(position).getJobType());
         holder.location.setText(appliedAndUpcommingModels.get(position).getLocationOfWork());
         holder.numberOfOpenings.setText(appliedAndUpcommingModels.get(position).getNumberOfOpenPositions() + " openings");
-        holder.salary.setText(context.getResources().getString(R.string.Rs) + CommonMethod.roundNumbertoNextPossibleValue(appliedAndUpcommingModels.get(position).getSalary()));
+        if(appliedAndUpcommingModels.get(position).getSalary() .equals("null") ){
+            holder.salary.setText("000");
+        }
+        else {
+            holder.salary.setText(context.getResources().getString(R.string.Rs) + CommonMethod.roundNumbertoNextPossibleValue(appliedAndUpcommingModels.get(position).getSalary()));
+        }
         if (position == appliedAndUpcommingModels.size() - 1) {
             if (context instanceof AppliedApplicationActivity) {
                 if (AppliedApplicationActivity.currentPages == AppliedApplicationActivity.numberOfPagesFromServer) {
                     Log.e("AllDataLoaded", "true");
                 } else {
-
                     AppliedApplicationActivity.currentPages = AppliedApplicationActivity.currentPages + 1;
                     ((AppliedApplicationActivity) context).getAppliedInterview();
                 }

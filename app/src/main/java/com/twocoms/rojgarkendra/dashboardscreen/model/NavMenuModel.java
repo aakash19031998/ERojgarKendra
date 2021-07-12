@@ -16,7 +16,7 @@ public class NavMenuModel {
         return iconName;
     }
 
-    public void setIconName(String iconName) {
+    public void setTitleName(String iconName) {
         this.iconName = iconName;
     }
 

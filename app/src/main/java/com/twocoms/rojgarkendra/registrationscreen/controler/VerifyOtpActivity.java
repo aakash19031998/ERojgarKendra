@@ -46,6 +46,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
     boolean isVerifiedEnabled = false;
     TextView explainableText;
     String android_id;
+    String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
         Intent intent = getIntent();
         otpStr = intent.getStringExtra("otp");
         mobile_no = intent.getStringExtra("mobile_no");
+        token = intent.getStringExtra("token");
         explainableText = (TextView) findViewById(R.id.explainabletext);
         explainableText.setText("Please wait.\nWe will auto verify the OTP sent to +91" + mobile_no);
         et1 = findViewById(R.id.et1);
@@ -121,15 +123,15 @@ public class VerifyOtpActivity extends AppCompatActivity {
     }
 
 
-    void resendOtpClicked() {
-
-    }
+//    void resendOtpClicked() {
+//
+//    }
 
     void startTimer() {
         otp_timer.setVisibility(View.VISIBLE);
         isOtpExpire = false;
         long timeInMilliseconds;
-        timeInMilliseconds = 5 * 60000;
+        timeInMilliseconds = 1 * 60000;
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
@@ -401,6 +403,129 @@ public class VerifyOtpActivity extends AppCompatActivity {
         }
 
     }
+
+
+//    void verifyOtp() {
+//        final JSONObject Json = new JSONObject();
+//        try {
+//            Json.put(AppConstant.KEY_CONTACT, mobile_no);
+//            Json.put(AppConstant.KEY_OTP, enteredOtpStr);
+//            Json.put(AppConstant.KEY_DEVICE_ID, android_id);
+//            Json.put(AppConstant.KEY_OS_TYPE, "A");
+//            Json.put(AppConstant.KEY_NOTIFICATION_ID, GlobalPreferenceManager.getStringForKey(VerifyOtpActivity.this, AppConstant.KEY_DEVICE_TOKEN, ""));
+//            //Json.put("Messege","HAVELLS APP VERIFICATION");
+//            Log.v("JSONURL", Json.toString());
+//            ServiceHandler serviceHandler = new ServiceHandler(VerifyOtpActivity.this);
+//            serviceHandler.StringRequest(Request.Method.POST, Json.toString(), AppConstant.VERIFY_OTP, true, new ServiceHandler.VolleyCallback() {
+//                @Override
+//                public void onSuccess(String result) {
+//
+//                    Log.v("Response", result);
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(result);
+//                        if (jsonObject.getBoolean("success")) {
+//                            JSONObject dataStr = jsonObject.getJSONObject("data");
+//                            JSONObject otpJson = dataStr.getJSONObject("otpInfo");
+//                            String contactInfo = otpJson.getString("contact");
+//                            otpStr = otpJson.getString("otp");
+//                            GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CONTACT_VERIFIED, "1");
+//                            // String msgStr = jsonObject.getString("message");
+//                            if (dataStr.has("is_register") && dataStr.has("eduErp")) {
+//                                if (dataStr.getString("is_register").equals("N")) {
+//                                    if (dataStr.getString("eduErp").equals("Y")) {
+//                                        /*Save data in SharePref*/
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_NAME, dataStr.getString(AppConstant.KEY_NAME));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CONTACT, dataStr.getString(AppConstant.KEY_CONTACT));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_EMAIL_ID, dataStr.getString(AppConstant.KEY_EMAIL_ID));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.STATE_ID, dataStr.getString(AppConstant.STATE_ID));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_STATE_NAME, dataStr.getString(AppConstant.KEY_STATE_NAME));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CITY, dataStr.getString(AppConstant.KEY_CITY));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_DOB, dataStr.getString(AppConstant.KEY_DOB));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_GENDER, dataStr.getString(AppConstant.KEY_GENDER));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_QUALIFICATION_TYPE, dataStr.getString(AppConstant.KEY_QUALIFICATION_TYPE));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_EXPERIANCE_YEARS, dataStr.getString(AppConstant.KEY_EXPERIANCE_YEARS));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_EXPERIANCE_MONTH, dataStr.getString(AppConstant.KEY_EXPERIANCE_MONTH));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_SALARY, dataStr.getString(AppConstant.KEY_SALARY));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_COURSE_NAME, dataStr.getString(AppConstant.KEY_COURSE_NAME));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROJECT_NAME, dataStr.getString(AppConstant.KEY_PROJECT_NAME));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_BATCH_NAME, dataStr.getString(AppConstant.KEY_BATCH_NAME));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CENTRE_NAME, dataStr.getString(AppConstant.KEY_CENTRE_NAME));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_COURSE_ID, dataStr.getString(AppConstant.KEY_COURSE_ID));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROJECT_ID, dataStr.getString(AppConstant.KEY_PROJECT_ID));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_BATCH_ID, dataStr.getString(AppConstant.KEY_BATCH_ID));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CENTRE_ID, dataStr.getString(AppConstant.KEY_CENTRE_ID));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_IS_REGISTER, dataStr.getString(AppConstant.KEY_IS_REGISTER));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_LANGUAGE_KNOWN, dataStr.getString(AppConstant.KEY_LANGUAGE_KNOWN));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_ROLE, dataStr.getString(AppConstant.KEY_ROLE));
+//                                    }
+//                                    navigateToRegister(contactInfo, dataStr.getString("eduErp"));
+//                                } else {
+//                                    /*Data Save*/
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_USER_ID, dataStr.getString(AppConstant.KEY_USER_ID));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_NAME, dataStr.getString(AppConstant.KEY_NAME));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CONTACT, dataStr.getString(AppConstant.KEY_CONTACT));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CONTACT_VERIFIED, dataStr.getString(AppConstant.KEY_CONTACT_VERIFIED));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_EMAIL_ID, dataStr.getString(AppConstant.KEY_EMAIL_ID));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.STATE_ID, dataStr.getString(AppConstant.STATE_ID));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CITY, dataStr.getString(AppConstant.KEY_CITY));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_DOB, dataStr.getString(AppConstant.KEY_DOB));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_GENDER, dataStr.getString(AppConstant.KEY_GENDER));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_QUALIFICATION_TYPE, dataStr.getString(AppConstant.KEY_QUALIFICATION_TYPE));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_EXPERIANCE_YEARS, dataStr.getString(AppConstant.KEY_EXPERIANCE_YEARS));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_EXPERIANCE_MONTH, dataStr.getString(AppConstant.KEY_EXPERIANCE_MONTH));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_SALARY, dataStr.getString(AppConstant.KEY_SALARY));
+////                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
+////                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
+//                                    if (dataStr.has(AppConstant.KEY_PROFILE_URL)) {
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
+//                                    }
+//                                    else {
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, "");
+//                                    }
+//                                    if (dataStr.has(AppConstant.KEY_RESUME_URL)) {
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
+//                                    }
+//                                    else {
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, "");
+//                                    }
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_IS_REGISTER, dataStr.getString(AppConstant.KEY_IS_REGISTER));
+//                                    // GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_DEVICE_ID, dataStr.getString(AppConstant.KEY_DEVICE_ID));
+//                                    //   GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_OS_TYPE, dataStr.getString(AppConstant.KEY_OS_TYPE));
+//                                    //    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_NOTIFICATION_ID, dataStr.getString(AppConstant.KEY_NOTIFICATION_ID));
+//                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_IS_EDURP, dataStr.getString(AppConstant.KEY_IS_EDURP));
+//                                    if (dataStr.getString("eduErp").equals("Y")) {
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_COURSE_NAME, dataStr.getString(AppConstant.KEY_COURSE_NAME));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROJECT_NAME, dataStr.getString(AppConstant.KEY_PROJECT_NAME));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_BATCH_NAME, dataStr.getString(AppConstant.KEY_BATCH_NAME));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CENTRE_NAME, dataStr.getString(AppConstant.KEY_CENTRE_NAME));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_COURSE_ID, dataStr.getString(AppConstant.KEY_COURSE_ID));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROJECT_ID, dataStr.getString(AppConstant.KEY_PROJECT_ID));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_BATCH_ID, dataStr.getString(AppConstant.KEY_BATCH_ID));
+//                                        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CENTRE_ID, dataStr.getString(AppConstant.KEY_CENTRE_ID));
+//                                    }
+//                                    navigateToDashBoard();
+//                                }
+//
+//                            } else {
+//                                navigateToRegister(contactInfo, "N");
+//                            }
+//                        } else {
+//                            String msgStr = jsonObject.getString("message");
+//                            CommonMethod.showToast(msgStr, VerifyOtpActivity.this);
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                        CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, VerifyOtpActivity.this);
+//                    }
+//                }
+//            });
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 
     void navigateToRegister(String mobileNumber, String isEduRp) {

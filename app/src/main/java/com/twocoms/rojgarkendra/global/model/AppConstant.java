@@ -6,34 +6,31 @@ import android.view.View;
 public class AppConstant {
 
     //DEV
-    public static final String BASE_URL = "https://dev.2coms.com/erkapi/api/";
+    public static final String BASE_URL = "https://dev-eduerp.2coms.com/api/";
 
     //PRODUCTION
-    public static final String BASE_URL_PROD = "https://dev.2coms.com/erkapi/api/";
+   // public static final String BASE_URL = "https://dev-eduerp.2coms.com/api/";
 
 
-    public static final String VERIFY_MOB_NO = BASE_URL + "contact_no";
-    public static final String VERIFY_OTP = BASE_URL + "verify_otp";
-    public static final String RESEND_OTP = BASE_URL + "resend_otp";
-    public static final String CREATE_USER = BASE_URL + "create_user";
-    public static final String GET_STATE = BASE_URL + "states";
-    public static final String GET_USER_DETAILS = BASE_URL + "candidate_detail/";
-    public static final String UPDATE_USER_DETAILS = BASE_URL + "update_user/";
-    public static final String GET_HOT_JOBS = BASE_URL + "jobs";
-    public static final String GET_ALL_JOBS = BASE_URL + "jobs";
+//    /Register/token
 
-    public static final String GET_POPULAR_JOBS = BASE_URL + "popularjob";
-
-
-
-    public static final String GET_APPLIED_AND_UPCOMING_INTERVIEW = BASE_URL + "interview";
-    public static final String ADD_STUDENT_REMARK= BASE_URL + "student_remark";
-
-    public static final String GET_JOBS_DETAIL = BASE_URL + "job_details/";
-    public static final String APPLY_ALL_JOBS = BASE_URL + "applyJob";
-    public static final String GET_ALL_TESTIMONIALS = BASE_URL + "testimonial";
+    public static final String GET_TOKEN_CREATION = BASE_URL + "Register/"+"token";
+    public static final String VERIFY_MOB_NO = BASE_URL +"Register/"+"contact_no";
+    public static final String VERIFY_OTP = BASE_URL +"Register/"+ "verify_otp";
+    public static final String RESEND_OTP = BASE_URL + "Register/"+"resend_otp";
+    public static final String CREATE_USER = BASE_URL + "Register/"+"create_user";
+    public static final String GET_STATE = BASE_URL +"Register/"+ "states";
+    public static final String GET_USER_DETAILS = BASE_URL + "Register/"+ "candidate_detail/";
+    public static final String UPDATE_USER_DETAILS = BASE_URL + "Register/"+ "update_user/";
+    public static final String GET_HOT_JOBS = BASE_URL + "Vacancy/"+"jobs";
+    public static final String GET_ALL_JOBS = BASE_URL + "Vacancy/"+"jobs";
+    public static final String GET_POPULAR_JOBS = BASE_URL + "Vacancy/"+"popularjobs";
+    public static final String GET_JOBS_DETAIL = BASE_URL +"Vacancy/"+ "job_details/";
+    public static final String APPLY_ALL_JOBS = BASE_URL + "Vacancy/"+"applyJob";
+    public static final String GET_APPLIED_AND_UPCOMING_INTERVIEW = BASE_URL + "Interview/"+"allInterview";
+    public static final String ADD_STUDENT_REMARK= BASE_URL + "Interview/"+"student_remark";
+    public static final String GET_ALL_TESTIMONIALS = BASE_URL + "Testimonial/show";
     public static final String SOMETHING_WENT_WRONG = "Something went wrong please try again...!!!";
-
     public static final String JOB_APPLIED_SUCCESSFULLY_MESSAGE = "Job applied successfully!";
     public static final String KEY_NAME = "name";
     public static final String KEY_CONTACT = "contact";
@@ -66,7 +63,7 @@ public class AppConstant {
     public static final String KEY_CENTRE_ID_2 = "centre_id";
     public static final String KEY_INVITE_CODE = "invite_code";
     public static final String KEY_DEVICE_TOKEN = "device_token";
-    public static final String KEY_PROFILE_URL = "profile_url";
+    public static final String KEY_PROFILE_URL = "photo_url";
     public static final String KEY_RESUME_URL = "resume_url";
     public static final String KEY_RESUME = "resume";
     public static final String KEY_PROFILE_PHOTO = "profile_photo";
@@ -151,7 +148,7 @@ public class AppConstant {
     public static final String KEY_JOB_DATA_SUCCESS = "success";
     public static final String KEY_JOB_DATA_OBJ_DATA = "data";
     public static final String KEY_JOB_DATA_ARRAY_DATA = "data";
-    public static final String KEY_JOB_DATA_NO_OF_ENTRIES = "total";
+    public static final String KEY_JOB_DATA_NO_OF_ENTRIES = "totalPage";
     public static final String KEY_JOB_DATA_PER_PAGE = "per_page";
     public static final String KEY_JOB_DATA_ID = "id";
     public static final String KEY_JOB_DATA_SALARY = "salary";
@@ -249,6 +246,8 @@ public class AppConstant {
     public static final String KEY_USER_NAME = "name";
 
     public static final String KEY_INVITE_CODE_VALUE = "invitecodeshared";
+    public static final String KEY_TOKEN_MAIN = "bearertoken";
+
 
 
 

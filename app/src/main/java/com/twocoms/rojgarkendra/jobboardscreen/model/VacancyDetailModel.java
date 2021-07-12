@@ -5,7 +5,7 @@ public class VacancyDetailModel {
     public VacancyDetailModel() {
     }
 
-    private int id;
+    private String  id;
     private String vacancy_master_id;
     private String naps_opportunity_id;
     private String zoho_recruit_id;
@@ -66,7 +66,7 @@ public class VacancyDetailModel {
 
     // Getter Methods
 
-    public double getId() {
+    public String getId() {
         return id;
     }
 
@@ -296,7 +296,7 @@ public class VacancyDetailModel {
 
     // Setter Methods
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -368,73 +368,73 @@ public class VacancyDetailModel {
         this.minimum_education = minimum_education;
     }
 
-    public void setOther_eligibility_criterea(String other_eligibility_criterea) {
-        this.other_eligibility_criterea = other_eligibility_criterea;
-    }
+//    public void setOther_eligibility_criterea(String other_eligibility_criterea) {
+//        this.other_eligibility_criterea = other_eligibility_criterea;
+//    }
 
-    public void setHeight(double height) {
-        this.height = height;
-    }
+   // public void setHeight(double height) {
+//        this.height = height;
+//    }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public void setShift_type(String shift_type) {
-        this.shift_type = shift_type;
-    }
-
-    public void setShift_timing(String shift_timing) {
-        this.shift_timing = shift_timing;
-    }
-
-    public void setFooding(String fooding) {
-        this.fooding = fooding;
-    }
-
-    public void setLodging(String lodging) {
-        this.lodging = lodging;
-    }
-
+//    public void setWeight(double weight) {
+//        this.weight = weight;
+//    }
+//
+//    public void setShift_type(String shift_type) {
+//        this.shift_type = shift_type;
+//    }
+//
+//    public void setShift_timing(String shift_timing) {
+//        this.shift_timing = shift_timing;
+//    }
+//
+//    public void setFooding(String fooding) {
+//        this.fooding = fooding;
+//    }
+//
+//    public void setLodging(String lodging) {
+//        this.lodging = lodging;
+//    }
+//
     public void setOther_benefits_for_employees(String other_benefits_for_employees) {
         this.other_benefits_for_employees = other_benefits_for_employees;
     }
 
-    public void setIn_hand_salary(String in_hand_salary) {
-        this.in_hand_salary = in_hand_salary;
-    }
+  //  public void setIn_hand_salary(String in_hand_salary) {
+//        this.in_hand_salary = in_hand_salary;
+//    }
 
     public void setCtc(String ctc) {
         this.ctc = ctc;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public void setMinimum_salary_stipend(String minimum_salary_stipend) {
-        this.minimum_salary_stipend = minimum_salary_stipend;
-    }
-
-    public void setMaximum_salary_stipend(String maximum_salary_stipend) {
-        this.maximum_salary_stipend = maximum_salary_stipend;
-    }
-
-    public void setOvertime_per_day_hr(String overtime_per_day_hr) {
-        this.overtime_per_day_hr = overtime_per_day_hr;
-    }
-
-    public void setOt_amount(String ot_amount) {
-        this.ot_amount = ot_amount;
-    }
-
-    public void setJob_opening_status(String job_opening_status) {
-        this.job_opening_status = job_opening_status;
-    }
-
-    public void setDate_opened(String date_opened) {
-        this.date_opened = date_opened;
-    }
+//    public void setCurrency(String currency) {
+//        this.currency = currency;
+//    }
+//
+//    public void setMinimum_salary_stipend(String minimum_salary_stipend) {
+//        this.minimum_salary_stipend = minimum_salary_stipend;
+//    }
+//
+//    public void setMaximum_salary_stipend(String maximum_salary_stipend) {
+//        this.maximum_salary_stipend = maximum_salary_stipend;
+//    }
+//
+//    public void setOvertime_per_day_hr(String overtime_per_day_hr) {
+//        this.overtime_per_day_hr = overtime_per_day_hr;
+//    }
+//
+//    public void setOt_amount(String ot_amount) {
+//        this.ot_amount = ot_amount;
+//    }
+//
+//    public void setJob_opening_status(String job_opening_status) {
+//        this.job_opening_status = job_opening_status;
+//    }
+//
+//    public void setDate_opened(String date_opened) {
+//        this.date_opened = date_opened;
+//    }
 
     public void setJob_type(String job_type) {
         this.job_type = job_type;
@@ -452,37 +452,37 @@ public class VacancyDetailModel {
         this.city = city;
     }
 
-    public void setState_province(String state_province) {
-        this.state_province = state_province;
-    }
+//    public void setState_province(String state_province) {
+//        this.state_province = state_province;
+//    }
+//
+//    public void setCountry(String country) {
+//        this.country = country;
+//    }
+//
+//    public void setPostal_code(double postal_code) {
+//        this.postal_code = postal_code;
+//    }
+//
+//    public void setRegion_of_work_location_in_india(String region_of_work_location_in_india) {
+//        this.region_of_work_location_in_india = region_of_work_location_in_india;
+//    }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setPostal_code(double postal_code) {
-        this.postal_code = postal_code;
-    }
-
-    public void setRegion_of_work_location_in_india(String region_of_work_location_in_india) {
-        this.region_of_work_location_in_india = region_of_work_location_in_india;
-    }
-
-    public void setAdded_by(double added_by) {
-        this.added_by = added_by;
-    }
-
-    public void setCreated_on(String created_on) {
-        this.created_on = created_on;
-    }
-
-    public void setEdited_by(double edited_by) {
-        this.edited_by = edited_by;
-    }
-
-    public void setUpdated_on(String updated_on) {
-        this.updated_on = updated_on;
-    }
+//    public void setAdded_by(double added_by) {
+//        this.added_by = added_by;
+//    }
+//
+//    public void setCreated_on(String created_on) {
+//        this.created_on = created_on;
+//    }
+//
+//    public void setEdited_by(double edited_by) {
+//        this.edited_by = edited_by;
+//    }
+//
+//    public void setUpdated_on(String updated_on) {
+//        this.updated_on = updated_on;
+//    }
 
     public void setPublished(String published) {
         this.published = published;

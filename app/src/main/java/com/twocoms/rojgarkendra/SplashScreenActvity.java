@@ -21,6 +21,7 @@ import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
+import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.registrationscreen.controler.GetStartedActivity;
 import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataActivity;
@@ -34,7 +35,7 @@ public class SplashScreenActvity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         FirebaseApp.initializeApp(this);
         splashScreenDisplay(this);
-       Log.v( "FCMTOKEN",GlobalPreferenceManager.getStringForKey(SplashScreenActvity.this,AppConstant.KEY_DEVICE_TOKEN,""));
+        Log.v("FCMTOKEN", GlobalPreferenceManager.getStringForKey(SplashScreenActvity.this, AppConstant.KEY_DEVICE_TOKEN, ""));
         FirebaseDynamicLinks.getInstance()
                 .getDynamicLink(getIntent())
                 .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
@@ -50,29 +51,33 @@ public class SplashScreenActvity extends AppCompatActivity {
                                 && deepLink != null
                                 && deepLink.getBooleanQueryParameter("invitedby", false)) {
                             String referrerUid = deepLink.getQueryParameter("invitedby");
-                            GlobalPreferenceManager.saveStringForKey(SplashScreenActvity.this,AppConstant.KEY_INVITE_CODE,referrerUid);
-                            Log.v("ReferereId Main :",referrerUid);
-                          //  createAnonymousAccountWithReferrerInfo(referrerUid);
+                            GlobalPreferenceManager.saveStringForKey(SplashScreenActvity.this, AppConstant.KEY_INVITE_CODE, referrerUid);
+                            Log.v("ReferereId Main :", referrerUid);
+                            //  createAnonymousAccountWithReferrerInfo(referrerUid);
                         }
                     }
                 });
 
+        String token = GlobalPreferenceManager.getStringForKey(this, AppConstant.KEY_TOKEN_MAIN, "");
+        if (token.equals("")) {
+            CommonMethod.getTokenForMobile(SplashScreenActvity.this);
+        }
     }
 
     void splashScreenDisplay(final Context context) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                    if (GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_CONTACT_VERIFIED, "").equals("1") &&
-                            GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_IS_REGISTER, "").equals("Y")) {
-                        Intent mainIntent = new Intent(SplashScreenActvity.this, DashboardActivity.class);
-                        startActivity(mainIntent);
-                        finish();
-                    } else {
-                        Intent intent = new Intent(SplashScreenActvity.this, DashboardActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                if (GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_CONTACT_VERIFIED, "").equals("1") &&
+                        GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_IS_REGISTER, "").equals("Y")) {
+                    Intent mainIntent = new Intent(SplashScreenActvity.this, DashboardActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(SplashScreenActvity.this, DashboardActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }, 3000);
     }

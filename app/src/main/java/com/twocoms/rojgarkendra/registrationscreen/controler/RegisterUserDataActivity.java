@@ -1,3 +1,4 @@
+
 package com.twocoms.rojgarkendra.registrationscreen.controler;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -33,11 +35,19 @@ import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -46,9 +56,14 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.databinding.ActivityRegisterUserDataBinding;
+import com.twocoms.rojgarkendra.documentsscreen.controler.AddDocActivity;
+import com.twocoms.rojgarkendra.global.controler.AppHelper;
+import com.twocoms.rojgarkendra.global.controler.VolleyMultipartRequest;
+import com.twocoms.rojgarkendra.global.controler.VolleySingleton;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
+import com.twocoms.rojgarkendra.global.model.LoadingDialog;
 import com.twocoms.rojgarkendra.global.model.ServiceHandler;
 import com.twocoms.rojgarkendra.global.model.Validation;
 
@@ -64,14 +79,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class RegisterUserDataActivity extends AppCompatActivity {
 
@@ -116,7 +134,9 @@ public class RegisterUserDataActivity extends AppCompatActivity {
     ArrayList<String> listStates;
     String state_code = "";
     private Calendar mcalendar;
+    private LoadingDialog loadingDialog;
 
+    //    Bitmap bitmap;
     //    String dobToServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -366,7 +386,8 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (validation()) {
-                    userRegistration(jsonUserRegistration());
+                   // userRegistration(jsonUserRegistration());
+                    registerUserDataWithFilePart(RegisterUserDataActivity.this,jsonUserRegistration());
 //                    jsonUserRegistration();
                 }
             }
@@ -409,6 +430,8 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 }
             }
         });*/
+
+
 
 
     }
@@ -462,8 +485,8 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 Json.put(AppConstant.KEY_PROJECT_ID, projectId);
                 Json.put(AppConstant.KEY_BATCH_ID, batchId);
                 Json.put(AppConstant.KEY_COURSE_ID, courseId);
-                Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
-                Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
+//                Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
+//                Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
                 Json.put(AppConstant.KEY_LANGUAGE_KNOWN, registerUserDataBinding.languageKnownEditText.getText().toString());
 
                 Log.v("json", Json.toString());
@@ -493,8 +516,8 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 Json.put(AppConstant.KEY_NOTIFICATION_ID, GlobalPreferenceManager.getStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_DEVICE_TOKEN, ""));
                 Json.put("language_known", registerUserDataBinding.languageKnownEditText.getText().toString());
                 Json.put("role", registerUserDataBinding.designationEditText.getText().toString());
-                Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
-                Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
+//                Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
+//                Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
                 Log.v("json", Json.toString());
 
             } catch (JSONException e) {
@@ -1064,7 +1087,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 Uri uri = data.getParcelableExtra("path");
                 try {
                     // You can update this bitmap to your server
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                     Glide.with(this)
                             .load(bitmap)
                             .into(registerUserDataBinding.registationHeadre.userImg);
@@ -1078,22 +1101,51 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 }
             }
         } else if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                Uri fileuri = data.getData();
-                docFilePath = getFileNameByUri(this, fileuri);
-                Log.v("document", docFilePath);
-                String filename = docFilePath.substring(docFilePath.lastIndexOf("/") + 1);
-                registerUserDataBinding.uploadCvTxt.setText(filename);
-//                fileBAse64Str = fileBase64Convert(docFilePath);
-                try {
-                    fileBAse64Str = encodeFileToBase64Binary(loadFileAsBytesArray(docFilePath));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Log.v("base64FIle", fileBAse64Str);
-//                String decodeStr = decodeBase64(fileBAse64Str);
-//                Log.v("decode", decodeStr);
+//            if (resultCode == Activity.RESULT_OK) {
+//                Uri fileuri = data.getData();
+//                docFilePath = getFileNameByUri(this, fileuri);
+//                Log.v("document", docFilePath);
+//                String filename = docFilePath.substring(docFilePath.lastIndexOf("/") + 1);
+//                registerUserDataBinding.uploadCvTxt.setText(filename);
+////                fileBAse64Str = fileBase64Convert(docFilePath);
+//                try {
+//                    fileBAse64Str = encodeFileToBase64Binary(loadFileAsBytesArray(docFilePath));
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                Log.v("base64FIle", fileBAse64Str);
+////                String decodeStr = decodeBase64(fileBAse64Str);
+////                Log.v("decode", decodeStr);
+//
+//            }
 
+            if (resultCode == RESULT_OK) {
+                // Get the Uri of the selected file
+                Uri uri = data.getData();
+                String uriString = uri.toString();
+                File myFile = new File(uriString);
+                String path = myFile.getAbsolutePath();
+                String displayName = null;
+
+                if (uriString.startsWith("content://")) {
+                    if (uri.toString().contains(".pdf")) {
+                        Cursor cursor = null;
+                        try {
+                            cursor = getContentResolver().query(uri, null, null, null, null);
+                            if (cursor != null && cursor.moveToFirst()) {
+                                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                                registerUserDataBinding.uploadCvTxt.setText(displayName);
+                            }
+                        } finally {
+                            cursor.close();
+                        }
+                    }else {
+                        CommonMethod.showToast("Please Select PDF", RegisterUserDataActivity.this);
+                    }
+                } else if (uriString.startsWith("file://")) {
+                    displayName = myFile.getName();
+                    registerUserDataBinding.uploadCvTxt.setText(displayName);
+                }
             }
         }
     }
@@ -1270,12 +1322,12 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                         statesCode = new String[jsonArray.length()];
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = (JSONObject) jsonArray.get(i);
-                            String stateName = object.getString("StateName");
-                            int stateCode = object.getInt("StCode");
+                            String stateName = object.getString("name");
+                            int stateCode = object.getInt("id");
 //                            if (!stateName.equals("empty")) {
-                                listStates.add(stateName);
-                                states[i] = stateName;
-                                statesCode[i] = String.valueOf(stateCode);
+                            listStates.add(stateName);
+                            states[i] = stateName;
+                            statesCode[i] = String.valueOf(stateCode);
 //                            }
                         }
 
@@ -1317,4 +1369,156 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             registerUserDataBinding.registationHeadre.mobileLayout.setVisibility(View.VISIBLE);
         }
     }
+
+    private void registerUserDataWithFilePart(final Context context, final JSONObject jsonObject) {
+
+            loadingDialog = new LoadingDialog(context);
+            loadingDialog.show();
+            VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, AppConstant.CREATE_USER, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                String resultResponse = new String(response.data);
+                try {
+                    Log.v("response",resultResponse);
+                    JSONObject jsonObject = new JSONObject(resultResponse);
+                 //   JSONObject jsonObject = new JSONObject(result);
+                    if (jsonObject.getBoolean("success")) {
+                        JSONObject dataStr = jsonObject.getJSONObject("data");
+                        dataStr.put(AppConstant.KEY_IS_REGISTER, "Y");
+                        dataStr.put(AppConstant.KEY_IS_EDURP, eduJobStr);
+//                        String msgStr = jsonObject.getString("message");
+//                        if (dataStr.has("is_register") && dataStr.has("eduErp")) {
+                        /*Data Save*/
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_USER_ID, dataStr.getString(AppConstant.KEY_USER_ID));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_NAME, dataStr.getString(AppConstant.KEY_NAME));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_CONTACT, dataStr.getString(AppConstant.KEY_CONTACT));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_CONTACT_VERIFIED, dataStr.getString(AppConstant.KEY_CONTACT_VERIFIED));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_EMAIL_ID, dataStr.getString(AppConstant.KEY_EMAIL_ID));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.STATE_ID, dataStr.getString(AppConstant.STATE_ID));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_CITY, dataStr.getString(AppConstant.KEY_CITY));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_DOB, dataStr.getString(AppConstant.KEY_DOB));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_GENDER, dataStr.getString(AppConstant.KEY_GENDER));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_QUALIFICATION_TYPE, dataStr.getString(AppConstant.KEY_QUALIFICATION_TYPE));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_EXPERIANCE_YEARS, dataStr.getString(AppConstant.KEY_EXPERIANCE_YEARS));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_EXPERIANCE_MONTH, dataStr.getString(AppConstant.KEY_EXPERIANCE_MONTH));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_SALARY, dataStr.getString(AppConstant.KEY_SALARY));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));
+                        //  GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_DEVICE_ID, dataStr.getString(AppConstant.KEY_DEVICE_ID));
+                        // GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_OS_TYPE, dataStr.getString(AppConstant.KEY_OS_TYPE));
+                        //   GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_NOTIFICATION_ID, dataStr.getString(AppConstant.KEY_NOTIFICATION_ID));
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_IS_REGISTER, "Y");
+//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.thi);
+//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_IS_REGISTER, dataStr.getString(AppConstant.KEY_IS_REGISTER));
+                        if (dataStr.has(AppConstant.KEY_PROFILE_URL)) {
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
+                        } else {
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROFILE_URL, "");
+
+                        }
+                        if (dataStr.has(AppConstant.KEY_RESUME_URL)) {
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
+                        } else {
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_RESUME_URL, "");
+
+                        }
+
+                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_WALLET_AMOUNT, dataStr.getString(AppConstant.KEY_WALLET_AMOUNT));
+                        if (dataStr.getString("eduErp").equals("Y")) {
+//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_COURSE_NAME, dataStr.getString(AppConstant.KEY_COURSE_NAME));
+//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROJECT_NAME, dataStr.getString(AppConstant.KEY_PROJECT_NAME));
+//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_BATCH_NAME, dataStr.getString(AppConstant.KEY_BATCH_NAME));
+//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_CENTRE_NAME, dataStr.getString(AppConstant.KEY_CENTRE_NAME));
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_COURSE_ID, dataStr.getString(AppConstant.KEY_COURSE_ID));
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROJECT_ID, dataStr.getString(AppConstant.KEY_PROJECT_ID));
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_BATCH_ID, dataStr.getString(AppConstant.KEY_BATCH_ID));
+                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_CENTRE_ID, dataStr.getString(AppConstant.KEY_CENTRE_ID));
+                        }
+                        loadingDialog.dismiss();
+                        navigateToDashBoard();
+//                        }
+                    } else {
+                        String msgStr = jsonObject.getString("message");
+                        CommonMethod.showToast(msgStr, RegisterUserDataActivity.this);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+
+                        Log.e("Error Status", status);
+                        Log.e("Error Message", message);
+
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message + " Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message + " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message + " Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.i("Error", errorMessage);
+                loadingDialog.dismiss();
+                CommonMethod.showToast(errorMessage,RegisterUserDataActivity.this);
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Gson gson = new Gson();
+                Type type = new TypeToken<Map<String, String>>() {
+                }.getType();
+                Map<String, String> myMap = gson.fromJson(jsonObject.toString(), type);
+                return myMap;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String tokenMain = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_TOKEN_MAIN, "");
+                headers.put("Authorization", "Bearer " + tokenMain);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                // file name could found file base or direct access from real path
+                // for now just get bitmap data from ImageView
+                if(bitmap != null) {
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    params.put("profile_photo", new DataPart("profile_image.jpg", byteArray, "image/jpeg"));
+//                params.put("cover", new DataP¬art("file_cover.jpg", AppHelper.getFileDataFromDrawable(getBaseContext(), mCoverImage.getDrawable()), "image/jpeg"));
+
+                }
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
+    }
+
 }

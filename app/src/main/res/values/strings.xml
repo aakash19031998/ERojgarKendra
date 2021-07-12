@@ -111,7 +111,11 @@
     <string name="course_hint">Course name</string>
     <string name="batch_hint">Batch name</string>
     <string name="skill_hint">Skills</string>
-
-
+    <string name="upload_document">Upload Document</string>
+    <string name="select_doc">SELECT DOCUMNET</string>
+    <string name="doc_type">Select Document</string>
+    <string name="doc_note">NOTES</string>
+    <string name="upload_doc">Upload Document</string>
+    <string name="upload">Upload</string>
 
 </resources>

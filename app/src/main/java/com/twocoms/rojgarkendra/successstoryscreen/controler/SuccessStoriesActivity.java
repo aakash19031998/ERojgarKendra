@@ -108,7 +108,6 @@ public class SuccessStoriesActivity extends AppCompatActivity {
             serviceHandler.StringRequest(Request.Method.POST, json.toString(), AppConstant.GET_ALL_TESTIMONIALS, true, new ServiceHandler.VolleyCallback() {
                 @Override
                 public void onSuccess(String result) {
-
                     Log.v("Response", result);
                     try {
                         JSONObject jsonObject = new JSONObject(result);
@@ -116,7 +115,7 @@ public class SuccessStoriesActivity extends AppCompatActivity {
                         if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
 
                             JSONObject object = jsonObject.getJSONObject(AppConstant.KEY_JOB_DATA_OBJ_DATA);
-                            JSONArray jsonArray = object.getJSONArray(AppConstant.KEY_JOB_DATA_ARRAY_DATA);
+                            JSONArray jsonArray = object.getJSONArray("records");
                             numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
                             int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
                             double numberofPages = ((double) numberofentries) / perPageData;

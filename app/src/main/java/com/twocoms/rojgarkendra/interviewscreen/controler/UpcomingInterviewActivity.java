@@ -124,7 +124,7 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
                         if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
 
                             JSONObject object = jsonObject.getJSONObject(AppConstant.KEY_JOB_DATA_OBJ_DATA);
-                            JSONArray jsonArray = object.getJSONArray(AppConstant.KEY_JOB_DATA_ARRAY_DATA);
+                            JSONArray jsonArray = object.getJSONArray("records");
 
                             numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
                             int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);

@@ -22,8 +22,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.credentials.HintRequest;
@@ -46,6 +52,9 @@ import com.twocoms.rojgarkendra.global.model.Validation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 //import com.twocoms.rojgarkendra.global.model.AppSignatureHelper;
 
 public class VerifyMobileNumberActivity extends AppCompatActivity {
@@ -60,6 +69,7 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
     String mobile_no;
     String otpStr;
     String android_id;
+    String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,16 +105,14 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
         signupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String token = GlobalPreferenceManager.getStringForKey(VerifyMobileNumberActivity.this, AppConstant.KEY_TOKEN_MAIN, "");
+                GlobalPreferenceManager.clearSharedPref(VerifyMobileNumberActivity.this);
+                GlobalPreferenceManager.saveStringForKey(VerifyMobileNumberActivity.this, AppConstant.KEY_TOKEN_MAIN, token);
+                mobile_no = mobile_edit_text.getText().toString();
 
-                // AppSignatureHelper appSignatureHelper = new AppSignatureHelper(VerifyMobileNumberActivity.this);
-                // appSignatureHelper.getAppSignatures();
-
-               GlobalPreferenceManager.clearSharedPref(VerifyMobileNumberActivity.this);
-               mobile_no = mobile_edit_text.getText().toString();
-
-                if (Validation.checkIfEmptyOrNot(mobile_no)){
+                if (Validation.checkIfEmptyOrNot(mobile_no)) {
                     CommonMethod.showToast("Please Enter Mobile Number", VerifyMobileNumberActivity.this);
-                }else if(!Validation.isValidMobileNumber(mobile_no)) {
+                } else if (!Validation.isValidMobileNumber(mobile_no)) {
                     CommonMethod.showToast("Enter Valid Mobile Number", VerifyMobileNumberActivity.this);
                 } else {
                     proceedButtonClicked();
@@ -113,13 +121,14 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
 
             }
         });
-
         requestPhoneNumber();
-
         android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        Log.v("Device Id",android_id);
-
+        Log.v("Device Id", android_id);
+        String token = GlobalPreferenceManager.getStringForKey(this,AppConstant.KEY_TOKEN_MAIN,"");
+        if(token.equals("")) {
+            CommonMethod.getTokenForMobile(VerifyMobileNumberActivity.this);
+        }
     }
 
     void proceedButtonClicked() {
@@ -137,7 +146,7 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
 
     }
 
-    void getFCMToken(){
+    void getFCMToken() {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -232,8 +241,7 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
     }
 
 
-
-    void startSMSretreiver(){
+    void startSMSretreiver() {
         SmsRetrieverClient client = SmsRetriever.getClient(this /* context */);
 // Starts SmsRetriever, which waits for ONE matching SMS message until timeout
 // (5 minutes). The matching SMS message will be sent via a Broadcast Intent with
@@ -245,14 +253,14 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
         task.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.e("Succesfully Started SMS","TRUE");
+                Log.e("Succesfully Started SMS", "TRUE");
             }
         });
 
         task.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("Succesfully Started SMS","FALSE");
+                Log.e("Succesfully Started SMS", "FALSE");
             }
         });
     }
@@ -262,30 +270,26 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
 //    }
 
     void verifyMobileNo() {
-
-        final JSONObject Json = new JSONObject();
-
+        final JSONObject jsonRequest = new JSONObject();
         try {
-            Json.put(AppConstant.KEY_CONTACT, mobile_edit_text.getText().toString());
-            //Json.put("Messege","HAVELLS APP VERIFICATION");
-            Log.v("JSONURL", Json.toString());
+            jsonRequest.put(AppConstant.KEY_CONTACT, mobile_edit_text.getText().toString());
+            Log.v("Json Request", jsonRequest.toString());
+            Log.v("URL", AppConstant.VERIFY_MOB_NO);
             ServiceHandler serviceHandler = new ServiceHandler(VerifyMobileNumberActivity.this);
-            serviceHandler.StringRequest(Request.Method.POST, Json.toString(), AppConstant.VERIFY_MOB_NO, true, new ServiceHandler.VolleyCallback() {
+            serviceHandler.StringRequest(Request.Method.POST, jsonRequest.toString(), AppConstant.VERIFY_MOB_NO, true, new ServiceHandler.VolleyCallback() {
                 @Override
                 public void onSuccess(String result) {
-
-                    Log.v("Response",result);
+                    Log.v("Response", result);
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        if (jsonObject.getBoolean("success")){
+                        if (jsonObject.getBoolean("success")) {
                             JSONObject dataStr = jsonObject.getJSONObject("data");
                             otpStr = dataStr.getString("otp");
                             Intent intent = new Intent(VerifyMobileNumberActivity.this, VerifyOtpActivity.class);
                             intent.putExtra("mobile_no", mobile_no);
-                            intent.putExtra("otp",otpStr);
+                            intent.putExtra("otp", otpStr);
                             startActivity(intent);
-                        }
-                        else {
+                        } else {
                             CommonMethod.showToast(jsonObject.getString("message"), VerifyMobileNumberActivity.this);
 
                         }
@@ -302,5 +306,6 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
         }
 
     }
+
 
 }

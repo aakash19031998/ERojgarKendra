@@ -195,7 +195,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         if (eduStr.equals("Y")) {
             NavMenuModel item1 = new NavMenuModel();
-            item1.setIconName(AppConstant.NAME_JOBS);
+            item1.setTitleName(AppConstant.NAME_JOBS);
             item1.setIconImg(R.drawable.bg_nav_dropdown);
             item1.setLeftImg(R.drawable.icon_job_board);
             item1.setId(AppConstant.ID_JOBS);
@@ -206,39 +206,39 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             NavMenuModel navMenuModel = new NavMenuModel();
             navMenuModel.setIconImg(R.drawable.icon_matching_vacancy);
-            navMenuModel.setIconName(AppConstant.NAME_MATCHING_VACANCIES);
+            navMenuModel.setTitleName(AppConstant.NAME_MATCHING_VACANCIES);
             navMenuModel.setId(AppConstant.ID_MATCHING_VACANCIES);
             allSUbmenu.add(navMenuModel);
 
             NavMenuModel navMenuModel2 = new NavMenuModel();
             navMenuModel2.setIconImg(R.drawable.icon_hot_jobs);
-            navMenuModel2.setIconName(AppConstant.NAME_HOT_JOBS);
+            navMenuModel2.setTitleName(AppConstant.NAME_HOT_JOBS);
             navMenuModel2.setId(AppConstant.ID_HOT_JOBS);
             allSUbmenu.add(navMenuModel2);
 
             NavMenuModel navMenuModel3 = new NavMenuModel();
             navMenuModel3.setIconImg(R.drawable.icon_popular_jobs);
-            navMenuModel3.setIconName(AppConstant.NAME_POPULARJOBS);
+            navMenuModel3.setTitleName(AppConstant.NAME_POPULARJOBS);
             navMenuModel3.setId(AppConstant.ID_POPULARJOBS);
             allSUbmenu.add(navMenuModel3);
 
             NavMenuModel navMenuModel4 = new NavMenuModel();
             navMenuModel4.setIconImg(R.drawable.icon_applied_by_my_team);
-            navMenuModel4.setIconName(AppConstant.NAME_JOBS_APPLIED_BY_BATCHMATES);
+            navMenuModel4.setTitleName(AppConstant.NAME_JOBS_APPLIED_BY_BATCHMATES);
             navMenuModel4.setId(AppConstant.ID_JOBS_APPLIED_BY_BATCHMATES);
             allSUbmenu.add(navMenuModel4);
 
             NavMenuModel navMenuModel5 = new NavMenuModel();
             navMenuModel5.setIconImg(R.drawable.icon_all_jobs);
             navMenuModel5.setId(AppConstant.ID_ALL_JOBS);
-            navMenuModel5.setIconName(AppConstant.NAME_ALL_JOBS);
+            navMenuModel5.setTitleName(AppConstant.NAME_ALL_JOBS);
             allSUbmenu.add(navMenuModel5);
 
             item1.setAllSubMenu(allSUbmenu);
 
         } else {
             NavMenuModel item1 = new NavMenuModel();
-            item1.setIconName(AppConstant.NAME_JOBS);
+            item1.setTitleName(AppConstant.NAME_JOBS);
             item1.setIconImg(R.drawable.bg_nav_dropdown);
             item1.setLeftImg(R.drawable.icon_job_board);
             item1.setId(AppConstant.ID_JOBS);
@@ -249,25 +249,25 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             NavMenuModel navMenuModel = new NavMenuModel();
             navMenuModel.setIconImg(R.drawable.icon_matching_vacancy);
-            navMenuModel.setIconName(AppConstant.NAME_MATCHING_VACANCIES);
+            navMenuModel.setTitleName(AppConstant.NAME_MATCHING_VACANCIES);
             navMenuModel.setId(AppConstant.ID_MATCHING_VACANCIES);
             allSUbmenu.add(navMenuModel);
 
             NavMenuModel navMenuModel2 = new NavMenuModel();
             navMenuModel2.setIconImg(R.drawable.icon_hot_jobs);
             navMenuModel2.setId(AppConstant.ID_HOT_JOBS);
-            navMenuModel2.setIconName(AppConstant.NAME_HOT_JOBS);
+            navMenuModel2.setTitleName(AppConstant.NAME_HOT_JOBS);
             allSUbmenu.add(navMenuModel2);
 
             NavMenuModel navMenuModel3 = new NavMenuModel();
             navMenuModel3.setIconImg(R.drawable.icon_popular_jobs);
-            navMenuModel3.setIconName(AppConstant.NAME_POPULARJOBS);
+            navMenuModel3.setTitleName(AppConstant.NAME_POPULARJOBS);
             navMenuModel3.setId(AppConstant.ID_POPULARJOBS);
             allSUbmenu.add(navMenuModel3);
 
             NavMenuModel navMenuModel5 = new NavMenuModel();
             navMenuModel5.setIconImg(R.drawable.icon_all_jobs);
-            navMenuModel5.setIconName(AppConstant.NAME_ALL_JOBS);
+            navMenuModel5.setTitleName(AppConstant.NAME_ALL_JOBS);
             navMenuModel5.setId(AppConstant.ID_ALL_JOBS);
             allSUbmenu.add(navMenuModel5);
 
@@ -281,7 +281,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
 
             NavMenuModel item2 = new NavMenuModel();
-            item2.setIconName(AppConstant.NAME_INTERVIEW);
+            item2.setTitleName(AppConstant.NAME_INTERVIEW);
             item2.setIconImg(R.drawable.bg_nav_dropdown);
             item2.setLeftImg(R.drawable.icons_interview);
             item2.setId(AppConstant.ID_INTERVIEW);
@@ -292,14 +292,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             NavMenuModel navMenuModel6 = new NavMenuModel();
             navMenuModel6.setIconImg(R.drawable.icon_my_interview);
-            navMenuModel6.setIconName(AppConstant.NAME_UPCOMING_INTERVIEW);
+            navMenuModel6.setTitleName(AppConstant.NAME_UPCOMING_INTERVIEW);
             navMenuModel6.setId(AppConstant.ID_UPCOMING_INTERVIEW);
 
             allSUbmenu2.add(navMenuModel6);
 
             NavMenuModel navMenuModel7 = new NavMenuModel();
             navMenuModel7.setIconImg(R.drawable.icons_all_application);
-            navMenuModel7.setIconName(AppConstant.NAME_ALL_APPLIED_APPLICATION);
+            navMenuModel7.setTitleName(AppConstant.NAME_ALL_APPLIED_APPLICATION);
             navMenuModel7.setId(AppConstant.ID_ALL_APPLIED_APPLICATION);
             allSUbmenu2.add(navMenuModel7);
             item2.setAllSubMenu(allSUbmenu2);
@@ -309,7 +309,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
 
             NavMenuModel item3 = new NavMenuModel();
-            item3.setIconName(AppConstant.NAME_MY_DOCUMENTS);
+            item3.setTitleName(AppConstant.NAME_MY_DOCUMENTS);
             item3.setId(AppConstant.ID_MY_DOCUMENTS);
             item3.setLeftImg(R.drawable.icons_my_documents);
 
@@ -322,7 +322,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
 
         NavMenuModel item4 = new NavMenuModel();
-        item4.setIconName(AppConstant.NAME_SUCCESS_STORIES);
+        item4.setTitleName(AppConstant.NAME_SUCCESS_STORIES);
         item4.setId(AppConstant.ID_SUCCESS_STORIES);
         item4.setLeftImg(R.drawable.icon_success_story);
         // Adding data header
@@ -330,35 +330,35 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         allSUbmenu = new ArrayList<>();
         item4.setAllSubMenu(allSUbmenu);
 
-        NavMenuModel item5 = new NavMenuModel();
-        item5.setIconName(AppConstant.NAME_MY_GOODIES_STORES);
-        item5.setIconImg(R.drawable.bg_nav_dropdown);
-        item5.setLeftImg(R.drawable.icon_goodies_store);
-        item5.setId(AppConstant.ID_GOODIES_STORE);
-        // Adding data header
-        listDataHeader1.add(item5);
-        allSUbmenu = new ArrayList<>();
-
-        NavMenuModel navMenuModel10 = new NavMenuModel();
-        navMenuModel10.setIconImg(R.drawable.icon_my_store);
-        navMenuModel10.setIconName(AppConstant.NAME_MY_GOODIES_STORES);
-        navMenuModel10.setId(AppConstant.ID_MY_GOODIES_STORES);
-        allSUbmenu.add(navMenuModel10);
-
-        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
-
-            NavMenuModel navMenuModel11 = new NavMenuModel();
-            navMenuModel11.setIconImg(R.drawable.icon_my_orders);
-            navMenuModel11.setIconName(AppConstant.NAME_MY_ORDERS);
-            navMenuModel11.setId(AppConstant.ID_MY_ORDERS);
-            allSUbmenu.add(navMenuModel11);
-        }
-
-        item5.setAllSubMenu(allSUbmenu);
+//        NavMenuModel item5 = new NavMenuModel();
+//        item5.setTitleName(AppConstant.NAME_MY_GOODIES_STORES);
+//        item5.setIconImg(R.drawable.bg_nav_dropdown);
+//        item5.setLeftImg(R.drawable.icon_goodies_store);
+//        item5.setId(AppConstant.ID_GOODIES_STORE);
+//        // Adding data header
+//        listDataHeader1.add(item5);
+//        allSUbmenu = new ArrayList<>();
+//
+//        NavMenuModel navMenuModel10 = new NavMenuModel();
+//        navMenuModel10.setIconImg(R.drawable.icon_my_store);
+//        navMenuModel10.setTitleName(AppConstant.NAME_MY_GOODIES_STORES);
+//        navMenuModel10.setId(AppConstant.ID_MY_GOODIES_STORES);
+//        allSUbmenu.add(navMenuModel10);
+//
+//        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
+//
+//            NavMenuModel navMenuModel11 = new NavMenuModel();
+//            navMenuModel11.setIconImg(R.drawable.icon_my_orders);
+//            navMenuModel11.setTitleName(AppConstant.NAME_MY_ORDERS);
+//            navMenuModel11.setId(AppConstant.ID_MY_ORDERS);
+//            allSUbmenu.add(navMenuModel11);
+//        }
+//
+//        item5.setAllSubMenu(allSUbmenu);
 
         if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
             NavMenuModel item6 = new NavMenuModel();
-            item6.setIconName(AppConstant.NAME_LOGOUT);
+            item6.setTitleName(AppConstant.NAME_LOGOUT);
             item6.setId(AppConstant.ID_LOGOUT);
             item6.setLeftImg(R.drawable.icon_logout);
 

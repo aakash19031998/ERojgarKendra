@@ -24,6 +24,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -46,7 +54,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -349,5 +359,51 @@ public class CommonMethod {
         GlobalPreferenceManager.saveStringForKey(context, AppConstant.KEY_FILTER_GENDER_BATCH_MATES_JOBS, "");
         GlobalPreferenceManager.saveStringForKey(context, AppConstant.KEY_FILTER_SKILLS_BATCH_MATES_JOBS, "");
     }
+
+    public static void getTokenForMobile(final Context context) {
+        StringRequest jsonObjRequest = new StringRequest(Request.Method.POST, AppConstant.GET_TOKEN_CREATION,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.v("response", response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success) {
+                               String token = jsonObject.getString("data");
+                                GlobalPreferenceManager.saveStringForKey(context, AppConstant.KEY_TOKEN_MAIN, token);
+                            }
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("volley", "Error: " + error.getMessage());
+                        error.printStackTrace();
+                    }
+                }) {
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", "api@eduerp.com");
+                params.put("password", "admin@1234");
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonObjRequest);
+    }
+
 
 }

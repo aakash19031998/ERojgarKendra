@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/upload_toolbar"
+        layout="@layout/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/main_layouy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/upload_toolbar">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/doc_type_lnr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/reg_tc_bg"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_toRightOf="@+id/header1"
+            app:hintTextColor="@android:color/black"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_toLeftOf="@+id/proceddbuttonlayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:padding="@dimen/_10sdp"
+                android:id="@+id/doc_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/bg_reg_drop_down"
+                android:maxLines="1"
+                android:drawablePadding="@dimen/_8sdp"
+                android:drawableLeft="@drawable/bg_upload_select_document"
+                android:singleLine="true"
+                android:hint="@string/select_doc" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/upload_doc_lnr"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70sdp"
+            android:visibility="visible"
+            app:boxStrokeColor="@color/reg_tc_bg"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_toRightOf="@+id/header1"
+            app:hintTextColor="@android:color/black"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:gravity="center"
+            android:background="@drawable/gender_background_drawable"
+            android:layout_toLeftOf="@+id/proceddbuttonlayout"
+            android:layout_below="@id/doc_type_lnr">
+
+            <ImageView
+                android:id="@+id/upload_doc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_reg_upload"
+                android:gravity="center"
+
+                android:foregroundGravity="center_horizontal"
+                />
+
+            <TextView
+                android:id="@+id/upload_doc_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_15sdp"
+                android:text="@string/upload_doc"
+                android:singleLine="true"
+                android:textColor="@color/colorPrimary"
+                android:padding="@dimen/_4sdp"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_below="@+id/upload_cv"
+                />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/uploadbutton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_34sdp"
+            android:text="@string/upload"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:gravity="center"
+            android:background="@drawable/verify_enable"
+            android:padding="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:layout_below="@+id/upload_doc_lnr"></TextView>
+    </RelativeLayout>
+
+
+</RelativeLayout>

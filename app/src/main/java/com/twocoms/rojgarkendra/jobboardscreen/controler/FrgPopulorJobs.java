@@ -99,13 +99,13 @@ public class FrgPopulorJobs extends Fragment {
                     if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
 
                         JSONObject object = jsonObject.getJSONObject(AppConstant.KEY_JOB_DATA_OBJ_DATA);
-                        JSONArray jsonArray = object.getJSONArray(AppConstant.KEY_JOB_DATA_ARRAY_DATA);
+                        JSONArray jsonArray = object.getJSONArray("records");
 
-                        numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
-                        int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
-                        double numberofPages = ((double) numberofentries) / perPageData;
+                     //   numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
+                       // int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
+                        double numberofPages = 5;
                         numberOfPagesFromServer = Integer.parseInt(CommonMethod.roundNumbertoNextPossibleValue(numberofPages + ""));
-                        Log.e("numberOfPagesFromServer", "" + numberOfPagesFromServer);
+                       // Log.e("numberOfPagesFromServer", "" + numberOfPagesFromServer);
                         // nextPageUrl = object.getString("next_page_url");
 
                         for (int i = 0; i < jsonArray.length(); i++) {

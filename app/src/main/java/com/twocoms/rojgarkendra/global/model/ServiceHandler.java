@@ -21,13 +21,18 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.internal.service.Common;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
+import com.twocoms.rojgarkendra.global.controler.AppHelper;
+import com.twocoms.rojgarkendra.global.controler.VolleyMultipartRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.CheckedOutputStream;
@@ -58,7 +63,6 @@ public class ServiceHandler {
             loadingDialog = new LoadingDialog(context);
             loadingDialog.show();
         }
-
 
         Log.d("JsonRequest", parameters.toString());
 
@@ -363,13 +367,13 @@ public class ServiceHandler {
                     if (loadingDialog != null && loadingDialog.isShowing())
                         loadingDialog.dismiss();
 
-               byte [] data =      error.networkResponse.data;
+                    byte[] data = error.networkResponse.data;
 
 //                    byte[] bytes = "hello world".getBytes();
 //creates a string from the byte array without specifying character encoding
                     String s = new String(data);
 
-                    Log.v("NetworkResponse",s);
+                    Log.v("NetworkResponse", s);
                     if (error.getMessage() == null) {
                         Toast.makeText(context, "Something went wrong please try again!", Toast.LENGTH_SHORT).show();
                     } else if (error instanceof TimeoutError) {
@@ -381,29 +385,26 @@ public class ServiceHandler {
                     Log.d("Error", error.toString());
                 }
             }) {
-//                @Override
-//                public Map<String, String> getHeaders() {
-//                    Map<String, String> params1 = new HashMap<>();
-//
-////                    params1.put("contact", "9967265737");
-////                    params1.put("Clientid",Application_Constants.CLIENT_ID);
-////                    params1.put("SecretId",Application_Constants.SECRET_ID);
-//                    return params1;
-//                }
-
                 @Override
                 public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
+                    return "application/x-www-form-urlencoded; charset=UTF-8";
                 }
 
                 @Override
-                public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return parameters == null ? null : parameters.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", parameters, "utf-8");
-                        return null;
-                    }
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<Map<String, String>>() {
+                    }.getType();
+                    Map<String, String> myMap = gson.fromJson(parameters, type);
+                    return myMap;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    String tokenMain = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_TOKEN_MAIN, "");
+                    headers.put("Authorization", "Bearer " + tokenMain);
+                    return headers;
                 }
             };
 
