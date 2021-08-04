@@ -60,11 +60,13 @@
     <string name="salary">Salary</string>
     <string name="client_name">Client Name</string>
     <string name="job_type">Job Types</string>
+    <string name="current_status">Current Status : </string>
     <string name="job_location">Job Location</string>
     <string name="job_opening">350 Openings</string>
     <string name="no_vacancy_available">No vacancy available</string>
     <string name="no_upcoming_interview">No Upcoming Interview</string>
     <string name="no_appliped_interview">No Applied Job/Interview</string>
+    <string name="no_job_in_hand">No job in hand</string>
     <string name="client_remark">Client Remark :-</string>
     <string name="student_remark">Student Remark :-</string>
     <string name="apply">Apply</string>
@@ -72,6 +74,10 @@
     <string name="set_filter">SET FILTER</string>
     <string name="applly_filter">Apply Filter</string>
     <string name="add">Add</string>
+
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+
 
     <!--Headers-->
     <string name="header_personal_details">PERSONAL DETAILS :</string>
@@ -102,6 +108,7 @@
     <string name="state_hing">State</string>
     <string name="city_hing">City/District</string>
     <string name="qualification_type_hint">Qualification Type</string>
+    <string name="select_status_hint">Select Status</string>
     <string name="exp_hint">Experienced</string>
     <string name="exp_in_years_hint">Experience in years</string>
     <string name="designation_hint">Designation/Job Role</string>

@@ -11,11 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
 import com.twocoms.rojgarkendra.R;
+import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
+import com.twocoms.rojgarkendra.global.model.ServiceHandler;
 import com.twocoms.rojgarkendra.interviewscreen.controler.AppliedApplicationActivity;
+import com.twocoms.rojgarkendra.interviewscreen.controler.JobInHandActivity;
 import com.twocoms.rojgarkendra.interviewscreen.model.AppliedAndUpcommingModel;
 import com.twocoms.rojgarkendra.jobboardscreen.view.AllJobsAdapter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -23,6 +30,7 @@ public class AppliedInterviewAdapter extends RecyclerView.Adapter<AppliedIntervi
 
     Context context;
     List<AppliedAndUpcommingModel> appliedAndUpcommingModels;
+    String statusStr;
 
     public AppliedInterviewAdapter(Context context, List<AppliedAndUpcommingModel> appliedAndUpcommingModels) {
         this.context = context;
@@ -50,6 +58,8 @@ public class AppliedInterviewAdapter extends RecyclerView.Adapter<AppliedIntervi
         else {
             holder.salary.setText(context.getResources().getString(R.string.Rs) + CommonMethod.roundNumbertoNextPossibleValue(appliedAndUpcommingModels.get(position).getSalary()));
         }
+
+        holder.vacancy_title_text.setText(appliedAndUpcommingModels.get(position).getVacancyTitle());
         if (position == appliedAndUpcommingModels.size() - 1) {
             if (context instanceof AppliedApplicationActivity) {
                 if (AppliedApplicationActivity.currentPages == AppliedApplicationActivity.numberOfPagesFromServer) {
@@ -62,6 +72,22 @@ public class AppliedInterviewAdapter extends RecyclerView.Adapter<AppliedIntervi
             }
 
         }
+
+        statusStr = appliedAndUpcommingModels.get(position).getStudentStatus();
+        if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_SCHEDULED)){
+            holder.currentStatusText.setText("Interview Scheduled");
+        } else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_APPLIED)){
+            holder.currentStatusText.setText("Applied");
+        }else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_PROPOSED)){
+            holder.currentStatusText.setText("Offer Proposed");
+        }else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_ACCEPTED)){
+            holder.currentStatusText.setText("Offer Accepted");
+        }else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_REJECTED)){
+            holder.currentStatusText.setText("Offer Rejected");
+        }else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_REJECTED_BY_CLIENT)){
+            holder.currentStatusText.setText("Rejected By Client");
+        }
+
     }
 
     @Override
@@ -74,7 +100,7 @@ public class AppliedInterviewAdapter extends RecyclerView.Adapter<AppliedIntervi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView postedDateText, clientNameText, salary, jobType, numberOfOpenings, location;
+        TextView postedDateText, clientNameText, salary, jobType, numberOfOpenings, location,vacancy_title_text,currentStatusText;
 
 
         ViewHolder(View itemView) {
@@ -85,9 +111,13 @@ public class AppliedInterviewAdapter extends RecyclerView.Adapter<AppliedIntervi
             jobType = itemView.findViewById(R.id.job_type_text);
             numberOfOpenings = itemView.findViewById(R.id.vacancy_text);
             location = itemView.findViewById(R.id.location_text);
+
+            vacancy_title_text = itemView.findViewById(R.id.vacancy_title_text);
+            currentStatusText = itemView.findViewById(R.id.current_status_text);
         }
 
     }
+
 
 
 }

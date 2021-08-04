@@ -144,7 +144,9 @@ public class JobDetailActivity extends AppCompatActivity {
                       //  vacancyDetailModel.setZoho_sourcing_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_ZOHO_SOURCING_ID));
                         vacancyDetailModel.setVacancy_title(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_VACANCY_TITLE));
                         vacancyDetailModel.setClient_name(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_CLIENT_NAME));
-                 //       vacancyDetailModel.setIndustry(jsonObjectData.getInt(AppConstant.KEY_VACANCY_DETAIL_INDUSTRY));
+
+
+                        //       vacancyDetailModel.setIndustry(jsonObjectData.getInt(AppConstant.KEY_VACANCY_DETAIL_INDUSTRY));
                       //  vacancyDetailModel.setContact_name(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_CONTACT_NAME));
                         vacancyDetailModel.setNumber_of_open_positions(jsonObjectData.getInt(AppConstant.KEY_VACANCY_DETAIL_NO_OPEN_POSITION));
                         vacancyDetailModel.setYears_of_exp_required(jsonObjectData.getInt(AppConstant.KEY_VACANCY_DETAIL_YEARS_EXP_REQUIRED));
@@ -241,6 +243,10 @@ public class JobDetailActivity extends AppCompatActivity {
         } else {
             jobDetailBinding.jobBenefit.setText(Html.fromHtml(vacancyDetailModel.getOther_benefits_for_employees()));
         }
+
+        jobDetailBinding.vacancyTitleText.setText(vacancyDetailModel.getVacancy_title());
+
+
     }
 
 

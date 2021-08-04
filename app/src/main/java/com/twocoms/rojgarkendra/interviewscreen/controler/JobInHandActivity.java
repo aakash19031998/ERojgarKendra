@@ -1,15 +1,15 @@
 package com.twocoms.rojgarkendra.interviewscreen.controler;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.twocoms.rojgarkendra.R;
@@ -19,17 +19,16 @@ import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.global.model.ServiceHandler;
 import com.twocoms.rojgarkendra.interviewscreen.model.AppliedAndUpcommingModel;
 import com.twocoms.rojgarkendra.interviewscreen.view.AppliedInterviewAdapter;
-import com.twocoms.rojgarkendra.interviewscreen.view.UpcomingInterviewAdapter;
+import com.twocoms.rojgarkendra.interviewscreen.view.JobInHandAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpcomingInterviewActivity extends AppCompatActivity {
+public class JobInHandActivity extends AppCompatActivity {
 
     ImageView menuIcon, backIcon, homeIcon, profileIcon;
     TextView titleToolbar;
@@ -40,18 +39,19 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
     public static String nextPageUrl = "";
     public static int numberOfPagesFromServer = 0;
     List<AppliedAndUpcommingModel> appliedAndUpcommingModels = new ArrayList<>();
-    UpcomingInterviewAdapter upcomingInterviewAdapter;
-    TextView noUpcomingInterviewText;
+    JobInHandAdapter appliedInterviewAdapter;
+    TextView noappliedJobText;
     String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upcoming_interview);
+        setContentView(R.layout.activity_applied_application);
         initialization();
         setToolbarVisibility();
-        getUpcomingInterview();
         onClick();
+        getJobsInHands();
+        noappliedJobText.setText(getResources().getString(R.string.no_job_in_hand));
     }
 
     void initialization() {
@@ -61,9 +61,9 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
         profileIcon = (ImageView) findViewById(R.id.user_profile_img);
         titleToolbar = (TextView) findViewById(R.id.title);
         titleLnr = (LinearLayout) findViewById(R.id.title_lnr);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_upcoming);
-        noUpcomingInterviewText = (TextView) findViewById(R.id.noUpcomingInterview);
-        titleToolbar.setText(AppConstant.NAME_UPCOMING_INTERVIEW);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_applied);
+        noappliedJobText = (TextView) findViewById(R.id.noAppliedJob);
+        titleToolbar.setText(AppConstant.NAME_MY_JOB_IN_HAND);
     }
 
     void setToolbarVisibility() {
@@ -101,24 +101,22 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void getUpcomingInterview() {
+    public void getJobsInHands() {
         JSONObject json = new JSONObject();
+        String user_id = GlobalPreferenceManager.getStringForKey(JobInHandActivity.this, AppConstant.KEY_USER_ID, "");
         String url;
-        String user_id = GlobalPreferenceManager.getStringForKey(UpcomingInterviewActivity.this, AppConstant.KEY_USER_ID, "");
         if (currentPages == 1) {
+            appliedAndUpcommingModels = new ArrayList<>();
             url = AppConstant.GET_APPLIED_AND_UPCOMING_INTERVIEW;
         } else {
             url = AppConstant.GET_APPLIED_AND_UPCOMING_INTERVIEW + "/" + currentPages;
         }
-
-
         try {
             json.put(AppConstant.KEY_APPLIED_AND_UPCOMING_INTEVIEW_USER_ID, user_id);
-            json.put(AppConstant.KEY_APPLIED_AND_UPCOMING_INTEVIEW_STUDENT_STATUS, "scheduled");
-//            json.put(AppConstant.KEY_PAGE,currentPages);
+            json.put(AppConstant.KEY_APPLIED_AND_UPCOMING_INTEVIEW_STUDENT_STATUS, "offer_proposed");
+//            json.put(AppConstant.KEY_PAGE, currentPages);
             Log.v("Request", json.toString());
-
-            ServiceHandler serviceHandler = new ServiceHandler(UpcomingInterviewActivity.this);
+            ServiceHandler serviceHandler = new ServiceHandler(JobInHandActivity.this);
             serviceHandler.StringRequest(Request.Method.POST, json.toString(), url, true, new ServiceHandler.VolleyCallback() {
                 @Override
                 public void onSuccess(String result) {
@@ -131,7 +129,6 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
 
                             JSONObject object = jsonObject.getJSONObject(AppConstant.KEY_JOB_DATA_OBJ_DATA);
                             JSONArray jsonArray = object.getJSONArray("records");
-
 //                            numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
 //                            int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
 //                            double numberofPages = ((double) numberofentries) / perPageData;
@@ -163,9 +160,9 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
                             if (currentPages == 1) {
                                 setAdapter();
                             } else {
-                                if (upcomingInterviewAdapter != null) {
-                                    upcomingInterviewAdapter.setData(appliedAndUpcommingModels);
-                                    upcomingInterviewAdapter.notifyDataSetChanged();
+                                if (appliedInterviewAdapter != null) {
+                                    appliedInterviewAdapter.setData(appliedAndUpcommingModels);
+                                    appliedInterviewAdapter.notifyDataSetChanged();
                                 } else {
                                     setAdapter();
                                 }
@@ -173,12 +170,12 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
 
 
                         } else {
-                            CommonMethod.showToast(message, UpcomingInterviewActivity.this);
+                            CommonMethod.showToast(message, JobInHandActivity.this);
                         }
 
 
                     } catch (JSONException e) {
-                        CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, UpcomingInterviewActivity.this);
+                        CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, JobInHandActivity.this);
                         e.printStackTrace();
                     }
 
@@ -194,22 +191,25 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
 
     void setAdapter() {
         if (appliedAndUpcommingModels.size() == 0) {
-            noUpcomingInterviewText.setVisibility(View.VISIBLE);
+            noappliedJobText.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         } else {
-            upcomingInterviewAdapter = new UpcomingInterviewAdapter(UpcomingInterviewActivity.this, appliedAndUpcommingModels);
-            recyclerView.setLayoutManager(new LinearLayoutManager(UpcomingInterviewActivity.this));
-            recyclerView.setAdapter(upcomingInterviewAdapter);
-            upcomingInterviewAdapter.notifyDataSetChanged();
-            noUpcomingInterviewText.setVisibility(View.GONE);
+            appliedInterviewAdapter = new JobInHandAdapter(JobInHandActivity.this, appliedAndUpcommingModels);
+            recyclerView.setLayoutManager(new LinearLayoutManager(JobInHandActivity.this));
+            recyclerView.setAdapter(appliedInterviewAdapter);
+            appliedInterviewAdapter.notifyDataSetChanged();
+            noappliedJobText.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
+        }
+
+
+
+        if(appliedInterviewAdapter == null){
+            appliedInterviewAdapter = new JobInHandAdapter(JobInHandActivity.this, appliedAndUpcommingModels);
+            appliedInterviewAdapter.acceptOrRejectoffer(2, "1234567", "offer_accepected");
         }
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //getUpcomingInterview();
-    }
+
 }

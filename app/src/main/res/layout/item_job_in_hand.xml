@@ -11,9 +11,11 @@
         android:layout_margin="@dimen/_6sdp"
         card_view:cardCornerRadius="@dimen/_5sdp">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/jobdetailslayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="@dimen/_6sdp">
 
 
@@ -70,7 +72,6 @@
 
 
                 </RelativeLayout>
-
 
 
 
@@ -182,114 +183,47 @@
 
                 </RelativeLayout>
 
-                <View
-                    android:id="@+id/remark_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginLeft="@dimen/_4sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_marginRight="@dimen/_4sdp"
-                    android:visibility="gone"
-                    android:background="@color/default_color_android"></View>
-
-
-
-
-
-                <RelativeLayout
-                    android:id="@+id/client_remark_lnr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/_4sdp">
-
-                    <TextView
-                        android:id="@+id/client_remark_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:text="@string/client_remark"
-                        android:textSize="@dimen/_10sdp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:id="@+id/client_remark_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_toRightOf="@id/client_remark_header"
-                        android:text="350 Openings"
-                        android:layout_centerVertical="true"
-                        android:textColor="@color/default_color_android"
-                        android:textSize="@dimen/_10sdp"
-                        android:textStyle="bold"/>
-
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/student_remark_lnr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:visibility="visible"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:weightSum="5"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/student_remark_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:text="@string/student_remark"
-                        android:layout_weight="0.3"
-                        android:visibility="gone"
-                        android:textSize="@dimen/_10sdp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:id="@+id/student_remark_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_toRightOf="@id/student_remark_header"
-                        android:text="350 Openings"
-                        android:layout_weight="4.5"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/add_remark"
-                        android:visibility="gone"
-                        android:textColor="@color/default_color_android"
-                        android:textSize="@dimen/_10sdp"
-                        android:textStyle="bold"/>
-
-                    <ImageView
-                        android:id="@+id/add_remark"
-                        android:padding="@dimen/_5sdp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/bg_add_remark"/>
-
-
-                </RelativeLayout>
-
-
-
-
 
 
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/jobdetailslayout"
+                android:layout_marginLeft="@dimen/_4sdp"
+                android:layout_marginRight="@dimen/_4sdp"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:weightSum="2">
 
-        </RelativeLayout>
+                <Button
+                    android:id="@+id/reject_job"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:text="@string/reject"
+                    android:textAllCaps="false"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/accept_job"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/accept"
+                    android:textAllCaps="false"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
 
 
     </androidx.cardview.widget.CardView>

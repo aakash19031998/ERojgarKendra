@@ -30,6 +30,7 @@ import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.goodiesscreen.controler.MyGoodiesStoreActivity;
 import com.twocoms.rojgarkendra.goodiesscreen.controler.MyOrdersActivity;
 import com.twocoms.rojgarkendra.interviewscreen.controler.AppliedApplicationActivity;
+import com.twocoms.rojgarkendra.interviewscreen.controler.JobInHandActivity;
 import com.twocoms.rojgarkendra.interviewscreen.controler.UpcomingInterviewActivity;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgAllJobs;
 import com.twocoms.rojgarkendra.jobboardscreen.controler.FrgHotJob;
@@ -294,7 +295,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             navMenuModel6.setIconImg(R.drawable.icon_my_interview);
             navMenuModel6.setTitleName(AppConstant.NAME_UPCOMING_INTERVIEW);
             navMenuModel6.setId(AppConstant.ID_UPCOMING_INTERVIEW);
-
             allSUbmenu2.add(navMenuModel6);
 
             NavMenuModel navMenuModel7 = new NavMenuModel();
@@ -312,10 +312,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             item3.setTitleName(AppConstant.NAME_MY_DOCUMENTS);
             item3.setId(AppConstant.ID_MY_DOCUMENTS);
             item3.setLeftImg(R.drawable.icons_my_documents);
+            listDataHeader1.add(item3);
+            allSUbmenu = new ArrayList<>();
+            item3.setAllSubMenu(allSUbmenu);
+        }
 
+        if (CommonMethod.checkUserLoggedInOrRegister(DashboardActivity.this)) {
 
-//            item3.setIconImg(R.drawable.bg_nav_exp_right);
-            // Adding data header
+            NavMenuModel item3 = new NavMenuModel();
+            item3.setTitleName(AppConstant.NAME_MY_JOB_IN_HAND);
+            item3.setId(AppConstant.ID_MY_JOB_IN_HAND);
+            item3.setLeftImg(R.drawable.icons_my_documents);
             listDataHeader1.add(item3);
             allSUbmenu = new ArrayList<>();
             item3.setAllSubMenu(allSUbmenu);
@@ -425,6 +432,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 openMyOrders();
                 break;
 
+            case AppConstant.ID_MY_JOB_IN_HAND:
+                openOffersInMyHand();
+                break;
+
             case AppConstant.ID_LOGOUT:
                 drawerLayout.closeDrawers();
                 openLogoutDialogue();
@@ -438,6 +449,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         setNavigationBarTitle(AppConstant.NAME_ALL_JOBS);
 
     }
+
+
 
     void openHotJobScreen() {
         if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
@@ -489,6 +502,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     void openMyOrders() {
         Intent intent = new Intent(DashboardActivity.this, MyOrdersActivity.class);
+        startActivity(intent);
+        drawerLayout.closeDrawers();
+    }
+
+    void openOffersInMyHand() {
+        Intent intent = new Intent(DashboardActivity.this, JobInHandActivity.class);
         startActivity(intent);
         drawerLayout.closeDrawers();
     }

@@ -72,6 +72,26 @@
                 </RelativeLayout>
 
 
+
+                <RelativeLayout
+                    android:id="@+id/vacantitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp">
+
+                    <TextView
+                        android:id="@+id/vacancy_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:text=""
+                        android:textColor="@color/default_color_android"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/job_text_card_view"
                     android:layout_width="match_parent"
@@ -156,6 +176,36 @@
                         android:text="@string/job_opening"
                         android:textColor="@color/default_color_android"
                         android:textSize="@dimen/_7sdp" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/current_status_card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp">
+
+                    <TextView
+                        android:id="@+id/current_status_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:text="@string/current_status"
+                        android:textColor="@color/default_color_android"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/current_status_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_toRightOf="@id/current_status_title"
+                        android:text="@string/current_status"
+                        android:textColor="@color/default_color_android"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold" />
 
 
                 </RelativeLayout>

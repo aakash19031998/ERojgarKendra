@@ -32,9 +32,9 @@ public class FrgAllJobs extends Fragment {
     AllJobsAdapter allJobsAdapter;
     ArrayList<ModelHotJobs> modelHotJobs = new ArrayList<>();
     String message;
-    public int numberofentries = 0;
+    //public int numberofentries = 0;
     public int currentPages = 1;
-    public String nextPageUrl = "";
+    //public String nextPageUrl = "";
     public int numberOfPagesFromServer = 0;
     RelativeLayout filterBtn;
     TextView noVacancyText;
@@ -65,9 +65,9 @@ public class FrgAllJobs extends Fragment {
                         Log.e("applyButtonPressed", "true");
                         modelHotJobs.clear();
                         modelHotJobs = new ArrayList<>();
-                        numberofentries = 0;
+                      //  numberofentries = 0;
                         currentPages = 1;
-                        nextPageUrl = "";
+                    //    nextPageUrl = "";
                         numberOfPagesFromServer = 0;
                         getAllJobsData();
                     }
@@ -79,10 +79,15 @@ public class FrgAllJobs extends Fragment {
 
     public void getAllJobsData() {
         ServiceHandler serviceHandler = new ServiceHandler(getActivity());
-        String url = "";
-        url = AppConstant.GET_ALL_JOBS;
+        String url;
+        if (currentPages == 1) {
+            url = AppConstant.GET_ALL_JOBS;
+        } else {
+            url = AppConstant.GET_ALL_JOBS + "/" + currentPages;
+        }
         String jSonRequest = getPostParameter();
         Log.v("Request", jSonRequest);
+        Log.v("URL", url);
         serviceHandler.StringRequest(Request.Method.POST, jSonRequest, url, true, new ServiceHandler.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
@@ -95,14 +100,12 @@ public class FrgAllJobs extends Fragment {
 
                         JSONObject object = jsonObject.getJSONObject(AppConstant.KEY_JOB_DATA_OBJ_DATA);
                         JSONArray jsonArray = object.getJSONArray(AppConstant.KEY_JOB_DATA_ARRAY_DATA);
-
-                        numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
-                        int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
-                        double numberofPages = ((double) numberofentries) / perPageData;
-                        numberOfPagesFromServer = Integer.parseInt(CommonMethod.roundNumbertoNextPossibleValue(numberofPages + ""));
+//                        numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
+//                        int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
+//                        double numberofPages = ((double) numberofentries) / perPageData;
+                        numberOfPagesFromServer = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
                         Log.e("numberOfPagesFromServer", "" + numberOfPagesFromServer);
                         // nextPageUrl = object.getString("next_page_url");
-
                         for (int i = 0; i < jsonArray.length(); i++) {
                             ModelHotJobs modelHotJob1 = new ModelHotJobs();
                             JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
@@ -113,6 +116,8 @@ public class FrgAllJobs extends Fragment {
                             modelHotJob1.setNumberOpenings(jsonObject1.getString(AppConstant.KEY_JOB_DATA_NO_OPEN_POSITION));
                             modelHotJob1.setLocation(jsonObject1.getString(AppConstant.KEY_JOB_DATA_WORK_LOCATION));
                             modelHotJob1.setDates(jsonObject1.getString(AppConstant.KEY_JOB_DATA_CREATED_ON));
+                          modelHotJob1.setVacancyTitle(jsonObject1.getString("vacancy_title"));
+//                            modelHotJob1.setVacancyTitle("Vacancy Title "+i);
                             modelHotJobs.add(modelHotJob1);
 
                         }
@@ -186,7 +191,7 @@ public class FrgAllJobs extends Fragment {
                 jsonObject.put("qualification_type", qualificationType);
             }
 
-            jsonObject.put(AppConstant.KEY_PAGE, currentPages);
+           // jsonObject.put(AppConstant.KEY_PAGE, currentPages);
 
         } catch (JSONException e) {
             e.printStackTrace();

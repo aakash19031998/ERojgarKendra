@@ -75,12 +75,15 @@ public class UpcomingInterviewAdapter extends RecyclerView.Adapter<UpcomingInter
             holder.remarkView.setVisibility(View.VISIBLE);
             holder.studentHeader.setVisibility(View.VISIBLE);
             holder.studentRemark.setVisibility(View.VISIBLE);
-            holder.addRemarkImg.setVisibility(View.VISIBLE);
+         //   holder.addRemarkImg.setVisibility(View.VISIBLE);
             holder.studentRemark.setText(appliedAndUpcommingModels.get(position).getStudentRemark());
         }else {
-            holder.remarkView.setVisibility(View.VISIBLE);
-            holder.addRemarkImg.setVisibility(View.VISIBLE);
+           holder.remarkView.setVisibility(View.VISIBLE);
+          //  holder.addRemarkImg.setVisibility(View.VISIBLE);
         }
+
+        holder.vacancy_title_text.setText(appliedAndUpcommingModels.get(position).getVacancyTitle());
+
         if (!appliedAndUpcommingModels.get(position).getClientRemark().equals("null") && !appliedAndUpcommingModels.get(position).getClientRemark().equals("")) {
 
             holder.remarkView.setVisibility(View.VISIBLE);
@@ -113,7 +116,7 @@ public class UpcomingInterviewAdapter extends RecyclerView.Adapter<UpcomingInter
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView postedDateText, clientNameText, salary, jobType, numberOfOpenings, location, studentRemark, clientRemark,studentHeader;
+        TextView postedDateText, clientNameText, salary, jobType, numberOfOpenings, location, studentRemark, clientRemark,studentHeader,vacancy_title_text;
         View remarkView;
         RelativeLayout studentRemarkLnr;
         RelativeLayout clientRemarkLnr;
@@ -136,6 +139,8 @@ public class UpcomingInterviewAdapter extends RecyclerView.Adapter<UpcomingInter
             addRemarkImg = itemView.findViewById(R.id.add_remark);
             studentHeader = itemView.findViewById(R.id.student_remark_header);
             location = itemView.findViewById(R.id.location_text);
+            vacancy_title_text = itemView.findViewById(R.id.vacancy_title_text);
+
 
         }
 
@@ -182,11 +187,7 @@ public class UpcomingInterviewAdapter extends RecyclerView.Adapter<UpcomingInter
             serviceHandler.StringRequest(Request.Method.POST, json.toString(), AppConstant.ADD_STUDENT_REMARK, true, new ServiceHandler.VolleyCallback() {
                 @Override
                 public void onSuccess(String result) {
-
                     Log.v("Response", result);
-
-
-
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         responseMsg = jsonObject.getString("message");

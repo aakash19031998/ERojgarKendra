@@ -76,13 +76,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp">
 
-                        <!--                <ImageView-->
-                        <!--                    android:id="@+id/client_img"-->
-                        <!--                    android:layout_width="@dimen/_16sdp"-->
-                        <!--                    android:layout_height="@dimen/_16sdp"-->
-                        <!--                    android:layout_marginLeft="@dimen/_5sdp"-->
-                        <!--                    android:src="@drawable/icons_client_name"/>-->
-
                         <TextView
                             android:id="@+id/client_text"
                             android:layout_width="wrap_content"
@@ -95,6 +88,24 @@
 
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/vacantitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp">
+
+                        <TextView
+                            android:id="@+id/vacancy_title_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:text=""
+                            android:textColor="@color/default_color_android"
+                            android:textSize="@dimen/_9sdp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/job_text_card_view"

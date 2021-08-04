@@ -84,10 +84,16 @@ public class FrgPopulorJobs extends Fragment {
 
     public void getAllJobsData() {
         ServiceHandler serviceHandler = new ServiceHandler(getActivity());
-        String url = "";
-        url = AppConstant.GET_POPULAR_JOBS;
+        String url ;
+        if (currentPages == 1) {
+            url = AppConstant.GET_POPULAR_JOBS;
+        } else {
+            url = AppConstant.GET_POPULAR_JOBS + "/" + currentPages;
+        }
+     //   url = AppConstant.GET_POPULAR_JOBS;
         String jSonRequest = getPostParameter();
         Log.v("Request", jSonRequest);
+        Log.v("URL", url);
         serviceHandler.StringRequest(Request.Method.POST, jSonRequest, url, true, new ServiceHandler.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
@@ -103,8 +109,8 @@ public class FrgPopulorJobs extends Fragment {
 
                      //   numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
                        // int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
-                        double numberofPages = 5;
-                        numberOfPagesFromServer = Integer.parseInt(CommonMethod.roundNumbertoNextPossibleValue(numberofPages + ""));
+                        //double numberofPages = 5;
+                        numberOfPagesFromServer = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
                        // Log.e("numberOfPagesFromServer", "" + numberOfPagesFromServer);
                         // nextPageUrl = object.getString("next_page_url");
 
@@ -118,6 +124,7 @@ public class FrgPopulorJobs extends Fragment {
                             modelHotJob1.setNumberOpenings(jsonObject1.getString(AppConstant.KEY_JOB_DATA_NO_OPEN_POSITION));
                             modelHotJob1.setLocation(jsonObject1.getString(AppConstant.KEY_JOB_DATA_WORK_LOCATION));
                             modelHotJob1.setDates(jsonObject1.getString(AppConstant.KEY_JOB_DATA_CREATED_ON));
+                            modelHotJob1.setVacancyTitle(jsonObject1.getString("vacancy_title"));
                             modelHotJobs.add(modelHotJob1);
 
                         }
@@ -191,7 +198,7 @@ public class FrgPopulorJobs extends Fragment {
                 jsonObject.put("qualification_type", qualificationType);
             }
 
-            jsonObject.put("page", currentPages);
+         //   jsonObject.put("page", currentPages);
 
         } catch (JSONException e) {
             e.printStackTrace();

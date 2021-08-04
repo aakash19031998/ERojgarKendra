@@ -131,7 +131,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
         otp_timer.setVisibility(View.VISIBLE);
         isOtpExpire = false;
         long timeInMilliseconds;
-        timeInMilliseconds = 1 * 60000;
+        timeInMilliseconds = 5 * 60000;
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
@@ -270,7 +270,8 @@ public class VerifyOtpActivity extends AppCompatActivity {
         } else {
 //            Intent intent = new Intent(this, RegisterUserDataActivity.class);
 //            startActivity(intent);
-            verifyOtp();
+             verifyOtp();
+          //  navigateToRegister(mobile_no, "N");
         }
     }
 
@@ -355,14 +356,12 @@ public class VerifyOtpActivity extends AppCompatActivity {
 //                                    GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
                                     if (dataStr.has(AppConstant.KEY_PROFILE_URL)) {
                                         GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
-                                    }
-                                    else {
+                                    } else {
                                         GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_PROFILE_URL, "");
                                     }
                                     if (dataStr.has(AppConstant.KEY_RESUME_URL)) {
                                         GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
-                                    }
-                                    else {
+                                    } else {
                                         GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_RESUME_URL, "");
                                     }
                                     GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));
@@ -530,8 +529,8 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
     void navigateToRegister(String mobileNumber, String isEduRp) {
         Intent intent = new Intent(VerifyOtpActivity.this, RegisterUserDataActivity.class);
-        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this,AppConstant.KEY_IS_EDURP,isEduRp);
-        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this,AppConstant.KEY_CONTACT,mobileNumber);
+        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_IS_EDURP, isEduRp);
+        GlobalPreferenceManager.saveStringForKey(VerifyOtpActivity.this, AppConstant.KEY_CONTACT, mobileNumber);
         startActivity(intent);
         finish();
     }
@@ -546,7 +545,6 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
     void resendOtp() {
         final JSONObject Json = new JSONObject();
-
         try {
             Json.put("contact", mobile_no);
             Json.put("resend", 1);

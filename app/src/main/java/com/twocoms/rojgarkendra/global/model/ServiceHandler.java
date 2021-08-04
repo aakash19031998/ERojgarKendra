@@ -367,22 +367,29 @@ public class ServiceHandler {
                     if (loadingDialog != null && loadingDialog.isShowing())
                         loadingDialog.dismiss();
 
-                    byte[] data = error.networkResponse.data;
+                    try {
+
+                        byte[] data = error.networkResponse.data;
 
 //                    byte[] bytes = "hello world".getBytes();
 //creates a string from the byte array without specifying character encoding
-                    String s = new String(data);
+                        String s = new String(data);
 
-                    Log.v("NetworkResponse", s);
-                    if (error.getMessage() == null) {
+                        Log.v("NetworkResponse", s);
+                        if (error.getMessage() == null) {
+                            Toast.makeText(context, "Something went wrong please try again!", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof TimeoutError) {
+                            Toast.makeText(context, "Time out error", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        Log.d("Error", error.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                         Toast.makeText(context, "Something went wrong please try again!", Toast.LENGTH_SHORT).show();
-                    } else if (error instanceof TimeoutError) {
-                        Toast.makeText(context, "Time out error", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
 
-                    Log.d("Error", error.toString());
+                    }
                 }
             }) {
                 @Override

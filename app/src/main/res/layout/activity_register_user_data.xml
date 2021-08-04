@@ -271,6 +271,8 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/city_edit_text_lnr"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/reg_tc_bg"
@@ -282,15 +284,30 @@
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <com.google.android.material.textfield.TextInputEditText
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/city_edit_text"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:drawablePadding="@dimen/_8sdp"-->
+<!--                    android:drawableLeft="@drawable/bg_reg_city"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:hint="@string/city_hing" />-->
+
+<!--                android:drawableRight="@drawable/bg_reg_drop_down"-->
+
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/city_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:padding="@dimen/_8sdp"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_city"
+                    android:drawableLeft="@drawable/bg_reg_state"
                     android:singleLine="true"
                     android:hint="@string/city_hing" />
+
 
             </com.google.android.material.textfield.TextInputLayout>
 

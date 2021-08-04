@@ -24,6 +24,11 @@
             android:name=".interviewscreen.controler.AppliedApplicationActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".interviewscreen.controler.JobInHandActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity
             android:name=".successstoryscreen.controler.SuccessStoriesActivity"
             android:screenOrientation="portrait" />
 

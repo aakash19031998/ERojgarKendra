@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.twocoms.rojgarkendra.R;
-import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
@@ -82,18 +81,13 @@ public class AllJobsAdapter extends RecyclerView.Adapter<AllJobsAdapter.ViewHold
                 }
             }
         });
-
+        holder.vacancyTitle.setText(hotJobsModels.getVacancyTitle());
         if (position == modelHotJobs.size() - 1) {
             if (frgAllJobs.currentPages == frgAllJobs.numberOfPagesFromServer) {
                 Log.e("AllDataLoaded", "true");
-//                paginationProgress.setVisibility(View.GONE);
             } else {
-//                paginationProgress.setVisibility(View.VISIBLE);
-                // newsAdapter.notifyDataSetChanged();
                 frgAllJobs.currentPages = frgAllJobs.currentPages + 1;
                 frgAllJobs.getAllJobsData();
-//                getNews(currentPages + 1);
-                // searchGetNews(currentPages + 1);
             }
         }
 
@@ -107,7 +101,7 @@ public class AllJobsAdapter extends RecyclerView.Adapter<AllJobsAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView salaryText, jobText, clientText, locationText, vacancyText, dateText;
+        TextView salaryText, jobText, clientText, locationText, vacancyText, dateText,vacancyTitle;
         Button viewJobBtn, applyJobBtn;
 
         ViewHolder(View itemView) {
@@ -120,7 +114,7 @@ public class AllJobsAdapter extends RecyclerView.Adapter<AllJobsAdapter.ViewHold
             dateText = itemView.findViewById(R.id.date_job_posted);
             viewJobBtn = itemView.findViewById(R.id.view_jobs);
             applyJobBtn = itemView.findViewById(R.id.apply_jobs);
-
+            vacancyTitle = itemView.findViewById(R.id.vacancy_title_text);
         }
 
     }

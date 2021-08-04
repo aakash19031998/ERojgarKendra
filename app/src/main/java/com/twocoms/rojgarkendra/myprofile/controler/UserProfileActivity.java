@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -85,7 +86,6 @@ import java.util.Locale;
 import java.util.Map;
 
 public class UserProfileActivity extends AppCompatActivity {
-
     public ActivityUserProfileBinding userDataBinding;
     String userId;
     String[] states;
@@ -99,7 +99,6 @@ public class UserProfileActivity extends AppCompatActivity {
     String userResumeUrlStr = "";
     public static final int REQUEST_IMAGE = 100;
     private AlertDialog dialog;
-    String img_user_profile_base_64 = "";
     String fileBAse64Str = "";
     String docFilePath;
     String android_id;
@@ -119,6 +118,13 @@ public class UserProfileActivity extends AppCompatActivity {
     boolean isProfileImgUpdated = false;
     boolean isCVUpadted = false;
     Uri mInvitationUrl;
+    private LoadingDialog loadingDialog;
+    public Bitmap bitmap;
+
+    String[] cityMain;
+    String[] cityCode;
+    ArrayList<String> listCity;
+    String city_code = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,12 +144,6 @@ public class UserProfileActivity extends AppCompatActivity {
         mobile_no = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_CONTACT, "");
         userDataBinding.profileHeader.mobileLayout.setVisibility(View.VISIBLE);
         userDataBinding.profileHeader.mobileNumberVisitingcard.setText(mobile_no);
-
-//        qualificationList.add("5th");
-//        qualificationList.add("6th");
-//        qualificationList.add("7th");
-//        qualificationList.add("8th");
-//        qualificationList.add("9th");
         qualificationList.add("10th");
         qualificationList.add("11th");
         qualificationList.add("12th");
@@ -155,7 +155,6 @@ public class UserProfileActivity extends AppCompatActivity {
         qualificationList.add("ITI");
         qualificationList.add("ITI Dual");
         qualificationList.add("Others");
-
         expList.add("Yes");
         expList.add("No");
         mcalendar = Calendar.getInstance();
@@ -216,8 +215,8 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (validation()) {
-                    updateUserDetails(jsonUpdateUser());
-                    //jsonUpdateUser();
+//                    updateUserDetails(jsonUpdateUser());
+                    updateUserData(UserProfileActivity.this,jsonUpdateUser());
                 }
             }
         });
@@ -325,7 +324,70 @@ public class UserProfileActivity extends AppCompatActivity {
         });
 
 
+//        userDataBinding.cityEditText.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(!userDataBinding.stateEditText.getText().toString().equals("")){
+//                    getCity(state_code);
+//                }
+//                else {
+//                    CommonMethod.showToast("Please select state first.",UserProfileActivity.this);
+//                }
+//
+//
+//            }
+//        });
+//
+//        userDataBinding.cityEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                int j = listCity.indexOf(userDataBinding.cityEditText.getText().toString());
+//                city_code = cityCode[j];
+//                Log.v("city_code", city_code);
+//            }
+//        });
+
     }
+
+    void getCity(String city) {
+        Log.v("URL City",AppConstant.GET_CITY+city);
+        ServiceHandler serviceHandler = new ServiceHandler(UserProfileActivity.this);
+        serviceHandler.StringRequest(Request.Method.GET, "", AppConstant.GET_CITY+cityMain, true, new ServiceHandler.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+                Log.v("Response", result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    if (jsonObject.getBoolean("success")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                        cityMain = new String[jsonArray.length()];
+                        cityCode = new String[jsonArray.length()];
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = (JSONObject) jsonArray.get(i);
+                            String stateName = object.getString("city");
+                            int stateCode = object.getInt("id");
+//                            if (!stateName.equals("empty")) {
+                            listCity.add(stateName);
+                            cityMain[i] = stateName;
+                            cityCode[i] = String.valueOf(stateCode);
+//                            }
+                        }
+
+                        ArrayAdapter adapter1 = new ArrayAdapter<String>(UserProfileActivity.this, R.layout.drop_down_item, cityMain);
+                        userDataBinding.cityEditText.setAdapter(adapter1);
+                        userDataBinding.cityEditText.showDropDown();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
+
 
     void setdisable() {
         userDataBinding.profileHeader.userImg.setFocusable(false);
@@ -449,7 +511,7 @@ public class UserProfileActivity extends AppCompatActivity {
             } else if (Validation.checkIfEmptyOrNot(userDataBinding.phoneNumberEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter Phone No", UserProfileActivity.this);
                 return false;
-            }else if (userDataBinding.emailEditText.getText().toString().isEmpty()) {
+            } else if (userDataBinding.emailEditText.getText().toString().isEmpty()) {
                 CommonMethod.showToast("Please Enter Email Id", UserProfileActivity.this);
                 return false;
             } else if (!userDataBinding.emailEditText.getText().toString().matches(emailPattern)) {
@@ -470,7 +532,7 @@ public class UserProfileActivity extends AppCompatActivity {
             } else if (Validation.checkIfEmptyOrNot(userDataBinding.cityEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter City/District", UserProfileActivity.this);
                 return false;
-            }   else if (Validation.checkIfEmptyOrNot(userDataBinding.qualificationTypeEditText.getText().toString())) {
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.qualificationTypeEditText.getText().toString())) {
                 CommonMethod.showToast("Please Select Qualification", UserProfileActivity.this);
                 return false;
             } else if (Validation.checkIfEmptyOrNot(userDataBinding.experinaceEditText.getText().toString())) {
@@ -495,7 +557,7 @@ public class UserProfileActivity extends AppCompatActivity {
             } else if (Validation.checkIfEmptyOrNot(userDataBinding.phoneNumberEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter Phone No", UserProfileActivity.this);
                 return false;
-            }else if (userDataBinding.emailEditText.getText().toString().isEmpty()) {
+            } else if (userDataBinding.emailEditText.getText().toString().isEmpty()) {
                 CommonMethod.showToast("Please Enter Email Id", UserProfileActivity.this);
                 return false;
             } else if (!userDataBinding.emailEditText.getText().toString().matches(emailPattern)) {
@@ -516,7 +578,7 @@ public class UserProfileActivity extends AppCompatActivity {
             } else if (Validation.checkIfEmptyOrNot(userDataBinding.cityEditText.getText().toString())) {
                 CommonMethod.showToast("Please Enter City/District", UserProfileActivity.this);
                 return false;
-            }   else if (Validation.checkIfEmptyOrNot(userDataBinding.qualificationTypeEditText.getText().toString())) {
+            } else if (Validation.checkIfEmptyOrNot(userDataBinding.qualificationTypeEditText.getText().toString())) {
                 CommonMethod.showToast("Please Select Qualification", UserProfileActivity.this);
                 return false;
             } else if (Validation.checkIfEmptyOrNot(userDataBinding.experinaceEditText.getText().toString())) {
@@ -571,10 +633,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(result);
                     if (jsonObject.getBoolean("success")) {
                         JSONObject object = jsonObject.getJSONObject("data");
-
                         responseMsg = jsonObject.getString("message");
-
-
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_USER_ID, object.getString(AppConstant.KEY_USER_ID));
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_NAME, object.getString(AppConstant.KEY_NAME));
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_EMAIL_ID, object.getString(AppConstant.KEY_EMAIL_ID));
@@ -596,14 +655,12 @@ public class UserProfileActivity extends AppCompatActivity {
                         GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_LANGUAGE_KNOWN, object.getString(AppConstant.KEY_LANGUAGE_KNOWN));
                         if (object.has(AppConstant.KEY_PROFILE_URL)) {
                             GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_PROFILE_URL, object.getString(AppConstant.KEY_PROFILE_URL));
-                        }
-                        else {
+                        } else {
                             GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_PROFILE_URL, "");
                         }
                         if (object.has(AppConstant.KEY_RESUME_URL)) {
                             GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_RESUME_URL, object.getString(AppConstant.KEY_RESUME_URL));
-                        }
-                        else {
+                        } else {
                             GlobalPreferenceManager.saveStringForKey(UserProfileActivity.this, AppConstant.KEY_RESUME_URL, "");
                         }
                         if (object.getString("eduErp").equals("Y")) {
@@ -662,8 +719,8 @@ public class UserProfileActivity extends AppCompatActivity {
                         statesCode = new String[jsonArray.length()];
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = (JSONObject) jsonArray.get(i);
-                            String stateName = object.getString("StateName");
-                            int stateCode = object.getInt("StCode");
+                            String stateName = object.getString("name");
+                            int stateCode = object.getInt("id");
                             //if(!stateName.equals("empty")) {
                             listStates.add(stateName);
                             states[i] = stateName;
@@ -900,14 +957,12 @@ public class UserProfileActivity extends AppCompatActivity {
                 Json.put(AppConstant.KEY_PROJECT_ID, projectId);
                 Json.put(AppConstant.KEY_BATCH_ID, batchId);
                 Json.put(AppConstant.KEY_COURSE_ID, courseId);
-                if (isProfileImgUpdated) {
-                    Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
-                }
-                if (isCVUpadted) {
-                    Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
-                }
-
-
+//                if (isProfileImgUpdated) {
+//                    Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
+//                }
+//                if (isCVUpadted) {
+//                    Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
+//                }
                 Log.v("json", Json.toString());
 //                CommonMethod.showToast("Json",UserProfileActivity.this);
             } catch (JSONException e) {
@@ -958,12 +1013,12 @@ public class UserProfileActivity extends AppCompatActivity {
                 Json.put(AppConstant.KEY_OS_TYPE, "A");
                 Json.put(AppConstant.KEY_ROLE, userDataBinding.designationEditText.getText().toString());
                 Json.put(AppConstant.KEY_NOTIFICATION_ID, GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_DEVICE_TOKEN, ""));
-                if (isProfileImgUpdated) {
-                    Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
-                }
-                if (isCVUpadted) {
-                    Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
-                }
+//                if (isProfileImgUpdated) {
+//                    Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
+//                }
+//                if (isCVUpadted) {
+//                    Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
+//                }
                 Log.v("json", Json.toString());
 
             } catch (JSONException e) {
@@ -979,7 +1034,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         Log.v("JSONURL", Json.toString());
         ServiceHandler serviceHandler = new ServiceHandler(UserProfileActivity.this);
-        serviceHandler.StringRequest(Request.Method.PUT, Json.toString(), AppConstant.UPDATE_USER_DETAILS + userId, true, new ServiceHandler.VolleyCallback() {
+        serviceHandler.StringRequest(Request.Method.POST, Json.toString(), AppConstant.UPDATE_USER_DETAILS + userId, true, new ServiceHandler.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
 
@@ -1108,6 +1163,7 @@ public class UserProfileActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_DOC);*/
         Intent intent = new Intent();
         intent.setType("application/pdf");
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
     }
@@ -1180,14 +1236,14 @@ public class UserProfileActivity extends AppCompatActivity {
 //        return base64;
 //    }
 
-    private String decodeBase64(String coded) {
-        byte[] valueDecoded = new byte[0];
-        try {
-            valueDecoded = Base64.decode(coded.getBytes("UTF-8"), Base64.DEFAULT);
-        } catch (UnsupportedEncodingException e) {
-        }
-        return new String(valueDecoded);
-    }
+//    private String decodeBase64(String coded) {
+//        byte[] valueDecoded = new byte[0];
+//        try {
+//            valueDecoded = Base64.decode(coded.getBytes("UTF-8"), Base64.DEFAULT);
+//        } catch (UnsupportedEncodingException e) {
+//        }
+//        return new String(valueDecoded);
+//    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -1199,11 +1255,10 @@ public class UserProfileActivity extends AppCompatActivity {
                 Uri uri = data.getParcelableExtra("path");
                 try {
                     // You can update this bitmap to your server
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                     Glide.with(this)
                             .load(bitmap)
                             .into(userDataBinding.profileHeader.userImg);
-                    img_user_profile_base_64 = encodeTobase64(bitmap);
                     isProfileImgUpdated = true;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -1211,21 +1266,18 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         } else if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                Uri fileuri = data.getData();
-                docFilePath = getFileNameByUri(this, fileuri);
-                Log.v("document", docFilePath);
-                String filename = docFilePath.substring(docFilePath.lastIndexOf("/") + 1);
-                userDataBinding.uploadCvTxt.setText(filename);
-                try {
-                    fileBAse64Str = encodeFileToBase64Binary(loadFileAsBytesArray(docFilePath));
-                } catch (Exception e) {
-                    e.printStackTrace();
+                Uri uri = data.getData();
+                String uriString = uri.toString();
+                File myFile = new File(uriString);
+                String path = myFile.getAbsolutePath();
+                String displayName = null;
+                Cursor cursor = null;
+                docFilePath = getFileNameByUri(this, uri);
+                cursor = getContentResolver().query(uri, null, null, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    userDataBinding.uploadCvTxt.setText(displayName);
                 }
-
-//                fileBAse64Str = (docFilePath);
-//                Log.v("base64FIle", fileBAse64Str);
-//                String decodeStr = decodeBase64(fileBAse64Str);
-//                Log.v("decode", decodeStr);
                 isCVUpadted = true;
 
             }
@@ -1249,15 +1301,19 @@ public class UserProfileActivity extends AppCompatActivity {
         return encoded;
     }
 
-    public static byte[] loadFileAsBytesArray(String fileName) throws Exception {
-        File file = new File(fileName);
-        int length = (int) file.length();
-        BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
-        byte[] bytes = new byte[length];
-        reader.read(bytes, 0, length);
-        reader.close();
-        return bytes;
-
+    public static byte[] loadFileAsBytesArray(String fileName) {
+        try {
+            File file = new File(fileName);
+            int length = (int) file.length();
+            BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
+            byte[] bytes = new byte[length];
+            reader.read(bytes, 0, length);
+            reader.close();
+            return bytes;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -1269,7 +1325,8 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);Log.v("Device Id", android_id);
+                Settings.Secure.ANDROID_ID);
+        Log.v("Device Id", android_id);
 
     }
 
@@ -1410,9 +1467,9 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     };
 
-    public void createReferralLink(){
-        String uid = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this,AppConstant.KEY_REFERAL_CODE,"");
-        String link = "https://mygame.example.com/?invitedby="+uid;
+    public void createReferralLink() {
+        String uid = GlobalPreferenceManager.getStringForKey(UserProfileActivity.this, AppConstant.KEY_REFERAL_CODE, "");
+        String link = "https://mygame.example.com/?invitedby=" + uid;
         FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLink(Uri.parse(link))
                 .setDomainUriPrefix("https://rojgarkendra.page.link")
@@ -1425,11 +1482,11 @@ public class UserProfileActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<ShortDynamicLink>() {
                     @Override
                     public void onSuccess(ShortDynamicLink shortDynamicLink) {
-                         mInvitationUrl = shortDynamicLink.getShortLink();
-                        Log.v("Referral LInk",mInvitationUrl.toString());
+                        mInvitationUrl = shortDynamicLink.getShortLink();
+                        Log.v("Referral LInk", mInvitationUrl.toString());
                         Intent intent = new Intent();
                         intent.setAction(Intent.ACTION_SEND);
-                        intent.putExtra(Intent.EXTRA_TEXT,mInvitationUrl.toString());
+                        intent.putExtra(Intent.EXTRA_TEXT, mInvitationUrl.toString());
                         intent.setType("text/plain");
                         startActivity(intent);
                     }
@@ -1437,155 +1494,110 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
 
-//    private void registerUserDataWithFilePart(final Context context, final JSONObject jsonObject) {
-//
-//        loadingDialog = new LoadingDialog(context);
-//        loadingDialog.show();
-//        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, AppConstant.CREATE_USER, new Response.Listener<NetworkResponse>() {
-//            @Override
-//            public void onResponse(NetworkResponse response) {
-//                String resultResponse = new String(response.data);
-//                try {
-//                    Log.v("response",resultResponse);
-//                    JSONObject jsonObject = new JSONObject(resultResponse);
-//                    //   JSONObject jsonObject = new JSONObject(result);
-//                    if (jsonObject.getBoolean("success")) {
-//                        JSONObject dataStr = jsonObject.getJSONObject("data");
-//                        dataStr.put(AppConstant.KEY_IS_REGISTER, "Y");
-//                        dataStr.put(AppConstant.KEY_IS_EDURP, eduJobStr);
-////                        String msgStr = jsonObject.getString("message");
-////                        if (dataStr.has("is_register") && dataStr.has("eduErp")) {
-//                        /*Data Save*/
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_USER_ID, dataStr.getString(AppConstant.KEY_USER_ID));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_NAME, dataStr.getString(AppConstant.KEY_NAME));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_CONTACT, dataStr.getString(AppConstant.KEY_CONTACT));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_CONTACT_VERIFIED, dataStr.getString(AppConstant.KEY_CONTACT_VERIFIED));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_EMAIL_ID, dataStr.getString(AppConstant.KEY_EMAIL_ID));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.STATE_ID, dataStr.getString(AppConstant.STATE_ID));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_CITY, dataStr.getString(AppConstant.KEY_CITY));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_DOB, dataStr.getString(AppConstant.KEY_DOB));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_GENDER, dataStr.getString(AppConstant.KEY_GENDER));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_QUALIFICATION_TYPE, dataStr.getString(AppConstant.KEY_QUALIFICATION_TYPE));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_EXPERIANCE_YEARS, dataStr.getString(AppConstant.KEY_EXPERIANCE_YEARS));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_EXPERIANCE_MONTH, dataStr.getString(AppConstant.KEY_EXPERIANCE_MONTH));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_SALARY, dataStr.getString(AppConstant.KEY_SALARY));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_REFERAL_CODE, dataStr.getString(AppConstant.KEY_REFERAL_CODE));
-//                        //  GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_DEVICE_ID, dataStr.getString(AppConstant.KEY_DEVICE_ID));
-//                        // GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_OS_TYPE, dataStr.getString(AppConstant.KEY_OS_TYPE));
-//                        //   GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_NOTIFICATION_ID, dataStr.getString(AppConstant.KEY_NOTIFICATION_ID));
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_IS_REGISTER, "Y");
-////                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.thi);
-////                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_IS_REGISTER, dataStr.getString(AppConstant.KEY_IS_REGISTER));
-//                        if (dataStr.has(AppConstant.KEY_PROFILE_URL)) {
-//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROFILE_URL, dataStr.getString(AppConstant.KEY_PROFILE_URL));
-//                        } else {
-//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROFILE_URL, "");
-//
-//                        }
-//                        if (dataStr.has(AppConstant.KEY_RESUME_URL)) {
-//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_RESUME_URL, dataStr.getString(AppConstant.KEY_RESUME_URL));
-//                        } else {
-//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_RESUME_URL, "");
-//
-//                        }
-//
-//                        GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_WALLET_AMOUNT, dataStr.getString(AppConstant.KEY_WALLET_AMOUNT));
-//                        if (dataStr.getString("eduErp").equals("Y")) {
-////                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_COURSE_NAME, dataStr.getString(AppConstant.KEY_COURSE_NAME));
-////                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROJECT_NAME, dataStr.getString(AppConstant.KEY_PROJECT_NAME));
-////                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_BATCH_NAME, dataStr.getString(AppConstant.KEY_BATCH_NAME));
-////                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_CENTRE_NAME, dataStr.getString(AppConstant.KEY_CENTRE_NAME));
-//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_COURSE_ID, dataStr.getString(AppConstant.KEY_COURSE_ID));
-//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_PROJECT_ID, dataStr.getString(AppConstant.KEY_PROJECT_ID));
-//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_BATCH_ID, dataStr.getString(AppConstant.KEY_BATCH_ID));
-//                            GlobalPreferenceManager.saveStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_CENTRE_ID, dataStr.getString(AppConstant.KEY_CENTRE_ID));
-//                        }
-//                        loadingDialog.dismiss();
-//                        navigateToDashBoard();
-////                        }
-//                    } else {
-//                        String msgStr = jsonObject.getString("message");
-//                        CommonMethod.showToast(msgStr, RegisterUserDataActivity.this);
-//                    }
+    private void updateUserData(final Context context, final JSONObject jsonObject) {
+        loadingDialog = new LoadingDialog(context);
+        loadingDialog.show();
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, AppConstant.UPDATE_USER_DETAILS + userId, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                loadingDialog.dismiss();
+                getProfileDetails();
+                userDataBinding.savebutton.setVisibility(View.GONE);
+                userDataBinding.edit.setVisibility(View.VISIBLE);
+                userDataBinding.cancel.setVisibility(View.GONE);
+
+                //Auto Scroll the Scroll view to top
+                userDataBinding.scroll.post(new Runnable() {
+                    public void run() {
+                        userDataBinding.scroll.fullScroll(userDataBinding.scroll.FOCUS_UP);
+                    }
+                });
+                //userDataBinding.mainLnr.setAlpha((float) 0.5);
+                setdisable();
+//               try {
 //
 //                } catch (JSONException e) {
 //                    e.printStackTrace();
 //                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                NetworkResponse networkResponse = error.networkResponse;
-//                String errorMessage = "Unknown error";
-//                if (networkResponse == null) {
-//                    if (error.getClass().equals(TimeoutError.class)) {
-//                        errorMessage = "Request timeout";
-//                    } else if (error.getClass().equals(NoConnectionError.class)) {
-//                        errorMessage = "Failed to connect server";
-//                    }
-//                } else {
-//                    String result = new String(networkResponse.data);
-//                    try {
-//                        JSONObject response = new JSONObject(result);
-//                        String status = response.getString("status");
-//                        String message = response.getString("message");
-//
-//                        Log.e("Error Status", status);
-//                        Log.e("Error Message", message);
-//
-//                        if (networkResponse.statusCode == 404) {
-//                            errorMessage = "Resource not found";
-//                        } else if (networkResponse.statusCode == 401) {
-//                            errorMessage = message + " Please login again";
-//                        } else if (networkResponse.statusCode == 400) {
-//                            errorMessage = message + " Check your inputs";
-//                        } else if (networkResponse.statusCode == 500) {
-//                            errorMessage = message + " Something is getting wrong";
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                Log.i("Error", errorMessage);
-//                loadingDialog.dismiss();
-//                CommonMethod.showToast(errorMessage,RegisterUserDataActivity.this);
-//                error.printStackTrace();
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Gson gson = new Gson();
-//                Type type = new TypeToken<Map<String, String>>() {
-//                }.getType();
-//                Map<String, String> myMap = gson.fromJson(jsonObject.toString(), type);
-//                return myMap;
-//            }
-//
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Map<String, String> headers = new HashMap<>();
-//                String tokenMain = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_TOKEN_MAIN, "");
-//                headers.put("Authorization", "Bearer " + tokenMain);
-//                return headers;
-//            }
-//
-//            @Override
-//            protected Map<String, DataPart> getByteData() {
-//                Map<String, DataPart> params = new HashMap<>();
-//                // file name could found file base or direct access from real path
-//                // for now just get bitmap data from ImageView
-//                if(bitmap != null) {
-//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//                    byte[] byteArray = stream.toByteArray();
-//                    params.put("profile_photo", new DataPart("profile_image.jpg", byteArray, "image/jpeg"));
-////                params.put("cover", new DataP¬art("file_cover.jpg", AppHelper.getFileDataFromDrawable(getBaseContext(), mCoverImage.getDrawable()), "image/jpeg"));
-//
-//                }
-//                return params;
-//            }
-//        };
-//        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
-//    }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+
+                        Log.e("Error Status", status);
+                        Log.e("Error Message", message);
+
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message + " Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message + " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message + " Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.i("Error", errorMessage);
+                loadingDialog.dismiss();
+                CommonMethod.showToast(errorMessage, UserProfileActivity.this);
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Gson gson = new Gson();
+                Type type = new TypeToken<Map<String, String>>() {}.getType();
+                Map<String, String> myMap = gson.fromJson(jsonObject.toString(), type);
+                return myMap;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String tokenMain = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_TOKEN_MAIN, "");
+                headers.put("Authorization", "Bearer " + tokenMain);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                if (bitmap != null) {
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 95, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    params.put("profile_photo", new DataPart("profile_image.jpg", byteArray, "image/jpeg"));
+
+                }
+                if (docFilePath != null) {
+                    byte[] data = loadFileAsBytesArray(docFilePath);
+                    if (data != null) {
+                        params.put("resume", new DataPart("user_resume.pdf", data, "application/pdf"));
+                    }
+
+                }
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
+    }
+
 
 }

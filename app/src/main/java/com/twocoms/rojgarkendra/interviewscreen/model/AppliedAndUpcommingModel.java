@@ -18,6 +18,16 @@ public class AppliedAndUpcommingModel {
     String numberOfOpenPositions;
     String locationOfWork ;
 
+    public String getVacancyTitle() {
+        return vacancyTitle;
+    }
+
+    public void setVacancyTitle(String vacancyTitle) {
+        this.vacancyTitle = vacancyTitle;
+    }
+
+    String vacancyTitle;
+
 
     public String getAppliedDate() {
         return appliedDate;

@@ -4,16 +4,11 @@ package com.twocoms.rojgarkendra.global.model;
 import android.view.View;
 
 public class AppConstant {
-
     //DEV
     public static final String BASE_URL = "https://dev-eduerp.2coms.com/api/";
-
     //PRODUCTION
    // public static final String BASE_URL = "https://dev-eduerp.2coms.com/api/";
-
-
 //    /Register/token
-
     public static final String GET_TOKEN_CREATION = BASE_URL + "Register/"+"token";
     public static final String VERIFY_MOB_NO = BASE_URL +"Register/"+"contact_no";
     public static final String VERIFY_OTP = BASE_URL +"Register/"+ "verify_otp";
@@ -30,6 +25,10 @@ public class AppConstant {
     public static final String GET_APPLIED_AND_UPCOMING_INTERVIEW = BASE_URL + "Interview/"+"allInterview";
     public static final String ADD_STUDENT_REMARK= BASE_URL + "Interview/"+"student_remark";
     public static final String GET_ALL_TESTIMONIALS = BASE_URL + "Testimonial/show";
+    public static final String GET_CITY = BASE_URL +"Register/"+ "city/";
+
+    public static final String GET_ALL_DOCUMENTS_TO_UPLOADED = BASE_URL + "Document/client_documents";
+
     public static final String SOMETHING_WENT_WRONG = "Something went wrong please try again...!!!";
     public static final String JOB_APPLIED_SUCCESSFULLY_MESSAGE = "Job applied successfully!";
     public static final String KEY_NAME = "name";
@@ -63,7 +62,7 @@ public class AppConstant {
     public static final String KEY_CENTRE_ID_2 = "centre_id";
     public static final String KEY_INVITE_CODE = "invite_code";
     public static final String KEY_DEVICE_TOKEN = "device_token";
-    public static final String KEY_PROFILE_URL = "photo_url";
+    public static final String KEY_PROFILE_URL = "profile_url";
     public static final String KEY_RESUME_URL = "resume_url";
     public static final String KEY_RESUME = "resume";
     public static final String KEY_PROFILE_PHOTO = "profile_photo";
@@ -74,7 +73,6 @@ public class AppConstant {
     public static final String KEY_DATA = "data";
     public static final String KEY_ = "otp";
     public static final String KEY_ROLE = "role";
-
     public static final String ID_JOBS = "JOBS";
     public static final String ID_INTERVIEW = "INTERVIEW";
     public static final String ID_MY_DOCUMENTS = "MYDOCUMENTS";
@@ -90,6 +88,7 @@ public class AppConstant {
     public static final String ID_ALL_APPLIED_APPLICATION = "APPLIEDAPPLICATION";
     public static final String ID_MY_GOODIES_STORES = "MYGOODIESSTORES";
     public static final String ID_MY_ORDERS = "MYORDERS";
+    public static final String ID_MY_JOB_IN_HAND = "MYJOBINHAND";
     public static final String NAME_JOBS = "Job Board";
     public static final String NAME_INTERVIEW = "Interview";
     public static final String NAME_MY_DOCUMENTS = "My Documents";
@@ -105,6 +104,7 @@ public class AppConstant {
     public static final String NAME_ALL_APPLIED_APPLICATION = "All Applied Applications";
     public static final String NAME_MY_GOODIES_STORES = "EduErp Goodies Store";
     public static final String NAME_MY_ORDERS = "My Orders";
+    public static final String NAME_MY_JOB_IN_HAND = "Job in Hand";
     public static final String EXIT_TEXT = "Are you sure you want to close the app?";
     public static final String LOGOUT_TEXT = "Are you sure you want to logout from the app?";
     public static final String SIGN_UP_LOGIN_TEXT = "Please Login / Sign Up to use the application.";
@@ -219,10 +219,8 @@ public class AppConstant {
     public static final String KEY_VACANCY_DETAIL_CREAETED_AT = "created_at";
     public static final String KEY_VACANCY_DETAIL_STCODE = "StCode";
     public static final String KEY_VACANCY_DETAIL_STATENAME = "StateName";
-
     public static final String KEY_APPLY_JOB_USER_ID = "user_id";
     public static final String KEY_APPLY_JOB_VACANCY_ID = "vacancy_id";
-
     public static final String KEY_APPLIED_AND_UPCOMING_INTEVIEW_USER_ID = "user_id";
     public static final String KEY_APPLIED_AND_UPCOMING_INTEVIEW_STUDENT_STATUS = "student_status";
     public static final String KEY_APPLIED_ID = "applied_id";
@@ -233,21 +231,24 @@ public class AppConstant {
     public static final String KEY_APPLIED_STUDENT_REMARKS = "student_remarks";
     public static final String KEY_APPLIED_DATE_OF_JOINING = "date_of_joining";
     public static final String KEY_APPLIED_CLIENT_NAME = "client_name";
-
     public static final String KEY_APPLIED_DATE = "applied_on";
     public static final String KEY_APPLIED_ID_REMARK = "applied_id";
     public static final String KEY_STUDENT_REMARK = "student_remarks";
-
     public static final String KEY_PAGE = "page";
-
     public static final String KEY_POSTED_BY = "posted_by";
     public static final String KEY_POSTED_DATE_TIME = "posted_on";
-
     public static final String KEY_USER_NAME = "name";
-
     public static final String KEY_INVITE_CODE_VALUE = "invitecodeshared";
     public static final String KEY_TOKEN_MAIN = "bearertoken";
 
+    public static final String KEY_FILTER_STATUS_APPLIED_JOB = "appliedjobstatusfilter";
+    public static final String VALUE_STATUS_SCHEDULED = "scheduled";
+    public static final String VALUE_STATUS_APPLIED = "applied";
+    public static final String VALUE_STATUS_PROPOSED = "offer_proposed";
+    public static final String VALUE_STATUS_REJECTED = "offer_rejected";
+    public static final String VALUE_STATUS_ACCEPTED = "offer_accepected";
+    public static final String VALUE_STATUS_REJECTED_BY_CLIENT = "rejected_by_client";
+    public static final String VALUE_STATUS_NULL = "";
 
 
 

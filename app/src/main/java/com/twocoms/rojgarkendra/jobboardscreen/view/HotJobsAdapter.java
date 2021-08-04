@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.twocoms.rojgarkendra.R;
-import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
@@ -22,7 +21,6 @@ import com.twocoms.rojgarkendra.jobboardscreen.controler.JobDetailActivity;
 import com.twocoms.rojgarkendra.jobboardscreen.model.ModelHotJobs;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHolder> {
 
@@ -60,7 +58,6 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
             holder.dateText.setText("Posted on : " + CommonMethod.parseDateToFormat(hotJobsModels.getDates()));
         }
 
-
         holder.viewJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +71,6 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 if (CommonMethod.checkUserLoggedInOrRegister(context)) {
-                   // CommonMethod.showToast("Job Applied", context);
                     userIdSTr = GlobalPreferenceManager.getStringForKey(context,AppConstant.KEY_USER_ID,"");
                     vacancyId = modelHotJobs.get(position).getId();
                     frgHotJob.applyAllJobs(userIdSTr,vacancyId);
@@ -83,19 +79,13 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
                 }
             }
         });
-
-
+        holder.vacancyTitle.setText(hotJobsModels.getVacancyTitle());
         if (position == modelHotJobs.size() - 1) {
             if (frgHotJob.currentPages == frgHotJob.numberOfPagesFromServer) {
                 Log.e("AllDataLoaded", "true");
-//                paginationProgress.setVisibility(View.GONE);
             } else {
-//                paginationProgress.setVisibility(View.VISIBLE);
-                // newsAdapter.notifyDataSetChanged();
                 frgHotJob.currentPages = frgHotJob.currentPages + 1;
                 frgHotJob.getHotJobs();
-//                getNews(currentPages + 1);
-                // searchGetNews(currentPages + 1);
             }
         }
     }
@@ -107,7 +97,7 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView salaryText, jobText, clientText, locationText, vacancyText, dateText;
+        TextView salaryText, jobText, clientText, locationText, vacancyText, dateText,vacancyTitle;
         Button viewJobBtn, applyJobBtn;
 
         ViewHolder(View itemView) {
@@ -120,6 +110,7 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
             dateText = itemView.findViewById(R.id.date_job_posted);
             viewJobBtn = itemView.findViewById(R.id.view_jobs);
             applyJobBtn = itemView.findViewById(R.id.apply_jobs);
+            vacancyTitle = itemView.findViewById(R.id.vacancy_title_text);
 
         }
 

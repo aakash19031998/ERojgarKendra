@@ -63,9 +63,6 @@ public class VacancyDetailModel {
     private double StCode;
     private String StateName;
 
-
-    // Getter Methods
-
     public String getId() {
         return id;
     }

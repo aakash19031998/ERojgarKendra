@@ -29,6 +29,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -136,6 +137,10 @@ public class RegisterUserDataActivity extends AppCompatActivity {
     private Calendar mcalendar;
     private LoadingDialog loadingDialog;
 
+    String[] city;
+    String[] cityCode;
+    ArrayList<String> listCity;
+    String city_code = "";
     //    Bitmap bitmap;
     //    String dobToServer;
     @Override
@@ -164,6 +169,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 //        }
         permissionStatus = getSharedPreferences("permissionStatus", MODE_PRIVATE);
         listStates = new ArrayList<>();
+        listCity = new ArrayList<>();
         mcalendar = Calendar.getInstance();
 
 //        qualificationList.add("5th");
@@ -189,6 +195,10 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         registerUserDataBinding.dobKnownEditText.setFocusable(false);
         registerUserDataBinding.stateEditTextLnr.setFocusable(false);
         registerUserDataBinding.stateEditText.setFocusable(false);
+
+//        registerUserDataBinding.cityEditTextLnr.setFocusable(false);
+//        registerUserDataBinding.cityEditText.setFocusable(false);
+
         registerUserDataBinding.qualificationTypeEditTextLnr.setFocusable(false);
         registerUserDataBinding.qualificationTypeEditText.setFocusable(false);
         registerUserDataBinding.experinaceEditTextLnr.setFocusable(false);
@@ -344,6 +354,30 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             }
         });
 
+
+//        registerUserDataBinding.cityEditText.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(!registerUserDataBinding.stateEditText.getText().toString().equals("")){
+//                    getCity(state_code);
+//                }
+//                else {
+//                    CommonMethod.showToast("Please select state first.",RegisterUserDataActivity.this);
+//                }
+//
+//
+//            }
+//        });
+//
+//        registerUserDataBinding.cityEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                int j = listCity.indexOf(registerUserDataBinding.cityEditText.getText().toString());
+//                city_code = cityCode[j];
+//                Log.v("city_code", city_code);
+//            }
+//        });
+
         registerUserDataBinding.qualificationTypeEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -386,8 +420,8 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (validation()) {
-                   // userRegistration(jsonUserRegistration());
-                    registerUserDataWithFilePart(RegisterUserDataActivity.this,jsonUserRegistration());
+                    // userRegistration(jsonUserRegistration());
+                    registerUserDataWithFilePart(RegisterUserDataActivity.this, jsonUserRegistration());
 //                    jsonUserRegistration();
                 }
             }
@@ -430,8 +464,6 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 }
             }
         });*/
-
-
 
 
     }
@@ -948,6 +980,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_DOC);*/
         Intent intent = new Intent();
         intent.setType("application/pdf");
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
     }
@@ -1092,7 +1125,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                             .load(bitmap)
                             .into(registerUserDataBinding.registationHeadre.userImg);
 
-                    img_user_profile_base_64 = encodeTobase64(bitmap);
+                    //   img_user_profile_base_64 = encodeTobase64(bitmap);
 //                    registerUserDataBinding.registationHeadre.userImg.setImageBitmap(bitmap);
                     // loading profile image from local cache
 //                    loadProfile(uri.toString());
@@ -1126,26 +1159,20 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 File myFile = new File(uriString);
                 String path = myFile.getAbsolutePath();
                 String displayName = null;
-
-                if (uriString.startsWith("content://")) {
-                    if (uri.toString().contains(".pdf")) {
-                        Cursor cursor = null;
-                        try {
-                            cursor = getContentResolver().query(uri, null, null, null, null);
-                            if (cursor != null && cursor.moveToFirst()) {
-                                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                                registerUserDataBinding.uploadCvTxt.setText(displayName);
-                            }
-                        } finally {
-                            cursor.close();
-                        }
-                    }else {
-                        CommonMethod.showToast("Please Select PDF", RegisterUserDataActivity.this);
-                    }
-                } else if (uriString.startsWith("file://")) {
-                    displayName = myFile.getName();
+                Cursor cursor = null;
+                docFilePath = getFileNameByUri(this, uri);
+                cursor = getContentResolver().query(uri, null, null, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                     registerUserDataBinding.uploadCvTxt.setText(displayName);
                 }
+
+                byte[] dataMain = loadFileAsBytesArray(docFilePath);
+
+                if(dataMain == null){
+                    Log.v("SelectedFilel Null","True");
+                }
+
             }
         }
     }
@@ -1309,6 +1336,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
     void getStates() {
         ServiceHandler serviceHandler = new ServiceHandler(RegisterUserDataActivity.this);
+        Log.v("URL States",AppConstant.GET_STATE);
         serviceHandler.StringRequest(Request.Method.GET, "", AppConstant.GET_STATE, true, new ServiceHandler.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
@@ -1345,22 +1373,87 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
     }
 
+    void getCity(String cityMain) {
+        Log.v("URL City",AppConstant.GET_CITY+cityMain);
+        ServiceHandler serviceHandler = new ServiceHandler(RegisterUserDataActivity.this);
+        serviceHandler.StringRequest(Request.Method.GET, "", AppConstant.GET_CITY+cityMain, true, new ServiceHandler.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+                Log.v("Response", result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    if (jsonObject.getBoolean("success")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                        city = new String[jsonArray.length()];
+                        cityCode = new String[jsonArray.length()];
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = (JSONObject) jsonArray.get(i);
+                            String stateName = object.getString("city");
+                            int stateCode = object.getInt("id");
+//                            if (!stateName.equals("empty")) {
+                            listCity.add(stateName);
+                            city[i] = stateName;
+                            cityCode[i] = String.valueOf(stateCode);
+//                            }
+                        }
+
+                        ArrayAdapter adapter1 = new ArrayAdapter<String>(RegisterUserDataActivity.this, R.layout.drop_down_item, city);
+                        registerUserDataBinding.cityEditText.setAdapter(adapter1);
+                        registerUserDataBinding.cityEditText.showDropDown();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
 
     private String encodeFileToBase64Binary(byte[] allData) {
         String encoded = Base64.encodeToString(allData, Base64.NO_WRAP);
         return encoded;
     }
 
-    public static byte[] loadFileAsBytesArray(String fileName) throws Exception {
-        File file = new File(fileName);
-        int length = (int) file.length();
-        BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
-        byte[] bytes = new byte[length];
-        reader.read(bytes, 0, length);
-        reader.close();
-        return bytes;
+    public static byte[] loadFileAsBytesArray(String fileName) {
+        try {
+            File file = new File(fileName);
+            int length = (int) file.length();
+            BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
+            byte[] bytes = new byte[length];
+            reader.read(bytes, 0, length);
+            reader.close();
+            return bytes;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return null;
     }
+
+
+
+    public  byte[] loadFilleAsByteArray(String fileName) {
+        try {
+//            File file = new File(fileName);
+//            int length = (int) file.length();
+//            BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
+//            byte[] bytes = new byte[length];
+//            reader.read(bytes, 0, length);
+//            reader.close();
+
+            InputStream inStream = getResources().openRawResource(R.raw.doc_02);
+            byte[] music = new byte[inStream.available()];
+            return music;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
 
     void setMobileDataCard() {
@@ -1372,16 +1465,16 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
     private void registerUserDataWithFilePart(final Context context, final JSONObject jsonObject) {
 
-            loadingDialog = new LoadingDialog(context);
-            loadingDialog.show();
-            VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, AppConstant.CREATE_USER, new Response.Listener<NetworkResponse>() {
+        loadingDialog = new LoadingDialog(context);
+        loadingDialog.show();
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, AppConstant.CREATE_USER, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
                 try {
-                    Log.v("response",resultResponse);
+                    Log.v("response", resultResponse);
                     JSONObject jsonObject = new JSONObject(resultResponse);
-                 //   JSONObject jsonObject = new JSONObject(result);
+                    //   JSONObject jsonObject = new JSONObject(result);
                     if (jsonObject.getBoolean("success")) {
                         JSONObject dataStr = jsonObject.getJSONObject("data");
                         dataStr.put(AppConstant.KEY_IS_REGISTER, "Y");
@@ -1437,6 +1530,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                         navigateToDashBoard();
 //                        }
                     } else {
+                        loadingDialog.dismiss();
                         String msgStr = jsonObject.getString("message");
                         CommonMethod.showToast(msgStr, RegisterUserDataActivity.this);
                     }
@@ -1481,7 +1575,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 }
                 Log.i("Error", errorMessage);
                 loadingDialog.dismiss();
-                CommonMethod.showToast(errorMessage,RegisterUserDataActivity.this);
+                CommonMethod.showToast(errorMessage, RegisterUserDataActivity.this);
                 error.printStackTrace();
             }
         }) {
@@ -1505,16 +1599,23 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             @Override
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
-                // file name could found file base or direct access from real path
-                // for now just get bitmap data from ImageView
-                if(bitmap != null) {
+                if (bitmap != null) {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 95, out);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 95, stream);
                     byte[] byteArray = stream.toByteArray();
                     params.put("profile_photo", new DataPart("profile_image.jpg", byteArray, "image/jpeg"));
-//                params.put("cover", new DataP¬art("file_cover.jpg", AppHelper.getFileDataFromDrawable(getBaseContext(), mCoverImage.getDrawable()), "image/jpeg"));
 
                 }
+
+//                MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+//                if (docFilePath != null) {
+//                    byte[] data = loadFilleAsByteArray(docFilePath);
+//
+//                    if (data != null) {
+//                        params.put("resume", new DataPart("user_resume.pdf", data, "pdf"));
+//                    }
+//                }
                 return params;
             }
         };

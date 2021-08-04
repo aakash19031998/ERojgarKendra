@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_6sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:gravity="center"
+                android:padding="@dimen/_6sdp"
+                android:text="@string/set_filter"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/refreshBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:foregroundGravity="center_vertical"
+                android:src="@drawable/bg_refresh"
+                android:padding="@dimen/_12sdp"/>
+
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/scroll_bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <RelativeLayout
+                android:id="@+id/location_bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/status_edit_text_lnr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/reg_tc_bg"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_8sdp"
+                    android:layout_toRightOf="@+id/header1"
+                    app:hintTextColor="@android:color/black"
+                    android:layout_marginTop="6dp"
+
+                    android:layout_toLeftOf="@+id/proceddbuttonlayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:padding="@dimen/_10sdp"
+                        android:id="@+id/status_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:focusable="false"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:drawableLeft="@drawable/bg_reg_qualificatiion"
+                        android:drawableRight="@drawable/bg_reg_drop_down"
+                        android:hint="@string/select_status_hint" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/apply_job_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/status_edit_text_lnr"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:background="@color/app_colour_name"
+                    android:gravity="center"
+                    android:padding="@dimen/_6sdp"
+                    android:text="@string/applly_filter"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

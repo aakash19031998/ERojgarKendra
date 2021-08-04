@@ -358,13 +358,27 @@
                 android:layout_toLeftOf="@+id/proceddbuttonlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <com.google.android.material.textfield.TextInputEditText
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/city_edit_text"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:drawablePadding="@dimen/_8sdp"-->
+<!--                    android:drawableLeft="@drawable/bg_reg_city"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:hint="@string/city_hing" />-->
+
+<!--                android:drawableRight="@drawable/bg_reg_drop_down"-->
+
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:padding="@dimen/_10sdp"
                     android:id="@+id/city_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_city"
+                    android:drawableLeft="@drawable/bg_reg_state"
                     android:singleLine="true"
                     android:hint="@string/city_hing" />
 

@@ -9,9 +9,12 @@ package com.twocoms.rojgarkendra.jobboardscreen.model;
      String numberOpenings;
      String dates;
      String location;
+     String vacancyTitle = "";
 
      public ModelHotJobs() {
      }
+
+
 
      public ModelHotJobs(int id, String salary, String jobTypes, String clientName, String numberOpenings, String dates, String location) {
          this.id = id;
@@ -21,6 +24,7 @@ package com.twocoms.rojgarkendra.jobboardscreen.model;
          this.numberOpenings = numberOpenings;
          this.dates = dates;
          this.location = location;
+         this.vacancyTitle = location;
      }
 
      public int getId() {
@@ -77,5 +81,13 @@ package com.twocoms.rojgarkendra.jobboardscreen.model;
 
      public void setLocation(String location) {
          this.location = location;
+     }
+
+     public String getVacancyTitle() {
+         return vacancyTitle;
+     }
+
+     public void setVacancyTitle(String vacancyTitle) {
+         this.vacancyTitle = vacancyTitle;
      }
  }
