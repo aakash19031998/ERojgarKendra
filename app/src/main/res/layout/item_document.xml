@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_hot_job"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_6sdp"
+        card_view:cardCornerRadius="@dimen/_5sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_10sdp">
+
+            <ImageView
+                android:id="@+id/viewDocument"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="@dimen/_26sdp"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/viewdocument"></ImageView>
+
+            <ImageView
+                android:id="@+id/verifiedDocument"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="@dimen/_26sdp"
+                android:layout_toLeftOf="@+id/viewDocument"
+                android:padding="@dimen/_4sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:src="@drawable/verified_icon"></ImageView>
+
+
+            <TextView
+                android:id="@+id/documentName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:text="Document Name">
+
+            </TextView>
+
+
+            <ImageView
+                android:id="@+id/addDocument"
+                android:layout_width="@dimen/_34sdp"
+                android:layout_height="@dimen/_34sdp"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/_4sdp"
+                android:visibility="visible"
+                android:layout_below="@+id/viewDocument"
+                android:src="@drawable/adddocument"
+                android:text="Add"></ImageView>
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

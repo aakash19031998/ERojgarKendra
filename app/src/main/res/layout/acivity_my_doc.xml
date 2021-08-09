@@ -28,6 +28,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:src="@drawable/icon_plus"
+        android:visibility="gone"
         android:backgroundTint="@color/app_colour_name"
         app:tint="@color/white"
         />

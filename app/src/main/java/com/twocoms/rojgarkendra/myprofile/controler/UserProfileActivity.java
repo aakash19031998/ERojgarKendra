@@ -1133,19 +1133,19 @@ public class UserProfileActivity extends AppCompatActivity {
         builder.setPositiveButton(getString(R.string.go_to_settings), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialog.cancel();
+                dialogInterface.cancel();
                 openSettings();
             }
         });
 
-        builder.setPositiveButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialog.cancel();
+                dialogInterface.cancel();
             }
         });
-        builder.show();
-
+        AlertDialog alert11 = builder.create();
+        alert11.show();
     }
 
     private void openSettings() {
@@ -1583,16 +1583,16 @@ public class UserProfileActivity extends AppCompatActivity {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 95, stream);
                     byte[] byteArray = stream.toByteArray();
-                    params.put("profile_photo", new DataPart("profile_image.jpg", byteArray, "image/jpeg"));
+                    params.put("profile_photo", new DataPart("profile_image.jpg", byteArray));
 
                 }
-                if (docFilePath != null) {
-                    byte[] data = loadFileAsBytesArray(docFilePath);
-                    if (data != null) {
-                        params.put("resume", new DataPart("user_resume.pdf", data, "application/pdf"));
-                    }
-
-                }
+//                if (docFilePath != null) {
+//                    byte[] data = loadFileAsBytesArray(docFilePath);
+//                    if (data != null) {
+//                        params.put("resume", new DataPart("user_resume.pdf", data, "application/pdf"));
+//                    }
+//
+//                }
                 return params;
             }
         };

@@ -141,6 +141,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
     String[] cityCode;
     ArrayList<String> listCity;
     String city_code = "";
+
     //    Bitmap bitmap;
     //    String dobToServer;
     @Override
@@ -1169,8 +1170,8 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
                 byte[] dataMain = loadFileAsBytesArray(docFilePath);
 
-                if(dataMain == null){
-                    Log.v("SelectedFilel Null","True");
+                if (dataMain == null) {
+                    Log.v("SelectedFilel Null", "True");
                 }
 
             }
@@ -1198,18 +1199,22 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         builder.setPositiveButton(getString(R.string.go_to_settings), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialog.cancel();
+                dialogInterface.cancel();
                 openSettings();
             }
         });
 
-        builder.setPositiveButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialog.cancel();
+                dialogInterface.cancel();
+
+
             }
         });
-        builder.show();
+
+        AlertDialog alert11 = builder.create();
+        alert11.show();
 
     }
 
@@ -1336,7 +1341,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
     void getStates() {
         ServiceHandler serviceHandler = new ServiceHandler(RegisterUserDataActivity.this);
-        Log.v("URL States",AppConstant.GET_STATE);
+        Log.v("URL States", AppConstant.GET_STATE);
         serviceHandler.StringRequest(Request.Method.GET, "", AppConstant.GET_STATE, true, new ServiceHandler.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
@@ -1374,9 +1379,9 @@ public class RegisterUserDataActivity extends AppCompatActivity {
     }
 
     void getCity(String cityMain) {
-        Log.v("URL City",AppConstant.GET_CITY+cityMain);
+        Log.v("URL City", AppConstant.GET_CITY + cityMain);
         ServiceHandler serviceHandler = new ServiceHandler(RegisterUserDataActivity.this);
-        serviceHandler.StringRequest(Request.Method.GET, "", AppConstant.GET_CITY+cityMain, true, new ServiceHandler.VolleyCallback() {
+        serviceHandler.StringRequest(Request.Method.GET, "", AppConstant.GET_CITY + cityMain, true, new ServiceHandler.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
 
@@ -1434,8 +1439,7 @@ public class RegisterUserDataActivity extends AppCompatActivity {
     }
 
 
-
-    public  byte[] loadFilleAsByteArray(String fileName) {
+    public byte[] loadFilleAsByteArray(String fileName) {
         try {
 //            File file = new File(fileName);
 //            int length = (int) file.length();
@@ -1453,7 +1457,6 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
         return null;
     }
-
 
 
     void setMobileDataCard() {
@@ -1604,18 +1607,18 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 //                    bitmap.compress(Bitmap.CompressFormat.JPEG, 95, out);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 95, stream);
                     byte[] byteArray = stream.toByteArray();
-                    params.put("profile_photo", new DataPart("profile_image.jpg", byteArray, "image/jpeg"));
+                    params.put("profile_photo", new DataPart("profile_image.jpg", byteArray));
 
                 }
 
 //                MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
-//                if (docFilePath != null) {
+                //if (docFilePath != null) {
 //                    byte[] data = loadFilleAsByteArray(docFilePath);
 //
 //                    if (data != null) {
-//                        params.put("resume", new DataPart("user_resume.pdf", data, "pdf"));
+//                        params.put("doc_file_name", new DataPart("user_resume.pdf", data, "pdf"));
 //                    }
-//                }
+                // }
                 return params;
             }
         };

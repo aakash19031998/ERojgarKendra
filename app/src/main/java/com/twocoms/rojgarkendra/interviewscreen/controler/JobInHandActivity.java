@@ -203,11 +203,10 @@ public class JobInHandActivity extends AppCompatActivity {
         }
 
 
-
-        if(appliedInterviewAdapter == null){
-            appliedInterviewAdapter = new JobInHandAdapter(JobInHandActivity.this, appliedAndUpcommingModels);
-            appliedInterviewAdapter.acceptOrRejectoffer(2, "1234567", "offer_accepected");
-        }
+//        if(appliedInterviewAdapter == null){
+//            appliedInterviewAdapter = new JobInHandAdapter(JobInHandActivity.this, appliedAndUpcommingModels);
+//            appliedInterviewAdapter.acceptOrRejectoffer(2, "1234567", "offer_accepected");
+//        }
 
     }
 

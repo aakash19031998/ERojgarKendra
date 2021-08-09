@@ -27,7 +27,8 @@ public class AppConstant {
     public static final String GET_ALL_TESTIMONIALS = BASE_URL + "Testimonial/show";
     public static final String GET_CITY = BASE_URL +"Register/"+ "city/";
 
-    public static final String GET_ALL_DOCUMENTS_TO_UPLOADED = BASE_URL + "Document/client_documents";
+    public static final String GET_ALL_DOCUMENTS_TO_UPLOADED = BASE_URL + "Document/salary_documents";
+    public static final String UPLOAD_DOCUMENTS = BASE_URL + "Document/upload_salary_slip";
 
     public static final String SOMETHING_WENT_WRONG = "Something went wrong please try again...!!!";
     public static final String JOB_APPLIED_SUCCESSFULLY_MESSAGE = "Job applied successfully!";

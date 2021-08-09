@@ -92,6 +92,10 @@
             android:name=".jobboardscreen.controler.JobDetailActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity
+            android:name=".documentsscreen.controler.ViewPdfActivity"
+            android:screenOrientation="portrait"></activity>
+
         <activity android:name=".documentsscreen.controler.AddDocActivity"
             android:screenOrientation="portrait"></activity>
 

@@ -2,11 +2,10 @@ package com.twocoms.rojgarkendra.documentsscreen.controler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.util.Log;
@@ -15,14 +14,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.twocoms.rojgarkendra.R;
@@ -32,27 +32,32 @@ import com.twocoms.rojgarkendra.global.model.AppConstant;
 import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.global.model.LoadingDialog;
-import com.twocoms.rojgarkendra.global.model.ServiceHandler;
-import com.twocoms.rojgarkendra.jobboardscreen.controler.JobDetailActivity;
-import com.twocoms.rojgarkendra.jobboardscreen.model.VacancyDetailModel;
-import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class AddDocActivity extends AppCompatActivity {
 
-    ImageView menuIcon,backIcon,homeIcon,profileIcon;
-    TextView titleToolbar,selectedDocText;
+    ImageView menuIcon, backIcon, homeIcon, profileIcon;
+    TextView titleToolbar, selectedDocText, uploadbutton;
     LinearLayout titleLnr;
     RelativeLayout selectDoc;
     private LoadingDialog loadingDialog;
+    String filePath = "";
+    Uri uri;
+    String paySlipMonth = "";
+    String paySlipYear = "";
+    TextInputEditText doc_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,28 +66,34 @@ public class AddDocActivity extends AppCompatActivity {
         initialization();
         setToolbarVisibility();
         onClick();
+        paySlipMonth = getIntent().getStringExtra("payMonth");
+        paySlipYear = getIntent().getStringExtra("payYear");
+        doc_type.setText(paySlipMonth + " " + paySlipYear);
     }
 
-    void initialization(){
-        menuIcon = (ImageView)findViewById(R.id.menu);
-        backIcon = (ImageView)findViewById(R.id.backbutton);
-        homeIcon = (ImageView)findViewById(R.id.home_img);
-        profileIcon = (ImageView)findViewById(R.id.user_profile_img);
-        titleToolbar =(TextView)findViewById(R.id.title);
-        titleLnr =(LinearLayout)findViewById(R.id.title_lnr);
+    void initialization() {
+        menuIcon = (ImageView) findViewById(R.id.menu);
+        backIcon = (ImageView) findViewById(R.id.backbutton);
+        homeIcon = (ImageView) findViewById(R.id.home_img);
+        profileIcon = (ImageView) findViewById(R.id.user_profile_img);
+        titleToolbar = (TextView) findViewById(R.id.title);
+        titleLnr = (LinearLayout) findViewById(R.id.title_lnr);
         titleToolbar.setText(AppConstant.NAME_MY_DOCUMENTS);
-        selectDoc = (RelativeLayout)findViewById(R.id.upload_doc_lnr);
-        selectedDocText = (TextView)findViewById(R.id.upload_doc_txt);
+        selectDoc = (RelativeLayout) findViewById(R.id.upload_doc_lnr);
+        selectedDocText = (TextView) findViewById(R.id.upload_doc_txt);
+        uploadbutton = (TextView) findViewById(R.id.uploadbutton);
+        doc_type = findViewById(R.id.doc_type);
+
     }
 
-    void setToolbarVisibility(){
+    void setToolbarVisibility() {
         menuIcon.setVisibility(View.GONE);
         backIcon.setVisibility(View.VISIBLE);
         homeIcon.setVisibility(View.VISIBLE);
         profileIcon.setVisibility(View.GONE);
     }
 
-    void onClick(){
+    void onClick() {
         backIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,11 +118,42 @@ public class AddDocActivity extends AppCompatActivity {
         selectDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                intent.setType("application/pdf");
-                startActivityForResult(Intent.createChooser(intent, "Select Pdf"), 1212);
+//                Intent intent = new Intent();
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+//                intent.setType("application/pdf");
+//                startActivityForResult(Intent.createChooser(intent, "Select Pdf"), 1212);
+//                Intent intent = new Intent();
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                intent.setType("application/pdf");
+//                startActivityForResult(intent, 1);
+                String[] mimeTypes = {"image/*", "application/pdf"};
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        intent.setType(mimeTypes.length == 1 ? mimeTypes[0] : "*/*");
+                        if (mimeTypes.length > 0) {
+                            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+                        }
+                    } else {
+                        String mimeTypesStr = "";
+                        for (String mimeType : mimeTypes) {
+                            mimeTypesStr += mimeType + "|";
+                        }
+                        intent.setType(mimeTypesStr.substring(0, mimeTypesStr.length() - 1));
+                    }
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        uploadbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (uri != null && !filePath.equals("")) {
+                    uploadPDF(filePath, uri, upldocJson(paySlipMonth));
+                } else {
+                    CommonMethod.showToast("Please select document to upload", AddDocActivity.this);
+                }
             }
         });
     }
@@ -121,134 +163,174 @@ public class AddDocActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case 1212:
-                if (resultCode == RESULT_OK) {
-                    // Get the Uri of the selected file
-                    Uri uri = data.getData();
-                    String uriString = uri.toString();
-                    File myFile = new File(uriString);
-                    String path = myFile.getAbsolutePath();
-                    String displayName = null;
+        if (resultCode == RESULT_OK) {
+            // Get the Uri of the selected file
+            Uri uri = data.getData();
+            String uriString = uri.toString();
+            File myFile = new File(uriString);
+            String path = myFile.getAbsolutePath();
+            String displayName = null;
 
-                    if (uriString.startsWith("content://")) {
-                        if (uri.toString().contains(".pdf")) {
-                            Cursor cursor = null;
-                            try {
-                                cursor = getContentResolver().query(uri, null, null, null, null);
-                                if (cursor != null && cursor.moveToFirst()) {
-                                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                                    selectedDocText.setText(displayName);
-                                }
-                            } finally {
-                                cursor.close();
-                            }
-                        }else {
-                            CommonMethod.showToast("Please Select PDF",AddDocActivity.this);
-                        }
-                    } else if (uriString.startsWith("file://")) {
-                        displayName = myFile.getName();
-                        selectedDocText.setText(displayName);
-                    }
-                }
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-
-    private void uploadDocument(final Context context, final JSONObject jsonObject) {
-
-        loadingDialog = new LoadingDialog(context);
-        loadingDialog.show();
-        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, AppConstant.CREATE_USER, new Response.Listener<NetworkResponse>() {
-            @Override
-            public void onResponse(NetworkResponse response) {
-                String resultResponse = new String(response.data);
+            if (uriString.startsWith("content://")) {
+                Cursor cursor = null;
                 try {
-                    Log.v("response", resultResponse);
-                    JSONObject jsonObject = new JSONObject(resultResponse);
-                    //   JSONObject jsonObject = new JSONObject(result);
-                    if (jsonObject.getBoolean("success")) {
-                        JSONObject dataStr = jsonObject.getJSONObject("data");
-                        dataStr.put(AppConstant.KEY_IS_REGISTER, "Y");
-                        loadingDialog.dismiss();
-                    } else {
-                        loadingDialog.dismiss();
-                        String msgStr = jsonObject.getString("message");
-                        CommonMethod.showToast(msgStr, AddDocActivity.this);
+                    cursor = this.getContentResolver().query(uri, null, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
+                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        Log.d("nameeeee>>>>  ", displayName);
+                        selectedDocText.setText(displayName);
+                        filePath = displayName;
+                        this.uri = uri;
+                        //  uploadPDF(displayName,uri);
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } finally {
+                    cursor.close();
                 }
+            } else if (uriString.startsWith("file://")) {
+                displayName = myFile.getName();
+                filePath = displayName;
+                Log.d("nameeeee>>>>  ", displayName);
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                NetworkResponse networkResponse = error.networkResponse;
-                String errorMessage = "Unknown error";
-                if (networkResponse == null) {
-                    if (error.getClass().equals(TimeoutError.class)) {
-                        errorMessage = "Request timeout";
-                    } else if (error.getClass().equals(NoConnectionError.class)) {
-                        errorMessage = "Failed to connect server";
-                    }
-                } else {
-                    String result = new String(networkResponse.data);
-                    try {
-                        JSONObject response = new JSONObject(result);
-                        String status = response.getString("status");
-                        String message = response.getString("message");
+        }
 
-                        Log.e("Error Status", status);
-                        Log.e("Error Message", message);
+        super.onActivityResult(requestCode, resultCode, data);
 
-                        if (networkResponse.statusCode == 404) {
-                            errorMessage = "Resource not found";
-                        } else if (networkResponse.statusCode == 401) {
-                            errorMessage = message + " Please login again";
-                        } else if (networkResponse.statusCode == 400) {
-                            errorMessage = message + " Check your inputs";
-                        } else if (networkResponse.statusCode == 500) {
-                            errorMessage = message + " Something is getting wrong";
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.i("Error", errorMessage);
-                loadingDialog.dismiss();
-                CommonMethod.showToast(errorMessage, AddDocActivity.this);
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Gson gson = new Gson();
-                Type type = new TypeToken<Map<String, String>>() {
-                }.getType();
-                Map<String, String> myMap = gson.fromJson(jsonObject.toString(), type);
-                return myMap;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                String tokenMain = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_TOKEN_MAIN, "");
-                headers.put("Authorization", "Bearer " + tokenMain);
-                return headers;
-            }
-
-            @Override
-            protected Map<String, DataPart> getByteData() {
-                Map<String, DataPart> params = new HashMap<>();
-                return params;
-            }
-        };
-        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
     }
 
+    private JSONObject upldocJson(String paySlipMonth) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("user_id", GlobalPreferenceManager.getStringForKey(AddDocActivity.this, AppConstant.KEY_USER_ID, ""));
+            json.put("payslip_month", paySlipMonth);
+            Log.v("JSON", json.toString());
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+        }
+        return json;
+    }
+
+
+    private void uploadPDF(final String pdfname, Uri pdffile, final JSONObject jsonObject) {
+        loadingDialog = new LoadingDialog(AddDocActivity.this);
+        loadingDialog.show();
+        InputStream iStream = null;
+        try {
+            iStream = getContentResolver().openInputStream(pdffile);
+            final byte[] inputData = getBytes(iStream);
+            Log.v("URL", AppConstant.UPLOAD_DOCUMENTS);
+            VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, AppConstant.UPLOAD_DOCUMENTS,
+                    new Response.Listener<NetworkResponse>() {
+                        @Override
+                        public void onResponse(NetworkResponse response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(new String(response.data));
+                                Log.v("Response", jsonObject.toString());
+                                if (jsonObject.getBoolean("success")) {
+                                    CommonMethod.showToast("Document Uploaded Successfully", AddDocActivity.this);
+                                    loadingDialog.dismiss();
+                                    Intent data = new Intent();
+                                    data.putExtra("documentuplodedSucess","true");
+                                    setResult(RESULT_OK,data);
+                                    finish();
+
+                                } else {
+                                    //loadingDialog.dismiss();
+                                    String msgStr = jsonObject.getString("message");
+                                    CommonMethod.showToast(msgStr, AddDocActivity.this);
+                                }
+
+                            } catch (JSONException e ) {
+                                loadingDialog.dismiss();
+                                CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, AddDocActivity.this);
+                                e.printStackTrace();
+                            }
+                            catch (Exception e ) {
+                                loadingDialog.dismiss();
+                                CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, AddDocActivity.this);
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            loadingDialog.dismiss();
+                            byte[] data = error.networkResponse.data;
+
+//                    byte[] bytes = "hello world".getBytes();
+//creates a string from the byte array without specifying character encoding
+                            String s = new String(data);
+
+                            Log.v("NetworkResponse", s);
+
+                            Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }) {
+
+                // @Override
+                protected Map<String, String> getParams() {
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<Map<String, String>>() {
+                    }.getType();
+                    Map<String, String> myMap = gson.fromJson(jsonObject.toString(), type);
+                    return myMap;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    String tokenMain = GlobalPreferenceManager.getStringForKey(AddDocActivity.this, AppConstant.KEY_TOKEN_MAIN, "");
+                    headers.put("Authorization", "Bearer " + tokenMain);
+                    return headers;
+                }
+
+                /*
+                 *pass files using below method
+                 * */
+                @Override
+                protected Map<String, DataPart> getByteData() {
+                    Map<String, DataPart> params = new HashMap<>();
+                    params.put("payslip", new DataPart(pdfname, inputData));
+                    return params;
+                }
+            };
+
+
+//            volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+//                    0,
+//                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(volleyMultipartRequest);
+        } catch (FileNotFoundException e) {
+            loadingDialog.dismiss();
+            CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, AddDocActivity.this);
+            e.printStackTrace();
+        } catch (IOException e) {
+            loadingDialog.dismiss();
+            CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, AddDocActivity.this);
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        try {
+            ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+            int bufferSize = 1024;
+            byte[] buffer = new byte[bufferSize];
+            int len = 0;
+            while ((len = inputStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+            return byteBuffer.toByteArray();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
