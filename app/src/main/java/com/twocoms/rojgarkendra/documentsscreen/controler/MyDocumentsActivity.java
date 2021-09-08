@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
@@ -47,12 +48,13 @@ public class MyDocumentsActivity extends AppCompatActivity {
     TextView titleToolbar;
     LinearLayout titleLnr;
     TabLayout tabLayout;
-    //    ViewPager viewPager;
     RecyclerView docRecyclerView;
-    FloatingActionButton addButton;
+    /*FloatingActionButton addButton;*/
     ArrayList<DocumentsModel> documentsModule;
     DocumentListAdapter documentListAdapter;
     private AlertDialog dialog;
+    private SwipeRefreshLayout swipeContainer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,23 @@ public class MyDocumentsActivity extends AppCompatActivity {
         onClick();
         getAllDocumentsToUpload();
         setAdapter();
+
+        swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(false);
+                documentsModule.clear();
+                documentsModule = new ArrayList<>();
+               getAllDocumentsToUpload();
+            }
+        });
+
     }
 
     void initialization() {
@@ -74,7 +93,7 @@ public class MyDocumentsActivity extends AppCompatActivity {
         titleLnr = (LinearLayout) findViewById(R.id.title_lnr);
         titleToolbar.setText(AppConstant.NAME_MY_DOCUMENTS);
         docRecyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
-        addButton = (FloatingActionButton) findViewById(R.id.add_doc);
+      //  addButton = (FloatingActionButton) findViewById(R.id.add_doc);
     }
 //
 //    void setTab(){
@@ -135,13 +154,13 @@ public class MyDocumentsActivity extends AppCompatActivity {
             }
         });
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MyDocumentsActivity.this, AddDocActivity.class);
-                startActivity(intent);
-            }
-        });
+//        addButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MyDocumentsActivity.this, AddDocActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override

@@ -58,6 +58,19 @@ public class PopularJobsAdapter extends RecyclerView.Adapter<PopularJobsAdapter.
         }
 
 
+        if (modelHotJobs.get(position).isApplied()) {
+            holder.applyJobBtn.setVisibility(View.VISIBLE);
+            holder.applyJobBtn.setText("Already Applied");
+        } else {
+            if (CommonMethod.checkUserLoggedInOrRegister(context)) {
+                holder.applyJobBtn.setVisibility(View.VISIBLE);
+                holder.applyJobBtn.setText("Apply");
+            } else {
+                holder.applyJobBtn.setVisibility(View.GONE);
+
+            }
+        }
+
         holder.viewJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,10 +85,13 @@ public class PopularJobsAdapter extends RecyclerView.Adapter<PopularJobsAdapter.
             public void onClick(View view) {
                 if (CommonMethod.checkUserLoggedInOrRegister(context)) {
 //                    CommonMethod.showToast("Job Applied", context);
-
-                    String userIdSTr = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_USER_ID, "");
-                    int vacancyId = modelHotJobs.get(position).getId();
-                    frgPopulorJobs.applyAllJobs(userIdSTr, vacancyId);
+                    if (modelHotJobs.get(position).isApplied()) {
+                        CommonMethod.showToast("Job already applied please try for other option.", context);
+                    } else {
+                        String userIdSTr = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_USER_ID, "");
+                        int vacancyId = modelHotJobs.get(position).getId();
+                        frgPopulorJobs.applyAllJobs(userIdSTr, vacancyId, position);
+                    }
 
                 } else {
                     CommonMethod.showDialogueForLoginSignUp(frgPopulorJobs.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
@@ -93,7 +109,7 @@ public class PopularJobsAdapter extends RecyclerView.Adapter<PopularJobsAdapter.
 //                paginationProgress.setVisibility(View.VISIBLE);
                 // newsAdapter.notifyDataSetChanged();
                 frgPopulorJobs.currentPages = frgPopulorJobs.currentPages + 1;
-                frgPopulorJobs.getAllJobsData();
+                frgPopulorJobs.getPopularJobsData();
 //                getNews(currentPages + 1);
                 // searchGetNews(currentPages + 1);
             }
@@ -109,7 +125,7 @@ public class PopularJobsAdapter extends RecyclerView.Adapter<PopularJobsAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView salaryText, jobText, clientText, locationText, vacancyText, dateText,vacancyTitle;
+        TextView salaryText, jobText, clientText, locationText, vacancyText, dateText, vacancyTitle;
         Button viewJobBtn, applyJobBtn;
 
         ViewHolder(View itemView) {

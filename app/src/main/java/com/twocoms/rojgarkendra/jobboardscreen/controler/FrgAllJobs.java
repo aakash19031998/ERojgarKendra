@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
@@ -21,9 +24,11 @@ import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.global.model.ServiceHandler;
 import com.twocoms.rojgarkendra.jobboardscreen.model.ModelHotJobs;
 import com.twocoms.rojgarkendra.jobboardscreen.view.AllJobsAdapter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class FrgAllJobs extends Fragment {
@@ -39,12 +44,32 @@ public class FrgAllJobs extends Fragment {
     RelativeLayout filterBtn;
     TextView noVacancyText;
 
+    private SwipeRefreshLayout swipeContainer;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frg_all_jobs, container, false);
         CommonMethod.clearAllFilterData(getActivity());
         initialization(rootView);
         getAllJobsData();
         onclick();
+        swipeContainer = rootView.findViewById(R.id.swipeContainer);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(false);
+                modelHotJobs.clear();
+                modelHotJobs = new ArrayList<>();
+                currentPages = 1;
+                getAllJobsData();
+            }
+        });
+
         return rootView;
     }
 
@@ -65,9 +90,9 @@ public class FrgAllJobs extends Fragment {
                         Log.e("applyButtonPressed", "true");
                         modelHotJobs.clear();
                         modelHotJobs = new ArrayList<>();
-                      //  numberofentries = 0;
+                        //  numberofentries = 0;
                         currentPages = 1;
-                    //    nextPageUrl = "";
+                        //    nextPageUrl = "";
                         numberOfPagesFromServer = 0;
                         getAllJobsData();
                     }
@@ -116,7 +141,11 @@ public class FrgAllJobs extends Fragment {
                             modelHotJob1.setNumberOpenings(jsonObject1.getString(AppConstant.KEY_JOB_DATA_NO_OPEN_POSITION));
                             modelHotJob1.setLocation(jsonObject1.getString(AppConstant.KEY_JOB_DATA_WORK_LOCATION));
                             modelHotJob1.setDates(jsonObject1.getString(AppConstant.KEY_JOB_DATA_CREATED_ON));
-                          modelHotJob1.setVacancyTitle(jsonObject1.getString("vacancy_title"));
+                            modelHotJob1.setVacancyTitle(jsonObject1.getString("vacancy_title"));
+
+                            if (jsonObject1.has("applied")) {
+                                modelHotJob1.setApplied(jsonObject1.getBoolean("applied"));
+                            }
 //                            modelHotJob1.setVacancyTitle("Vacancy Title "+i);
                             modelHotJobs.add(modelHotJob1);
 
@@ -172,11 +201,18 @@ public class FrgAllJobs extends Fragment {
         String skills = GlobalPreferenceManager.getStringForKey(getActivity(), AppConstant.KEY_FILTER_SKILLS_ALL_JOBS, "");
         String qualificationType = GlobalPreferenceManager.getStringForKey(getActivity(), AppConstant.KEY_FILTER_QUALIFICATION_TYPE_ALL_JOBS, "");
         String languageKnown = GlobalPreferenceManager.getStringForKey(getActivity(), AppConstant.KEY_FILTER_LANGUAGE_ALL_JOBS, "");
+        String userId = GlobalPreferenceManager.getStringForKey(getActivity(), AppConstant.KEY_USER_ID, "");
+
         JSONObject jsonObject = new JSONObject();
         try {
             if (!gender.equals("")) {
                 jsonObject.put("gender", gender);
             }
+
+            if (!userId.equals("")) {
+                jsonObject.put("user_id", userId);
+            }
+
             if (!city.equals("")) {
                 jsonObject.put("city", city);
             }
@@ -191,7 +227,7 @@ public class FrgAllJobs extends Fragment {
                 jsonObject.put("qualification_type", qualificationType);
             }
 
-           // jsonObject.put(AppConstant.KEY_PAGE, currentPages);
+            // jsonObject.put(AppConstant.KEY_PAGE, currentPages);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -199,7 +235,7 @@ public class FrgAllJobs extends Fragment {
         return jsonObject.toString();
     }
 
-    public void applyAllJobs(String user_id, int vacancy_id) {
+    public void applyAllJobs(String user_id, int vacancy_id, final int position) {
         JSONObject Json = new JSONObject();
         try {
             Json.put(AppConstant.KEY_APPLY_JOB_USER_ID, user_id);
@@ -215,6 +251,15 @@ public class FrgAllJobs extends Fragment {
                         message = jsonObject.getString(AppConstant.KEY_JOB_DATA_MESSAGE);
                         if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
                             CommonMethod.showToast(AppConstant.JOB_APPLIED_SUCCESSFULLY_MESSAGE, getActivity());
+
+                            ModelHotJobs modelHotJobsData = modelHotJobs.get(position);
+                            modelHotJobsData.setApplied(true);
+                            modelHotJobs.set(position, modelHotJobsData);
+                            if (allJobsAdapter != null) {
+                                allJobsAdapter.setData(modelHotJobs);
+                                allJobsAdapter.notifyDataSetChanged();
+                            }
+
                         } else {
                             CommonMethod.showToast(message, getActivity());
                         }
@@ -231,8 +276,6 @@ public class FrgAllJobs extends Fragment {
             e.printStackTrace();
         }
     }
-
-
 
 
 }

@@ -3,6 +3,7 @@ package com.twocoms.rojgarkendra.interviewscreen.controler;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +51,8 @@ public class AppliedApplicationActivity extends AppCompatActivity {
     RelativeLayout filterBtn;
 //    RelativeLayout filter_layout;
 
+    private SwipeRefreshLayout swipeContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,24 @@ public class AppliedApplicationActivity extends AppCompatActivity {
         onClick();
         getAppliedInterview();
         GlobalPreferenceManager.saveStringForKey(this, AppConstant.KEY_FILTER_STATUS_APPLIED_JOB, "");
+
+        swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(false);
+                appliedAndUpcommingModels.clear();
+                appliedAndUpcommingModels = new ArrayList<>();
+                currentPages = 1;
+                getAppliedInterview();
+            }
+        });
+
     }
 
     void initialization() {

@@ -290,13 +290,13 @@ public class VerifyMobileNumberActivity extends AppCompatActivity {
                             intent.putExtra("otp", otpStr);
                             startActivity(intent);
                         } else {
-                          // CommonMethod.showToast(jsonObject.getString("message"), VerifyMobileNumberActivity.this);
-                            JSONObject dataStr = jsonObject.getJSONObject("data");
-                            otpStr = dataStr.getString("otp");
-                            Intent intent = new Intent(VerifyMobileNumberActivity.this, VerifyOtpActivity.class);
-                            intent.putExtra("mobile_no", mobile_no);
-                            intent.putExtra("otp", otpStr);
-                            startActivity(intent);
+                           CommonMethod.showToast(jsonObject.getString("message"), VerifyMobileNumberActivity.this);
+//                            JSONObject dataStr = jsonObject.getJSONObject("data");
+//                            otpStr = dataStr.getString("otp");
+//                            Intent intent = new Intent(VerifyMobileNumberActivity.this, VerifyOtpActivity.class);
+//                            intent.putExtra("mobile_no", mobile_no);
+//                            intent.putExtra("otp", otpStr);
+//                            startActivity(intent);
 
                         }
                     } catch (JSONException e) {

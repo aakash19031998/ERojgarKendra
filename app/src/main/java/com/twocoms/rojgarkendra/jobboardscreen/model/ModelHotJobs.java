@@ -11,6 +11,16 @@ package com.twocoms.rojgarkendra.jobboardscreen.model;
      String location;
      String vacancyTitle = "";
 
+     public boolean isApplied() {
+         return isApplied;
+     }
+
+     public void setApplied(boolean applied) {
+         isApplied = applied;
+     }
+
+     boolean isApplied = false;
+
      public ModelHotJobs() {
      }
 

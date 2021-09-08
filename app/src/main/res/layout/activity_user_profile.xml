@@ -676,7 +676,7 @@
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:textStyle="bold"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:text="@string/header_resume"></TextView>
 
 
@@ -684,7 +684,7 @@
                 android:id="@+id/upload_cv_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_74sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:boxStrokeColor="@color/reg_tc_bg"
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginRight="@dimen/_8sdp"
@@ -714,31 +714,31 @@
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_10sdp">
 
-                <TextView
-                    android:id="@+id/upload_cv_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_15sdp"
-                    android:text="@string/upload_cv"
-                    android:singleLine="true"
-                    android:gravity="center"
-                    android:padding="@dimen/_4sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_below="@+id/upload_cv"
-                    android:textColor="@color/colorPrimary"
-                    />
+                    <TextView
+                        android:id="@+id/upload_cv_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/upload_cv"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:gravity="center"
+                        android:padding="@dimen/_4sdp"
+                        android:singleLine="true"
+                        android:text="@string/upload_cv"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/_15sdp" />
 
                 <ImageView
                     android:id="@+id/download_CV"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    android:src="@drawable/bg_reg_download"
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
+                    android:src="@drawable/viewdocument"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_toRightOf="@id/upload_cv_txt"
                     android:layout_below="@+id/upload_cv"
+                    android:padding="@dimen/_4sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:foregroundGravity="center_horizontal"
                     />
-
 
                 </LinearLayout>
 

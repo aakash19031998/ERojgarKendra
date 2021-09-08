@@ -3,6 +3,7 @@ package com.twocoms.rojgarkendra.interviewscreen.controler;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -43,6 +44,8 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
     UpcomingInterviewAdapter upcomingInterviewAdapter;
     TextView noUpcomingInterviewText;
     String message;
+    private SwipeRefreshLayout swipeContainer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,24 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
         setToolbarVisibility();
         getUpcomingInterview();
         onClick();
+
+        swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(false);
+                appliedAndUpcommingModels.clear();
+                appliedAndUpcommingModels = new ArrayList<>();
+                currentPages = 1;
+                getUpcomingInterview();
+            }
+        });
+
     }
 
     void initialization() {
@@ -110,8 +131,6 @@ public class UpcomingInterviewActivity extends AppCompatActivity {
         } else {
             url = AppConstant.GET_APPLIED_AND_UPCOMING_INTERVIEW + "/" + currentPages;
         }
-
-
         try {
             json.put(AppConstant.KEY_APPLIED_AND_UPCOMING_INTEVIEW_USER_ID, user_id);
             json.put(AppConstant.KEY_APPLIED_AND_UPCOMING_INTEVIEW_STUDENT_STATUS, "scheduled");

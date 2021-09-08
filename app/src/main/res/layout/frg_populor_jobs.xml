@@ -6,7 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".jobboardscreen.controler.FrgHotJob">
 
-    <RelativeLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        <RelativeLayout
         android:id="@+id/filter_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,6 +64,11 @@
         android:gravity="center"
         android:visibility="gone"
         android:text="@string/no_vacancy_available"></TextView>
+
+        </RelativeLayout>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </RelativeLayout>

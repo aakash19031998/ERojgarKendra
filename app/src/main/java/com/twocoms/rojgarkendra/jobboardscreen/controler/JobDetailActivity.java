@@ -181,7 +181,7 @@ public class JobDetailActivity extends AppCompatActivity {
 //                        vacancyDetailModel.setState_province(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_STATE_PROVINCE));
 //                        vacancyDetailModel.setCountry(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_COUNTRY));
 //                        vacancyDetailModel.setPostal_code(jsonObjectData.getInt(AppConstant.KEY_VACANCY_DETAIL_POSTAL_CODE));
-//                        vacancyDetailModel.setRegion_of_work_location_in_india(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_WORK_LOCATION));
+                        vacancyDetailModel.setRegion_of_work_location_in_india(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_WORK_LOCATION));
 //                        vacancyDetailModel.setAdded_by(jsonObjectData.getDouble(AppConstant.KEY_VACANCY_DETAIL_ADDED_BY));
 //                        vacancyDetailModel.setCreated_on(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_CREATED_ON));
 //                        vacancyDetailModel.setEdited_by(jsonObjectData.getDouble(AppConstant.KEY_VACANCY_DETAIL_EDITED_BY));
@@ -218,7 +218,7 @@ public class JobDetailActivity extends AppCompatActivity {
         jobDetailBinding.salaryText.setText(getResources().getString(R.string.Rs) + CommonMethod.roundNumbertoNextPossibleValue(vacancyDetailModel.getCtc()));
         jobDetailBinding.clientText.setText(vacancyDetailModel.getClient_name());
         jobDetailBinding.jobTypeText.setText(vacancyDetailModel.getJob_type());
-        jobDetailBinding.locationText.setText(vacancyDetailModel.getCity());
+        jobDetailBinding.locationText.setText(vacancyDetailModel.getRegion_of_work_location_in_india());
         jobDetailBinding.vacancyText.setText(CommonMethod.roundNumbertoNextPossibleValue(vacancyDetailModel.getNumber_of_open_positions() + "") + " open position");
         jobDetailBinding.jobSkills.setText(vacancyDetailModel.getSkills());
         if (vacancyDetailModel.getGender_preferences().equalsIgnoreCase("male")) {

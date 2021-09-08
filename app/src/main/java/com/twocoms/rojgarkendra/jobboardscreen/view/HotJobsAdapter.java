@@ -67,13 +67,31 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
             }
         });
 
+        if (modelHotJobs.get(position).isApplied()) {
+            holder.applyJobBtn.setVisibility(View.VISIBLE);
+            holder.applyJobBtn.setText("Already Applied");
+        } else {
+            if (CommonMethod.checkUserLoggedInOrRegister(context)) {
+                holder.applyJobBtn.setVisibility(View.VISIBLE);
+                holder.applyJobBtn.setText("Apply");
+            } else {
+                holder.applyJobBtn.setVisibility(View.GONE);
+
+            }
+        }
+
         holder.applyJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (CommonMethod.checkUserLoggedInOrRegister(context)) {
-                    userIdSTr = GlobalPreferenceManager.getStringForKey(context,AppConstant.KEY_USER_ID,"");
-                    vacancyId = modelHotJobs.get(position).getId();
-                    frgHotJob.applyAllJobs(userIdSTr,vacancyId);
+                    if (modelHotJobs.get(position).isApplied()) {
+                        CommonMethod.showToast("Job already applied please try for other option.",frgHotJob.getActivity());
+
+                    } else {
+                        userIdSTr = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_USER_ID, "");
+                        vacancyId = modelHotJobs.get(position).getId();
+                        frgHotJob.applyAllJobs(userIdSTr, vacancyId,position);
+                    }
                 } else {
                     CommonMethod.showDialogueForLoginSignUp(frgHotJob.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
                 }
@@ -97,7 +115,7 @@ public class HotJobsAdapter extends RecyclerView.Adapter<HotJobsAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView salaryText, jobText, clientText, locationText, vacancyText, dateText,vacancyTitle;
+        TextView salaryText, jobText, clientText, locationText, vacancyText, dateText, vacancyTitle;
         Button viewJobBtn, applyJobBtn;
 
         ViewHolder(View itemView) {

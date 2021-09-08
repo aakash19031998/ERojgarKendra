@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.twocoms.rojgarkendra.R;
@@ -42,6 +43,8 @@ public class SuccessStoriesActivity extends AppCompatActivity {
     TestimonialsAdapter testimonialsAdapter;
     TextView noappliedJobText;
     String message;
+    private SwipeRefreshLayout swipeContainer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,23 @@ public class SuccessStoriesActivity extends AppCompatActivity {
         setToolbarVisibility();
         onClick();
         getAllTestimonials();
+        swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(false);
+                allTestimonials.clear();
+                allTestimonials = new ArrayList<>();
+                currentPages = 1;
+                getAllTestimonials();
+            }
+        });
+
     }
 
 
@@ -101,74 +121,75 @@ public class SuccessStoriesActivity extends AppCompatActivity {
 
 
     public void getAllTestimonials() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put(AppConstant.KEY_PAGE, currentPages);
-            ServiceHandler serviceHandler = new ServiceHandler(SuccessStoriesActivity.this);
-            serviceHandler.StringRequest(Request.Method.POST, json.toString(), AppConstant.GET_ALL_TESTIMONIALS, true, new ServiceHandler.VolleyCallback() {
-                @Override
-                public void onSuccess(String result) {
-                    Log.v("Response", result);
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        message = jsonObject.getString(AppConstant.KEY_JOB_DATA_MESSAGE);
-                        if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
+        ServiceHandler serviceHandler = new ServiceHandler(SuccessStoriesActivity.this);
+        String url;
+        if (currentPages == 1) {
+            url = AppConstant.GET_ALL_TESTIMONIALS;
+        } else {
+            url = AppConstant.GET_ALL_TESTIMONIALS + "/" + currentPages;
+        }
 
-                            JSONObject object = jsonObject.getJSONObject(AppConstant.KEY_JOB_DATA_OBJ_DATA);
-                            JSONArray jsonArray = object.getJSONArray("records");
-                            numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
-                            int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
-                            double numberofPages = ((double) numberofentries) / perPageData;
-                            numberOfPagesFromServer = Integer.parseInt(CommonMethod.roundNumbertoNextPossibleValue(numberofPages + ""));
-                          //  Log.e("numberOfPagesFromServer", "" + numberOfPagesFromServer);
+        serviceHandler.StringRequest(Request.Method.POST, "", url, true, new ServiceHandler.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+                Log.v("Response", result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    message = jsonObject.getString(AppConstant.KEY_JOB_DATA_MESSAGE);
+                    if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
 
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                TestimonialsModel testimonialsModel = new TestimonialsModel();
-                                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                        JSONObject object = jsonObject.getJSONObject(AppConstant.KEY_JOB_DATA_OBJ_DATA);
+                        JSONArray jsonArray = object.getJSONArray("records");
+//                        numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
+//                        int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
+//                        double numberofPages = ((double) numberofentries) / perPageData;
+                        numberOfPagesFromServer = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
+                        //  Log.e("numberOfPagesFromServer", "" + numberOfPagesFromServer);
 
-                                testimonialsModel.setPostedBy(jsonObject1.getInt(AppConstant.KEY_POSTED_BY));
-                                testimonialsModel.setPostedOn(jsonObject1.getString(AppConstant.KEY_POSTED_DATE_TIME));
-                                testimonialsModel.setUserName(jsonObject1.getString(AppConstant.KEY_NAME));
-                                testimonialsModel.setUserContact(jsonObject1.getString(AppConstant.KEY_CONTACT));
-                                testimonialsModel.setUserEmail(jsonObject1.getString(AppConstant.KEY_EMAIL_ID));
-                                testimonialsModel.setPostedMessage(jsonObject1.getString(AppConstant.KEY_JOB_DATA_MESSAGE));
-                                if (jsonObject1.has(AppConstant.KEY_PROFILE_URL)) {
-                                    testimonialsModel.setProfileUrl(jsonObject1.getString(AppConstant.KEY_PROFILE_URL));
-                                }
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            TestimonialsModel testimonialsModel = new TestimonialsModel();
+                            JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
 
-                                allTestimonials.add(testimonialsModel);
-
+                            testimonialsModel.setPostedBy(jsonObject1.getInt(AppConstant.KEY_POSTED_BY));
+                            testimonialsModel.setPostedOn(jsonObject1.getString(AppConstant.KEY_POSTED_DATE_TIME));
+                            testimonialsModel.setUserName(jsonObject1.getString(AppConstant.KEY_NAME));
+                            testimonialsModel.setUserContact(jsonObject1.getString(AppConstant.KEY_CONTACT));
+                            testimonialsModel.setUserEmail(jsonObject1.getString(AppConstant.KEY_EMAIL_ID));
+                            testimonialsModel.setPostedMessage(jsonObject1.getString(AppConstant.KEY_JOB_DATA_MESSAGE));
+                            if (jsonObject1.has(AppConstant.KEY_PROFILE_URL)) {
+                                testimonialsModel.setProfileUrl(jsonObject1.getString(AppConstant.KEY_PROFILE_URL));
                             }
 
-                            if (currentPages == 1) {
-                                setAdapter();
-                            } else {
-                                if (testimonialsAdapter != null) {
-                                    testimonialsAdapter.setData(allTestimonials);
-                                    testimonialsAdapter.notifyDataSetChanged();
-                                } else {
-                                    setAdapter();
-                                }
-                            }
+                            allTestimonials.add(testimonialsModel);
 
+                        }
 
+                        if (currentPages == 1) {
+                            setAdapter();
                         } else {
-                            CommonMethod.showToast(message, SuccessStoriesActivity.this);
+                            if (testimonialsAdapter != null) {
+                                testimonialsAdapter.setData(allTestimonials);
+                                testimonialsAdapter.notifyDataSetChanged();
+                            } else {
+                                setAdapter();
+                            }
                         }
 
 
-                    } catch (JSONException e) {
-                        CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, SuccessStoriesActivity.this);
-                        e.printStackTrace();
+                    } else {
+                        CommonMethod.showToast(message, SuccessStoriesActivity.this);
                     }
 
 
+                } catch (JSONException e) {
+                    CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, SuccessStoriesActivity.this);
+                    e.printStackTrace();
                 }
-            });
 
-        } catch (JSONException jsonException) {
-            jsonException.printStackTrace();
-        }
+
+            }
+        });
+
     }
 
 

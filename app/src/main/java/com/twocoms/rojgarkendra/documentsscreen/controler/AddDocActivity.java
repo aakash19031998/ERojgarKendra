@@ -169,6 +169,7 @@ public class AddDocActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             // Get the Uri of the selected file
             Uri uri = data.getData();
+            this.uri = uri;
             String uriString = uri.toString();
             File myFile = new File(uriString);
             String path = myFile.getAbsolutePath();
@@ -183,7 +184,7 @@ public class AddDocActivity extends AppCompatActivity {
                         Log.d("nameeeee>>>>  ", displayName);
                         selectedDocText.setText(displayName);
                         filePath = displayName;
-                        this.uri = uri;
+
                         //  uploadPDF(displayName,uri);
                     }
                 } finally {
@@ -191,6 +192,7 @@ public class AddDocActivity extends AppCompatActivity {
                 }
             } else if (uriString.startsWith("file://")) {
                 displayName = myFile.getName();
+                selectedDocText.setText(displayName);
                 filePath = displayName;
                 Log.d("nameeeee>>>>  ", displayName);
             }

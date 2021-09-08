@@ -12,6 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/success_stories_toolbar"
+        android:background="@color/white">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_success_stories"
         android:layout_width="match_parent"
@@ -19,7 +33,6 @@
         android:layout_marginLeft="@dimen/_6sdp"
         android:layout_marginRight="@dimen/_6sdp"
         android:layout_marginTop="@dimen/_6sdp"
-        android:layout_below="@+id/success_stories_toolbar"
 
         />
 
@@ -32,6 +45,9 @@
         android:gravity="center"
         android:visibility="gone"
         android:text="No Testimonials to show!"></TextView>
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </RelativeLayout>

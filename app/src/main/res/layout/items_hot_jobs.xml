@@ -217,6 +217,7 @@
                 android:layout_marginLeft="@dimen/_4sdp"
                 android:layout_marginRight="@dimen/_4sdp"
                 android:orientation="horizontal"
+                android:gravity="center"
                 android:weightSum="2">
 
                 <Button
@@ -226,6 +227,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_weight="1"
                     android:text="@string/view"
+                    android:textSize="@dimen/_10sdp"
                     android:textAllCaps="false"
                     android:textStyle="bold" />
 
@@ -235,7 +237,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/apply"
+                    android:visibility="gone"
                     android:textAllCaps="false"
+                    android:textSize="@dimen/_10sdp"
                     android:textStyle="bold" />
 
 

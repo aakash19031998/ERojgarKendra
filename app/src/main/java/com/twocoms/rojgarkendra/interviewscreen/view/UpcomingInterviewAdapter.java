@@ -58,7 +58,7 @@ public class UpcomingInterviewAdapter extends RecyclerView.Adapter<UpcomingInter
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         holder.clientNameText.setText(appliedAndUpcommingModels.get(position).getClientName());
-        holder.postedDateText.setText("Applied on : " + CommonMethod.parseDateToFormat(appliedAndUpcommingModels.get(position).getAppliedDate()));
+        holder.postedDateText.setText("Scheduled on : " + CommonMethod.parseDateToFormat(appliedAndUpcommingModels.get(position).getScheduledDate()));
         holder.jobType.setText(appliedAndUpcommingModels.get(position).getJobType());
         holder.location.setText(appliedAndUpcommingModels.get(position).getLocationOfWork());
         holder.numberOfOpenings.setText(appliedAndUpcommingModels.get(position).getNumberOfOpenPositions() + " openings");

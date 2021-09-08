@@ -48,14 +48,18 @@ public class AppliedInterviewAdapter extends RecyclerView.Adapter<AppliedIntervi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         holder.clientNameText.setText(appliedAndUpcommingModels.get(position).getClientName());
-        holder.postedDateText.setText("Applied on : " + CommonMethod.parseDateToFormat(appliedAndUpcommingModels.get(position).getAppliedDate()));
+        if (appliedAndUpcommingModels.get(position).getStudentStatus().equals("scheduled")) {
+            holder.postedDateText.setText("Scheduled on : " + CommonMethod.parseDateToFormat(appliedAndUpcommingModels.get(position).getScheduledDate()));
+        } else {
+            holder.postedDateText.setText("Applied on : " + CommonMethod.parseDateToFormat(appliedAndUpcommingModels.get(position).getAppliedDate()));
+
+        }
         holder.jobType.setText(appliedAndUpcommingModels.get(position).getJobType());
         holder.location.setText(appliedAndUpcommingModels.get(position).getLocationOfWork());
         holder.numberOfOpenings.setText(appliedAndUpcommingModels.get(position).getNumberOfOpenPositions() + " openings");
-        if(appliedAndUpcommingModels.get(position).getSalary() .equals("null") ){
+        if (appliedAndUpcommingModels.get(position).getSalary().equals("null")) {
             holder.salary.setText("000");
-        }
-        else {
+        } else {
             holder.salary.setText(context.getResources().getString(R.string.Rs) + CommonMethod.roundNumbertoNextPossibleValue(appliedAndUpcommingModels.get(position).getSalary()));
         }
 
@@ -74,17 +78,17 @@ public class AppliedInterviewAdapter extends RecyclerView.Adapter<AppliedIntervi
         }
 
         statusStr = appliedAndUpcommingModels.get(position).getStudentStatus();
-        if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_SCHEDULED)){
+        if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_SCHEDULED)) {
             holder.currentStatusText.setText("Interview Scheduled");
-        } else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_APPLIED)){
+        } else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_APPLIED)) {
             holder.currentStatusText.setText("Applied");
-        }else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_PROPOSED)){
+        } else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_PROPOSED)) {
             holder.currentStatusText.setText("Offer Proposed");
-        }else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_ACCEPTED)){
+        } else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_ACCEPTED)) {
             holder.currentStatusText.setText("Offer Accepted");
-        }else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_REJECTED)){
+        } else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_REJECTED)) {
             holder.currentStatusText.setText("Offer Rejected");
-        }else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_REJECTED_BY_CLIENT)){
+        } else if (statusStr.equalsIgnoreCase(AppConstant.VALUE_STATUS_REJECTED_BY_CLIENT)) {
             holder.currentStatusText.setText("Rejected By Client");
         }
 
@@ -100,7 +104,7 @@ public class AppliedInterviewAdapter extends RecyclerView.Adapter<AppliedIntervi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView postedDateText, clientNameText, salary, jobType, numberOfOpenings, location,vacancy_title_text,currentStatusText;
+        TextView postedDateText, clientNameText, salary, jobType, numberOfOpenings, location, vacancy_title_text, currentStatusText;
 
 
         ViewHolder(View itemView) {
@@ -117,7 +121,6 @@ public class AppliedInterviewAdapter extends RecyclerView.Adapter<AppliedIntervi
         }
 
     }
-
 
 
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.twocoms.rojgarkendra.R;
@@ -42,6 +43,7 @@ public class JobInHandActivity extends AppCompatActivity {
     JobInHandAdapter appliedInterviewAdapter;
     TextView noappliedJobText;
     String message;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,24 @@ public class JobInHandActivity extends AppCompatActivity {
         onClick();
         getJobsInHands();
         noappliedJobText.setText(getResources().getString(R.string.no_job_in_hand));
+
+        swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(false);
+                appliedAndUpcommingModels.clear();
+                appliedAndUpcommingModels = new ArrayList<>();
+                currentPages = 1;
+                getJobsInHands();
+            }
+        });
+
     }
 
     void initialization() {

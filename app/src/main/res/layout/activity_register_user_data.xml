@@ -602,7 +602,7 @@
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:textStyle="bold"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:text="@string/header_resume"></TextView>
 
 
@@ -610,7 +610,7 @@
                 android:id="@+id/upload_cv_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:boxStrokeColor="@color/reg_tc_bg"
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginRight="@dimen/_8sdp"

@@ -12,6 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/documents_toolbar"
+        android:background="@color/white">
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_doc"
         android:layout_width="match_parent"
@@ -19,19 +27,7 @@
         android:padding="@dimen/_10sdp"
         android:layout_below="@id/documents_toolbar"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_doc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:src="@drawable/icon_plus"
-        android:visibility="gone"
-        android:backgroundTint="@color/app_colour_name"
-        app:tint="@color/white"
-        />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </RelativeLayout>

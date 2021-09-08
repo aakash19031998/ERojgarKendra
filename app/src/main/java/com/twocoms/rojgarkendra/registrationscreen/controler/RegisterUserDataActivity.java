@@ -23,13 +23,10 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -57,8 +54,6 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.twocoms.rojgarkendra.R;
 import com.twocoms.rojgarkendra.dashboardscreen.controler.DashboardActivity;
 import com.twocoms.rojgarkendra.databinding.ActivityRegisterUserDataBinding;
-import com.twocoms.rojgarkendra.documentsscreen.controler.AddDocActivity;
-import com.twocoms.rojgarkendra.global.controler.AppHelper;
 import com.twocoms.rojgarkendra.global.controler.VolleyMultipartRequest;
 import com.twocoms.rojgarkendra.global.controler.VolleySingleton;
 import com.twocoms.rojgarkendra.global.model.AppConstant;
@@ -141,6 +136,8 @@ public class RegisterUserDataActivity extends AppCompatActivity {
     String[] cityCode;
     ArrayList<String> listCity;
     String city_code = "";
+    String fileName = "";
+    Uri uri;
 
     //    Bitmap bitmap;
     //    String dobToServer;
@@ -1153,28 +1150,61 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 //
 //            }
 
+//            if (resultCode == RESULT_OK) {
+//                // Get the Uri of the selected file
+//                Uri uri = data.getData();
+//                String uriString = uri.toString();
+//                File myFile = new File(uriString);
+//                String path = myFile.getAbsolutePath();
+//                String displayName = null;
+//                Cursor cursor = null;
+//                docFilePath = getFileNameByUri(this, uri);
+//                cursor = getContentResolver().query(uri, null, null, null, null);
+//                if (cursor != null && cursor.moveToFirst()) {
+//                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+//                    registerUserDataBinding.uploadCvTxt.setText(displayName);
+//                }
+//
+//                byte[] dataMain = loadFileAsBytesArray(docFilePath);
+//
+//                if (dataMain == null) {
+//                    Log.v("SelectedFilel Null", "True");
+//                }
+//
+//            }
+
+
             if (resultCode == RESULT_OK) {
                 // Get the Uri of the selected file
                 Uri uri = data.getData();
+                this.uri = uri;
                 String uriString = uri.toString();
                 File myFile = new File(uriString);
                 String path = myFile.getAbsolutePath();
                 String displayName = null;
-                Cursor cursor = null;
-                docFilePath = getFileNameByUri(this, uri);
-                cursor = getContentResolver().query(uri, null, null, null, null);
-                if (cursor != null && cursor.moveToFirst()) {
-                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+
+                if (uriString.startsWith("content://")) {
+                    Cursor cursor = null;
+                    try {
+                        cursor = this.getContentResolver().query(uri, null, null, null, null);
+                        if (cursor != null && cursor.moveToFirst()) {
+                            displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                            Log.d("nameeeee>>>>  ", displayName);
+                            registerUserDataBinding.uploadCvTxt.setText(displayName);
+                            fileName = displayName;
+                            //  uploadPDF(displayName,uri);
+                        }
+                    } finally {
+                        cursor.close();
+                    }
+                } else if (uriString.startsWith("file://")) {
+                    displayName = myFile.getName();
                     registerUserDataBinding.uploadCvTxt.setText(displayName);
+                    fileName = displayName;
+                    Log.d("nameeeee>>>>  ", displayName);
                 }
-
-                byte[] dataMain = loadFileAsBytesArray(docFilePath);
-
-                if (dataMain == null) {
-                    Log.v("SelectedFilel Null", "True");
-                }
-
             }
+
         }
     }
 
@@ -1611,6 +1641,16 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
                 }
 
+
+                if (uri != null && !fileName.equals("")) {
+                    byte [] data = getBytes();
+                   if(data != null){
+                       if (data != null) {
+                        params.put("resume", new DataPart(fileName, data));
+                    }
+                   }
+                }
+
 //                MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
                 //if (docFilePath != null) {
 //                    byte[] data = loadFilleAsByteArray(docFilePath);
@@ -1623,6 +1663,25 @@ public class RegisterUserDataActivity extends AppCompatActivity {
             }
         };
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
+    }
+
+    public byte[] getBytes() {
+        try {
+            InputStream iStream = getContentResolver().openInputStream(uri);
+            ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+            int bufferSize = 1024;
+            byte[] buffer = new byte[bufferSize];
+            int len = 0;
+            while ((len = iStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+            return byteBuffer.toByteArray();
+        } catch (IOException ex){
+            ex.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

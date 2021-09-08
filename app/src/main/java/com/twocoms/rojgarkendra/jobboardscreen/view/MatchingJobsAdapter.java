@@ -62,23 +62,39 @@ public class MatchingJobsAdapter extends RecyclerView.Adapter<MatchingJobsAdapte
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, JobDetailActivity.class);
-                intent.putExtra("jobId",modelHotJobs.get(position).getId()+"");
+                intent.putExtra("jobId", modelHotJobs.get(position).getId() + "");
                 context.startActivity(intent);
             }
         });
+
+        if (modelHotJobs.get(position).isApplied()) {
+            holder.applyJobBtn.setVisibility(View.VISIBLE);
+            holder.applyJobBtn.setText("Already Applied");
+        } else {
+            if (CommonMethod.checkUserLoggedInOrRegister(context)) {
+                holder.applyJobBtn.setVisibility(View.VISIBLE);
+                holder.applyJobBtn.setText("Apply");
+            } else {
+                holder.applyJobBtn.setVisibility(View.GONE);
+
+            }
+        }
 
         holder.applyJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (CommonMethod.checkUserLoggedInOrRegister(context)) {
-//                    CommonMethod.showToast("Job Applied",context);
-                    String userIdSTr = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_USER_ID, "");
-                    int vacancyId = modelHotJobs.get(position).getId();
-                    matchingJobsAdapter.applyAllJobs(userIdSTr, vacancyId);
+                    if (modelHotJobs.get(position).isApplied()) {
+                        CommonMethod.showToast("Job already applied please try for other option.", context);
+                    } else {
+                        String userIdSTr = GlobalPreferenceManager.getStringForKey(context, AppConstant.KEY_USER_ID, "");
+                        int vacancyId = modelHotJobs.get(position).getId();
+                        matchingJobsAdapter.applyAllJobs(userIdSTr, vacancyId, position);
+                    }
 
 
                 } else {
-                        CommonMethod.showDialogueForLoginSignUp(matchingJobsAdapter.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
+                    CommonMethod.showDialogueForLoginSignUp(matchingJobsAdapter.getActivity(), AppConstant.SIGN_UP_LOGIN_TEXT);
                 }
             }
         });
@@ -92,7 +108,7 @@ public class MatchingJobsAdapter extends RecyclerView.Adapter<MatchingJobsAdapte
 //                paginationProgress.setVisibility(View.VISIBLE);
                 // newsAdapter.notifyDataSetChanged();
                 matchingJobsAdapter.currentPages = matchingJobsAdapter.currentPages + 1;
-                matchingJobsAdapter.getAllJobsData();
+                matchingJobsAdapter.getMatchingJobsData();
 //                getNews(currentPages + 1);
                 // searchGetNews(currentPages + 1);
             }
@@ -108,7 +124,7 @@ public class MatchingJobsAdapter extends RecyclerView.Adapter<MatchingJobsAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView salaryText, jobText, clientText, locationText, vacancyText, dateText,vacancyTitle;
+        TextView salaryText, jobText, clientText, locationText, vacancyText, dateText, vacancyTitle;
         Button viewJobBtn, applyJobBtn;
 
         ViewHolder(View itemView) {

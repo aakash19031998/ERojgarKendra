@@ -2,10 +2,10 @@ package com.twocoms.rojgarkendra.jobboardscreen.controler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +23,6 @@ import com.twocoms.rojgarkendra.global.model.CommonMethod;
 import com.twocoms.rojgarkendra.global.model.GlobalPreferenceManager;
 import com.twocoms.rojgarkendra.global.model.ServiceHandler;
 import com.twocoms.rojgarkendra.jobboardscreen.model.ModelHotJobs;
-import com.twocoms.rojgarkendra.jobboardscreen.view.AllJobsAdapter;
 import com.twocoms.rojgarkendra.jobboardscreen.view.PopularJobsAdapter;
 
 import org.json.JSONArray;
@@ -44,12 +43,34 @@ public class FrgPopulorJobs extends Fragment {
     public int numberOfPagesFromServer = 0;
     RelativeLayout filterBtn;
     TextView noVacancyText;
+
+    private SwipeRefreshLayout swipeContainer;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frg_populor_jobs, container, false);
         CommonMethod.clearAllFilterDataPopularJobs(getActivity());
         initialization(rootView);
-        getAllJobsData();
+        getPopularJobsData();
         onclick();
+
+        swipeContainer = rootView.findViewById(R.id.swipeContainer);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(false);
+                modelHotJobs.clear();
+                modelHotJobs = new ArrayList<>();
+                currentPages = 1;
+                getPopularJobsData();
+            }
+        });
+
         return rootView;
     }
 
@@ -74,7 +95,7 @@ public class FrgPopulorJobs extends Fragment {
                         currentPages = 1;
                         nextPageUrl = "";
                         numberOfPagesFromServer = 0;
-                        getAllJobsData();
+                        getPopularJobsData();
                     }
                 });
                 bottomSheet.show(getActivity().getSupportFragmentManager(), "ModalBottomSheet");
@@ -82,15 +103,15 @@ public class FrgPopulorJobs extends Fragment {
         });
     }
 
-    public void getAllJobsData() {
+    public void getPopularJobsData() {
         ServiceHandler serviceHandler = new ServiceHandler(getActivity());
-        String url ;
+        String url;
         if (currentPages == 1) {
             url = AppConstant.GET_POPULAR_JOBS;
         } else {
             url = AppConstant.GET_POPULAR_JOBS + "/" + currentPages;
         }
-     //   url = AppConstant.GET_POPULAR_JOBS;
+        //   url = AppConstant.GET_POPULAR_JOBS;
         String jSonRequest = getPostParameter();
         Log.v("Request", jSonRequest);
         Log.v("URL", url);
@@ -107,11 +128,11 @@ public class FrgPopulorJobs extends Fragment {
                         JSONObject object = jsonObject.getJSONObject(AppConstant.KEY_JOB_DATA_OBJ_DATA);
                         JSONArray jsonArray = object.getJSONArray("records");
 
-                     //   numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
-                       // int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
+                        //   numberofentries = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
+                        // int perPageData = object.getInt(AppConstant.KEY_JOB_DATA_PER_PAGE);
                         //double numberofPages = 5;
                         numberOfPagesFromServer = object.getInt(AppConstant.KEY_JOB_DATA_NO_OF_ENTRIES);
-                       // Log.e("numberOfPagesFromServer", "" + numberOfPagesFromServer);
+                        // Log.e("numberOfPagesFromServer", "" + numberOfPagesFromServer);
                         // nextPageUrl = object.getString("next_page_url");
 
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -125,6 +146,11 @@ public class FrgPopulorJobs extends Fragment {
                             modelHotJob1.setLocation(jsonObject1.getString(AppConstant.KEY_JOB_DATA_WORK_LOCATION));
                             modelHotJob1.setDates(jsonObject1.getString(AppConstant.KEY_JOB_DATA_CREATED_ON));
                             modelHotJob1.setVacancyTitle(jsonObject1.getString("vacancy_title"));
+
+                            if (jsonObject1.has("applied")) {
+                                modelHotJob1.setApplied(jsonObject1.getBoolean("applied"));
+                            }
+
                             modelHotJobs.add(modelHotJob1);
 
                         }
@@ -179,11 +205,19 @@ public class FrgPopulorJobs extends Fragment {
         String skills = GlobalPreferenceManager.getStringForKey(getActivity(), AppConstant.KEY_FILTER_SKILLS_POPULAR_JOBS, "");
         String qualificationType = GlobalPreferenceManager.getStringForKey(getActivity(), AppConstant.KEY_FILTER_QUALIFICATION_TYPE_POPULAR_JOBS, "");
         String languageKnown = GlobalPreferenceManager.getStringForKey(getActivity(), AppConstant.KEY_FILTER_LANGUAGE_POPULAR_JOBS, "");
+
+        String userId = GlobalPreferenceManager.getStringForKey(getActivity(), AppConstant.KEY_USER_ID, "");
+
         JSONObject jsonObject = new JSONObject();
         try {
             if (!gender.equals("")) {
                 jsonObject.put("gender", gender);
             }
+
+            if (!userId.equals("")) {
+                jsonObject.put("user_id", userId);
+            }
+
             if (!city.equals("")) {
                 jsonObject.put("city", city);
             }
@@ -198,7 +232,7 @@ public class FrgPopulorJobs extends Fragment {
                 jsonObject.put("qualification_type", qualificationType);
             }
 
-         //   jsonObject.put("page", currentPages);
+            //   jsonObject.put("page", currentPages);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -206,7 +240,7 @@ public class FrgPopulorJobs extends Fragment {
         return jsonObject.toString();
     }
 
-    public void applyAllJobs(String user_id, int vacancy_id) {
+    public void applyAllJobs(String user_id, int vacancy_id,final  int position) {
         JSONObject Json = new JSONObject();
         try {
             Json.put(AppConstant.KEY_APPLY_JOB_USER_ID, user_id);
@@ -222,6 +256,14 @@ public class FrgPopulorJobs extends Fragment {
                         message = jsonObject.getString(AppConstant.KEY_JOB_DATA_MESSAGE);
                         if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
                             CommonMethod.showToast(AppConstant.JOB_APPLIED_SUCCESSFULLY_MESSAGE, getActivity());
+                            ModelHotJobs modelHotJobsData = modelHotJobs.get(position);
+                            modelHotJobsData.setApplied(true);
+                            modelHotJobs.set(position,modelHotJobsData);
+                            if (popularJobsAdapter != null) {
+                                popularJobsAdapter.setData(modelHotJobs);
+                                popularJobsAdapter.notifyDataSetChanged();
+                            }
+
                         } else {
                             CommonMethod.showToast(message, getActivity());
                         }
@@ -238,7 +280,6 @@ public class FrgPopulorJobs extends Fragment {
             e.printStackTrace();
         }
     }
-
 
 
 }

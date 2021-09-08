@@ -461,9 +461,9 @@ public class VacancyDetailModel {
 //        this.postal_code = postal_code;
 //    }
 //
-//    public void setRegion_of_work_location_in_india(String region_of_work_location_in_india) {
-//        this.region_of_work_location_in_india = region_of_work_location_in_india;
-//    }
+    public void setRegion_of_work_location_in_india(String region_of_work_location_in_india) {
+        this.region_of_work_location_in_india = region_of_work_location_in_india;
+    }
 
 //    public void setAdded_by(double added_by) {
 //        this.added_by = added_by;

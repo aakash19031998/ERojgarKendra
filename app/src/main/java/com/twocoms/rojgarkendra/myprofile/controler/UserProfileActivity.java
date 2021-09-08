@@ -72,6 +72,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URI;
@@ -125,6 +126,8 @@ public class UserProfileActivity extends AppCompatActivity {
     String[] cityCode;
     ArrayList<String> listCity;
     String city_code = "";
+    String fileName = "";
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,6 +209,13 @@ public class UserProfileActivity extends AppCompatActivity {
         userDataBinding.uploadCvTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getDocument();
+            }
+        });
+
+        userDataBinding.uploadCv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 getDocument();
             }
         });
@@ -1266,19 +1276,50 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         } else if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                Uri uri = data.getData();
-                String uriString = uri.toString();
-                File myFile = new File(uriString);
-                String path = myFile.getAbsolutePath();
-                String displayName = null;
-                Cursor cursor = null;
-                docFilePath = getFileNameByUri(this, uri);
-                cursor = getContentResolver().query(uri, null, null, null, null);
-                if (cursor != null && cursor.moveToFirst()) {
-                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                    userDataBinding.uploadCvTxt.setText(displayName);
+//                Uri uri = data.getData();
+//                String uriString = uri.toString();
+//                File myFile = new File(uriString);
+//                String path = myFile.getAbsolutePath();
+//                String displayName = null;
+//                Cursor cursor = null;
+//                docFilePath = getFileNameByUri(this, uri);
+//                cursor = getContentResolver().query(uri, null, null, null, null);
+//                if (cursor != null && cursor.moveToFirst()) {
+//                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+//                    userDataBinding.uploadCvTxt.setText(displayName);
+//                }
+//                isCVUpadted = true;
+
+                if (resultCode == RESULT_OK) {
+                    // Get the Uri of the selected file
+                    Uri uri = data.getData();
+                    this.uri = uri;
+                    String uriString = uri.toString();
+                    File myFile = new File(uriString);
+                    String path = myFile.getAbsolutePath();
+                    String displayName = null;
+
+                    if (uriString.startsWith("content://")) {
+                        Cursor cursor = null;
+                        try {
+                            cursor = this.getContentResolver().query(uri, null, null, null, null);
+                            if (cursor != null && cursor.moveToFirst()) {
+                                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                                Log.d("nameeeee>>>>  ", displayName);
+                                userDataBinding.uploadCvTxt.setText(displayName);
+                                fileName = displayName;
+                                //  uploadPDF(displayName,uri);
+                            }
+                        } finally {
+                            cursor.close();
+                        }
+                    } else if (uriString.startsWith("file://")) {
+                        displayName = myFile.getName();
+                        userDataBinding.uploadCvTxt.setText(displayName);
+                        fileName = displayName;
+                        Log.d("nameeeee>>>>  ", displayName);
+                    }
                 }
-                isCVUpadted = true;
 
             }
         }
@@ -1523,6 +1564,7 @@ public class UserProfileActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
                 NetworkResponse networkResponse = error.networkResponse;
                 String errorMessage = "Unknown error";
                 if (networkResponse == null) {
@@ -1586,18 +1628,39 @@ public class UserProfileActivity extends AppCompatActivity {
                     params.put("profile_photo", new DataPart("profile_image.jpg", byteArray));
 
                 }
-//                if (docFilePath != null) {
-//                    byte[] data = loadFileAsBytesArray(docFilePath);
-//                    if (data != null) {
-//                        params.put("resume", new DataPart("user_resume.pdf", data, "application/pdf"));
-//                    }
-//
-//                }
+                if (uri != null && !fileName.equals("")) {
+                    byte [] data = getBytes();
+                    if(data != null){
+                        if (data != null) {
+                            params.put("resume", new DataPart(fileName, data));
+                        }
+                    }
+                }
+
                 return params;
             }
         };
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
     }
 
+
+    public byte[] getBytes() {
+        try {
+            InputStream iStream = getContentResolver().openInputStream(uri);
+            ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+            int bufferSize = 1024;
+            byte[] buffer = new byte[bufferSize];
+            int len = 0;
+            while ((len = iStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+            return byteBuffer.toByteArray();
+        } catch (IOException ex){
+            ex.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

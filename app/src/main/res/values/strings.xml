@@ -44,7 +44,7 @@
     <!--Strings-->
 
     <string name="sign_up_login_text">Sign Up / Login</string>
-    <string name="cap_sign_up_login_text">SIGN UP / LOGIN</string>
+    <string name="cap_sign_up_login_text">Sign Up / Login</string>
     <string name="otp_verify_text">Your OTP will expire 1:20 min</string>
     <string name="resend_otp_text">Resend OTP</string>
     <string name="verify_otp_text">VERIFY</string>
@@ -71,7 +71,7 @@
     <string name="student_remark">Student Remark :-</string>
     <string name="apply">Apply</string>
     <string name="view">View</string>
-    <string name="set_filter">SET FILTER</string>
+    <string name="set_filter">Set Filter</string>
     <string name="applly_filter">Apply Filter</string>
     <string name="add">Add</string>
 
@@ -80,20 +80,21 @@
 
 
     <!--Headers-->
-    <string name="header_personal_details">PERSONAL DETAILS :</string>
-    <string name="header_residential_details">RESIDENTIAL DETAILS :</string>
-    <string name="header_qualification_details">QUALIFICATION &amp; EXPERIANCE DETAILS :</string>
-    <string name="header_course_details">COURSE DETAILS :</string>
-    <string name="header_resume">MY RESUME :</string>
-    <string name="header_job_description">JOB DESCRIPTION :</string>
-    <string name="header_responsibilities">JOB RESPONSILITY :</string>
-    <string name="header_job_benifit">JOB BENEFIT :</string>
-    <string name="header_skill_required">SKILLS REQUIRED :</string>
-    <string name="header_prefered_gender">PREFERRED GENDER :</string>
-    <string name="header_exp_required">EXPERIANCED REQUIRED :</string>
-    <string name="header_min_qualification_required">MINIMUM QUALIFICATION REQUIRED ::</string>
+    <string name="header_personal_details">Personal Details :</string>
+    <string name="header_residential_details">Residential Details :</string>
+    <string name="header_qualification_details">Qualification &amp; Experience Details :</string>
+    <string name="header_course_details">Course Details :</string>
+    <string name="header_resume">My Resume :</string>
+    <string name="header_job_description">Job Description :</string>
+    <string name="header_responsibilities">Job Responsibility :</string>
+    <string name="header_job_benifit">Job Benefit :</string>
+    <string name="header_skill_required">Skills Required :</string>
+    <string name="header_prefered_gender">Preferred Gender :</string>
 
+    Experience
 
+    <string name="header_exp_required">Experience Required :</string>
+    <string name="header_min_qualification_required">Minimum Qualification Required :</string>
 
 
     <!--Hints-->
@@ -119,9 +120,9 @@
     <string name="batch_hint">Batch name</string>
     <string name="skill_hint">Skills</string>
     <string name="upload_document">Upload Document</string>
-    <string name="select_doc">SELECT DOCUMNET</string>
+    <string name="select_doc">Select Documents</string>
     <string name="doc_type">Select Document</string>
-    <string name="doc_note">NOTES</string>
+    <string name="doc_note">Notes</string>
     <string name="upload_doc">Upload Document</string>
     <string name="upload">Upload</string>
 

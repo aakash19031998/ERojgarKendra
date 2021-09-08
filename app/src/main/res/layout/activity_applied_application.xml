@@ -6,62 +6,78 @@
     android:layout_height="match_parent"
     tools:context=".interviewscreen.controler.AppliedApplicationActivity">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/all_application_toolbar"
+        android:background="@color/white">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/filter_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/_7sdp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/filter_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+
+                    android:src="@drawable/bg_filter" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:layout_toRightOf="@id/filter_img"
+                    android:text="Filter"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/noAppliedJob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/no_appliped_interview"
+                android:textColor="@color/default_color_android"
+                android:visibility="gone"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_applied"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/filter_layout"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginRight="@dimen/_6sdp"
+
+                />
+
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
     <include
         android:id="@+id/all_application_toolbar"
         layout="@layout/toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <RelativeLayout
-        android:id="@+id/filter_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/all_application_toolbar"
-        android:visibility="gone"
-        android:padding="@dimen/_7sdp">
-
-        <ImageView
-            android:id="@+id/filter_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-
-            android:src="@drawable/bg_filter"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:text="Filter"
-            android:layout_margin="@dimen/_2sdp"
-            android:textSize="@dimen/_14sdp"
-            android:layout_toRightOf="@id/filter_img"
-            android:textStyle="bold"/>
-
-
-    </RelativeLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_applied"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/_6sdp"
-        android:layout_marginRight="@dimen/_6sdp"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:layout_below="@+id/filter_layout"
-
-        />
-
-    <TextView
-        android:id="@+id/noAppliedJob"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textColor="@color/default_color_android"
-        android:gravity="center"
-        android:visibility="gone"
-        android:text="@string/no_appliped_interview"></TextView>
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
