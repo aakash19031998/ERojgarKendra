@@ -61,8 +61,8 @@ public class VerifyOtpActivity extends AppCompatActivity {
         otpStr = intent.getStringExtra("otp");
         mobile_no = intent.getStringExtra("mobile_no");
         token = intent.getStringExtra("token");
-        explainableText = (TextView) findViewById(R.id.explainabletext);
-        explainableText.setText("Please wait.\nWe will auto verify the OTP sent to +91" + mobile_no);
+//        explainableText = (TextView) findViewById(R.id.explainabletext);
+//        explainableText.setText("Please wait.\nWe will auto verify the OTP sent to +91" + mobile_no);
         et1 = findViewById(R.id.et1);
         et2 = findViewById(R.id.et2);
         et3 = findViewById(R.id.et3);

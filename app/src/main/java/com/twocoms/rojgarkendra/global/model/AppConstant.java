@@ -4,10 +4,11 @@ package com.twocoms.rojgarkendra.global.model;
 import android.view.View;
 
 public class AppConstant {
+
     //DEV
     public static final String BASE_URL = "https://dev-eduerp.2coms.com/api/";
     //PRODUCTION
-   // public static final String BASE_URL = "https://dev-eduerp.2coms.com/api/";
+//    public static final String BASE_URL = "https://eduerp.2coms.com/api/";
 //    /Register/token
     public static final String GET_TOKEN_CREATION = BASE_URL + "Register/"+"token";
     public static final String VERIFY_MOB_NO = BASE_URL +"Register/"+"contact_no";

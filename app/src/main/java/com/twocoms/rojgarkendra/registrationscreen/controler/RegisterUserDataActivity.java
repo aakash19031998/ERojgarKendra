@@ -519,6 +519,12 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 //                Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
                 Json.put(AppConstant.KEY_LANGUAGE_KNOWN, registerUserDataBinding.languageKnownEditText.getText().toString());
 
+
+                if (!registerUserDataBinding.empRererralEditText.getText().toString().equals("")) {
+                    Json.put("emp_referal_code", registerUserDataBinding.empRererralEditText.getText().toString());
+                }
+
+
                 Log.v("json", Json.toString());
 //                CommonMethod.showToast("Json",RegisterUserDataActivity.this);
             } catch (JSONException e) {
@@ -546,6 +552,10 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 Json.put(AppConstant.KEY_NOTIFICATION_ID, GlobalPreferenceManager.getStringForKey(RegisterUserDataActivity.this, AppConstant.KEY_DEVICE_TOKEN, ""));
                 Json.put("language_known", registerUserDataBinding.languageKnownEditText.getText().toString());
                 Json.put("role", registerUserDataBinding.designationEditText.getText().toString());
+
+                if (!registerUserDataBinding.empRererralEditText.getText().toString().equals("")) {
+                    Json.put("emp_referal_code", registerUserDataBinding.empRererralEditText.getText().toString());
+                }
 //                Json.put(AppConstant.KEY_PROFILE_PHOTO, img_user_profile_base_64);
 //                Json.put(AppConstant.KEY_RESUME, fileBAse64Str);
                 Log.v("json", Json.toString());
@@ -756,37 +766,37 @@ public class RegisterUserDataActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
 
-            if (!registerUserDataBinding.nameEditText.getText().toString().equals("")) {
-                registerUserDataBinding.registationHeadre.nameVisitingCard.setText(registerUserDataBinding.nameEditText.getText().toString());
-                registerUserDataBinding.registationHeadre.nameVisitingCard.setVisibility(View.VISIBLE);
-            } else {
-                registerUserDataBinding.registationHeadre.nameVisitingCard.setText(registerUserDataBinding.nameEditText.getText().toString());
-                registerUserDataBinding.registationHeadre.nameVisitingCard.setVisibility(View.GONE);
-            }
-
-            if (!registerUserDataBinding.emailEditText.getText().toString().equals("")) {
-                registerUserDataBinding.registationHeadre.emailIdVisitingcard.setText(registerUserDataBinding.emailEditText.getText().toString());
-                registerUserDataBinding.registationHeadre.emailLayout.setVisibility(View.VISIBLE);
-            } else {
-                registerUserDataBinding.registationHeadre.emailIdVisitingcard.setText(registerUserDataBinding.emailEditText.getText().toString());
-                registerUserDataBinding.registationHeadre.emailLayout.setVisibility(View.GONE);
-            }
-
-            if (!registerUserDataBinding.designationEditText.getText().toString().equals("")) {
-                registerUserDataBinding.registationHeadre.designationVisitingcard.setText(registerUserDataBinding.designationEditText.getText().toString());
-                registerUserDataBinding.registationHeadre.designationLayout.setVisibility(View.VISIBLE);
-            } else {
-                registerUserDataBinding.registationHeadre.designationVisitingcard.setText(registerUserDataBinding.designationEditText.getText().toString());
-                registerUserDataBinding.registationHeadre.designationLayout.setVisibility(View.GONE);
-            }
-
-            if (!registerUserDataBinding.cityEditText.getText().toString().equals("")) {
-                registerUserDataBinding.registationHeadre.locationVisitingcard.setText(registerUserDataBinding.cityEditText.getText().toString());
-                registerUserDataBinding.registationHeadre.locationLayout.setVisibility(View.VISIBLE);
-            } else {
-                registerUserDataBinding.registationHeadre.locationVisitingcard.setText(registerUserDataBinding.cityEditText.getText().toString());
-                registerUserDataBinding.registationHeadre.locationLayout.setVisibility(View.GONE);
-            }
+//            if (!registerUserDataBinding.nameEditText.getText().toString().equals("")) {
+//                registerUserDataBinding.registationHeadre.nameVisitingCard.setText(registerUserDataBinding.nameEditText.getText().toString());
+//                registerUserDataBinding.registationHeadre.nameVisitingCard.setVisibility(View.VISIBLE);
+//            } else {
+//                registerUserDataBinding.registationHeadre.nameVisitingCard.setText(registerUserDataBinding.nameEditText.getText().toString());
+//                registerUserDataBinding.registationHeadre.nameVisitingCard.setVisibility(View.GONE);
+//            }
+//
+//            if (!registerUserDataBinding.emailEditText.getText().toString().equals("")) {
+//                registerUserDataBinding.registationHeadre.emailIdVisitingcard.setText(registerUserDataBinding.emailEditText.getText().toString());
+//                registerUserDataBinding.registationHeadre.emailLayout.setVisibility(View.VISIBLE);
+//            } else {
+//                registerUserDataBinding.registationHeadre.emailIdVisitingcard.setText(registerUserDataBinding.emailEditText.getText().toString());
+//                registerUserDataBinding.registationHeadre.emailLayout.setVisibility(View.GONE);
+//            }
+//
+//            if (!registerUserDataBinding.designationEditText.getText().toString().equals("")) {
+//                registerUserDataBinding.registationHeadre.designationVisitingcard.setText(registerUserDataBinding.designationEditText.getText().toString());
+//                registerUserDataBinding.registationHeadre.designationLayout.setVisibility(View.VISIBLE);
+//            } else {
+//                registerUserDataBinding.registationHeadre.designationVisitingcard.setText(registerUserDataBinding.designationEditText.getText().toString());
+//                registerUserDataBinding.registationHeadre.designationLayout.setVisibility(View.GONE);
+//            }
+//
+//            if (!registerUserDataBinding.cityEditText.getText().toString().equals("")) {
+//                registerUserDataBinding.registationHeadre.locationVisitingcard.setText(registerUserDataBinding.cityEditText.getText().toString());
+//                registerUserDataBinding.registationHeadre.locationLayout.setVisibility(View.VISIBLE);
+//            } else {
+//                registerUserDataBinding.registationHeadre.locationVisitingcard.setText(registerUserDataBinding.cityEditText.getText().toString());
+//                registerUserDataBinding.registationHeadre.locationLayout.setVisibility(View.GONE);
+//            }
         }
     };
 
@@ -1643,12 +1653,12 @@ public class RegisterUserDataActivity extends AppCompatActivity {
 
 
                 if (uri != null && !fileName.equals("")) {
-                    byte [] data = getBytes();
-                   if(data != null){
-                       if (data != null) {
-                        params.put("resume", new DataPart(fileName, data));
+                    byte[] data = getBytes();
+                    if (data != null) {
+                        if (data != null) {
+                            params.put("resume", new DataPart(fileName, data));
+                        }
                     }
-                   }
                 }
 
 //                MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
@@ -1676,9 +1686,9 @@ public class RegisterUserDataActivity extends AppCompatActivity {
                 byteBuffer.write(buffer, 0, len);
             }
             return byteBuffer.toByteArray();
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

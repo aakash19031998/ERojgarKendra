@@ -23,8 +23,8 @@
             android:gravity="center"
             android:padding="@dimen/_6sdp"
             android:text="@string/set_filter"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp"
             android:textStyle="bold" />
 
             <ImageView
@@ -105,9 +105,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/gender_lnr"
                     android:layout_margin="@dimen/_16sdp"
-                    android:background="@color/app_colour_name"
+                    android:background="@drawable/sign_up_enable"
                     android:gravity="center"
-                    android:padding="@dimen/_6sdp"
+                    android:padding="@dimen/_8sdp"
                     android:text="@string/applly_filter"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/_10sdp"
@@ -131,10 +131,10 @@
                         android:id="@+id/language_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/bg_reg_city"
                         android:drawablePadding="@dimen/_8sdp"
                         android:hint="@string/language_hing"
                         android:maxLines="1"
+                        android:padding="@dimen/_8sdp"
                         android:singleLine="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -149,6 +149,7 @@
                     android:layout_marginRight="@dimen/_8sdp"
                     android:layout_toLeftOf="@+id/proceddbuttonlayout"
                     android:layout_toRightOf="@+id/header1"
+                    android:visibility="gone"
                     app:boxStrokeColor="@color/reg_tc_bg"
                     app:hintTextColor="@android:color/black">
 
@@ -156,10 +157,9 @@
                         android:id="@+id/city_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/bg_reg_city"
-                        android:drawablePadding="@dimen/_8sdp"
                         android:hint="@string/city_hing"
                         android:maxLines="1"
+                        android:padding="@dimen/_8sdp"
                         android:singleLine="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -181,14 +181,13 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:padding="@dimen/_10sdp"
                         android:id="@+id/qualification_type_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:drawablePadding="@dimen/_8sdp"
-                        android:drawableLeft="@drawable/bg_reg_qualificatiion"
+                        android:padding="@dimen/_8sdp"
+
                         android:drawableRight="@drawable/bg_reg_drop_down"
                         android:hint="@string/qualification_type_hint" />
 
@@ -214,10 +213,11 @@
                         android:id="@+id/skill_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/bg_reg_city"
                         android:drawablePadding="@dimen/_8sdp"
                         android:hint="@string/skill_hint"
                         android:maxLines="1"
+                        android:padding="@dimen/_8sdp"
+
                         android:singleLine="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>

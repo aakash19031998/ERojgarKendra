@@ -8,6 +8,37 @@
     tools:context=".registrationscreen.controler.VerifyOtpActivity">
 
 
+
+
+  <ImageView
+        android:id="@+id/bg_1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_280sdp"
+        android:background="@drawable/image_note1"
+        android:gravity="center">
+
+    </ImageView>
+
+    <ImageView
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_below="@+id/bg_1"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/_40sdp"
+        android:layout_marginTop="-30dp"
+        android:src="@drawable/profile_bg"></ImageView>
+
+
+    <ImageView
+        android:id="@+id/image1"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_below="@+id/bg_1"
+        android:layout_marginTop="-30dp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:src="@drawable/two_coms_logo"></ImageView>
+
+
     <ImageView
         android:id="@+id/backbutton"
         android:layout_width="@dimen/_34sdp"
@@ -20,53 +51,40 @@
         android:padding="@dimen/_6sdp"
         android:textStyle="bold" />
 
-
     <RelativeLayout
-        android:id="@+id/app_main_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/backbutton"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/image1"
+        android:layout_marginTop="@dimen/_10sdp"
+        >
+
+
 
         <TextView
-            android:id="@+id/maintext"
-            android:layout_width="wrap_content"
+            android:id="@+id/header1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/place_text"
-            android:textColor="@color/app_colour_name"
-            android:textSize="@dimen/_30sdp"
-            android:textStyle="bold">
-
-        </TextView>
+            android:text="We have a Job for You as per your ability"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:textColor="@color/global_color_blue"></TextView>
 
         <TextView
-
-            android:layout_width="wrap_content"
+            android:id="@+id/comejoinus"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/maintext"
-            android:text="@string/me_text"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_30sdp"
-            android:textStyle="bold">
-
-        </TextView>
-
-    </RelativeLayout>
+            android:text="VERIFY OTP"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_below="@+id/header1"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:textColor="@color/black"></TextView>
 
 
-
-    <TextView
-        android:id="@+id/explainabletext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Please wait.\nWe will auto verify the OTP sent to +919699101091"
-        android:textSize="@dimen/_17sdp"
-        android:textColor="@android:color/black"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_below="@+id/app_main_layout"
-
-        android:padding="6dp"/>
 
     <LinearLayout
         android:id="@+id/inputlayout"
@@ -74,7 +92,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_below="@+id/explainabletext"
+        android:layout_below="@+id/comejoinus"
         android:layout_marginTop="@dimen/_16sdp">
 
         <EditText
@@ -165,10 +183,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/resend_otp"
-        android:padding="@dimen/_8sdp"
+        android:padding="@dimen/_4sdp"
         android:textColor="#24a0ed"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/_8sdp"
         android:layout_below="@+id/didnotgetotptext"></TextView>
 
 
@@ -177,14 +194,15 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_34sdp"
         android:text="@string/verify_otp_text"
-        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:textColor="@android:color/white"
         android:layout_marginLeft="@dimen/_30sdp"
         android:layout_marginRight="@dimen/_30sdp"
         android:gravity="center"
         android:padding="@dimen/_8sdp"
+        android:background="@drawable/sign_up_enable"
         android:layout_below="@+id/resendotpbutton"></TextView>
 
-
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -104,7 +104,7 @@
                 android:textSize="@dimen/_15sdp"
                 android:text="@string/upload_doc"
                 android:singleLine="true"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/black"
                 android:padding="@dimen/_4sdp"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/_12sdp"

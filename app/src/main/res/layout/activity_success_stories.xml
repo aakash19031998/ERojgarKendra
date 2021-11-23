@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/success_stories_toolbar"
-        android:background="@color/white">
+        android:background="#f7f7f7"
+      >
 
 
         <RelativeLayout

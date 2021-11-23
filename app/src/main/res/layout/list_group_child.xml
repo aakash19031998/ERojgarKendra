@@ -13,7 +13,7 @@
         android:layout_height="@dimen/_16sdp"
         android:layout_marginLeft="@dimen/_24sdp"
         android:layout_marginTop="@dimen/_8sdp"
-
+        android:visibility="gone"
         android:src="@drawable/downarrow"/>
 
     <TextView

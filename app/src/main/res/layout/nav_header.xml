@@ -2,17 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/nav_header_bg">
-
+    android:padding="1dp"
+    >
 
     <LinearLayout
         android:id="@+id/userProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:background="@drawable/profile_header_main"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,6 +29,7 @@
                     android:id="@+id/user_img"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:background="@drawable/icons_profile" />
 
 
@@ -48,7 +48,7 @@
                     android:textSize="@dimen/_14sdp"
                     android:singleLine="true"
                     android:maxLines="1"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                    />
                 <TextView
                     android:id="@+id/user_phone_no"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:text="9930848424"
                     android:textSize="@dimen/_14sdp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     />
 
                 <ImageView
@@ -83,6 +83,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@drawable/profile_header_main"
+
         android:visibility="visible"
         >
 
@@ -102,13 +104,14 @@
                     android:id="@+id/userImgDummy"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
-                    android:background="@drawable/icons_profile" />
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:background="@drawable/profile_main" />
 
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_margin="@dimen/_8sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -120,7 +123,7 @@
                     android:textSize="@dimen/_12sdp"
                     android:singleLine="true"
                     android:maxLines="1"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     />
                 <TextView
                     android:id="@+id/userInformation"
@@ -129,26 +132,25 @@
                     android:layout_height="wrap_content"
                     android:text="@string/better_exp_str"
                     android:textSize="@dimen/_10sdp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     />
 
                 <ImageView
-
-                    android:layout_margin="@dimen/_5sdp"
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="@dimen/_15sdp"
-                    android:src="@drawable/arrow_right_login"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/arrow_main"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
+                    android:text=">"
+                    android:rotation="270"
+                    android:textSize="@dimen/_20sdp"
                    />
 
             </RelativeLayout>
 
-
-
-
-
         </LinearLayout>
+
+
     </LinearLayout>
 
 

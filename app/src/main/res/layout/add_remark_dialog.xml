@@ -41,7 +41,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/header1"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/_8sdp"
             app:hintTextColor="@android:color/black"
             android:layout_toLeftOf="@+id/proceddbuttonlayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -53,23 +53,29 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:drawablePadding="10dp"
-                android:drawableLeft="@drawable/bg_reg_name"
                 android:hint="@string/add_remark_hint" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
+        <TextView
             android:id="@+id/addRemarkBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add"
             android:textStyle="bold"
             android:textSize="@dimen/_12sdp"
-            android:layout_margin="@dimen/_5sdp"
             android:textAllCaps="false"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+
+            android:background="@drawable/sign_up_enable"
             android:layout_gravity="center_horizontal"
-            android:padding="@dimen/_5sdp"/>
+            android:paddingLeft="@dimen/_30sdp"
+            android:textColor="@color/white"
+            android:paddingRight="@dimen/_30sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp" />
 
 
     </LinearLayout>

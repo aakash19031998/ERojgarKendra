@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:text="@string/client_name"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/global_color_blue"
                         android:textSize="@dimen/_12sdp" />
 
 
@@ -197,22 +197,30 @@
                 android:layout_marginTop="@dimen/_4sdp"
                 android:weightSum="2">
 
-                <Button
+                <TextView
                     android:id="@+id/reject_job"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_weight="1"
                     android:text="@string/reject"
+                    android:background="@drawable/sign_up_enable"
                     android:textAllCaps="false"
+                    android:gravity="center"
+                    android:padding="@dimen/_8sdp"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
 
-                <Button
+                <TextView
                     android:id="@+id/accept_job"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/accept"
+                    android:background="@drawable/sign_up_enable"
+                    android:gravity="center"
+                    android:padding="@dimen/_8sdp"
+                    android:textColor="@color/white"
                     android:textAllCaps="false"
                     android:textStyle="bold" />
 

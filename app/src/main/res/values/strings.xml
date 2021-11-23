@@ -21,6 +21,7 @@
     <string name="toast_image_intent_null">Image picker option is missing!</string>
 
     <!-- font families -->
+
     <string name="font_family_light">sans-serif-light</string>
     <string name="font_family_medium">sans-serif-medium</string>
     <string name="font_family_regular">sans-serif</string>
@@ -37,6 +38,7 @@
 
 
     <!--Splash Screen-->
+
     <string name="place_text">Place</string>
     <string name="me_text">me</string>
     <string name="copyright">EDUERP © 2021</string>
@@ -85,6 +87,7 @@
     <string name="header_qualification_details">Qualification &amp; Experience Details :</string>
     <string name="header_course_details">Course Details :</string>
     <string name="header_resume">My Resume :</string>
+    <string name="header_employee_referral">Employee Referral :</string>
     <string name="header_job_description">Job Description :</string>
     <string name="header_responsibilities">Job Responsibility :</string>
     <string name="header_job_benifit">Job Benefit :</string>
@@ -117,6 +120,7 @@
     <string name="centre_hint">Centre name</string>
     <string name="project_hint">Project name</string>
     <string name="course_hint">Course name</string>
+    <string name="emp_id_hint">Employee Code</string>
     <string name="batch_hint">Batch name</string>
     <string name="skill_hint">Skills</string>
     <string name="upload_document">Upload Document</string>

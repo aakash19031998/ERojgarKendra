@@ -12,6 +12,7 @@
         android:id="@+id/left_icon"
         android:layout_width="@dimen/_16sdp"
         android:layout_height="@dimen/_16sdp"
+        android:visibility="gone"
         android:src="@drawable/downarrow"/>
 
 

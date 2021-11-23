@@ -8,93 +8,54 @@
     android:gravity="center">
 
 
+
+
     <RelativeLayout
-        android:id="@+id/place_me_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_20sdp">
-
-        <TextView
-            android:id="@+id/maintext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Place"
-            android:textColor="@color/app_colour_name"
-            android:textSize="@dimen/_34sdp"
-            android:textStyle="bold">
-
-        </TextView>
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/maintext"
-            android:text="me"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_34sdp"
-            android:textStyle="bold">
-
-        </TextView>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/get_started">
 
     </RelativeLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/place_me_layout"
-        android:layout_above="@+id/indicatorpart"
-       />
 
-    <RelativeLayout
-        android:id="@+id/indicatorpart"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
-
-        <com.viewpagerindicator.CirclePageIndicator
-            android:id="@+id/indicator"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/icon_arrow"
             android:layout_centerHorizontal="true"
-            android:gravity="bottom"
-            android:padding="@dimen/_8sdp"
-            app:centered="true"
-            app:fillColor="@color/app_colour_name"
-            app:pageColor="@color/indicator_colour_name"
-            app:snap="false" />
+            android:rotation="180"
+            android:layout_above="@id/get_start_text"></ImageView>
 
         <TextView
-            android:layout_below="@+id/indicator"
             android:id="@+id/get_start_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Get Started"
-            android:background="@color/app_colour_name"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:background="@drawable/sign_up_enable"
             android:padding="@dimen/_8sdp"
+            android:layout_alignParentBottom="true"
             android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/_15sdp"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/_15sdp"/>
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp" />
 
-        <TextView
-            android:id="@+id/skip_text"
-            android:layout_width="wrap_content"
-            android:layout_below="@id/get_start_text"
-            android:layout_height="wrap_content"
-            android:text="Skip"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:padding="@dimen/_5sdp"
-            android:textColor="@color/app_colour_name"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/_15sdp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
+        <!--        <TextView-->
+        <!--            android:id="@+id/skip_text"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_below="@id/get_start_text"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Skip"-->
+        <!--            android:layout_marginTop="@dimen/_10sdp"-->
+        <!--            android:padding="@dimen/_5sdp"-->
+        <!--            android:textColor="@color/app_colour_name"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:textSize="@dimen/_15sdp"-->
+        <!--            android:textStyle="bold" />-->
 
 
 

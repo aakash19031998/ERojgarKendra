@@ -81,7 +81,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:text="@string/client_name"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/global_color_blue"
                             android:textSize="@dimen/_14sdp" />
 
 
@@ -534,13 +534,17 @@
                     </LinearLayout>
 
 
-                    <Button
+                    <TextView
                         android:id="@+id/apply_jobs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Apply For Job"
                         android:textAllCaps="false"
+                        android:padding="@dimen/_8sdp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:background="@drawable/sign_up_enable"
                         android:layout_marginRight="@dimen/_6sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginLeft="@dimen/_6sdp"

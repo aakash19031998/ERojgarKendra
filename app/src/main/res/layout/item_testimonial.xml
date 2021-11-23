@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_hot_job"
@@ -12,71 +12,55 @@
         card_view:cardCornerRadius="@dimen/_5sdp">
 
 
-
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content">x
 
-            <LinearLayout
-                android:id="@+id/testimonialsmain"
+            <TextView
+                android:id="@+id/date_testimonials_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/nav_header_gradiant"
-                android:gravity="center">
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginRight="@dimen/_6sdp"
+                android:gravity="right"
+                android:text="@string/posted_on"
+                android:textColor="@color/black"
+                android:layout_below="@+id/message"
+                android:layout_margin="@dimen/_6sdp"
+                android:layout_alignParentRight="true"
+                android:textSize="@dimen/_8sdp"></TextView>
 
-                <TextView
-                    android:id="@+id/date_testimonials_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text="@string/posted_on"
-                    android:textSize="@dimen/_8sdp"
-                    android:layout_marginRight="@dimen/_6sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:gravity="right"></TextView>
-                <TextView
-                    android:id="@+id/message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_9sdp"
-                    android:gravity="center"
-                    android:text="....."
-                    android:layout_marginRight="@dimen/_8sdp"
-                    android:layout_marginLeft="@dimen/_8sdp"
-                    android:textColor="@color/white"
-                    android:layout_marginBottom="48dp"
-                     />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:gravity="center"
+                android:text="....."
+                android:layout_below="@+id/userImage"
+                android:textColor="@color/black" />
 
 
             <TextView
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/testimonialsmain"
-                android:layout_centerHorizontal="true"
-                android:textStyle="bold"
-                android:layout_marginTop="@dimen/_40sdp"
+                android:text="Satyam Vishwakarma"
                 android:textColor="@color/black"
-                android:layout_marginBottom="@dimen/_6sdp"
-                android:text="Satyam Vishwakarma"></TextView>
+                android:layout_margin="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:textStyle="bold"></TextView>
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/userImage"
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="-40dp"
-                android:layout_below="@+id/testimonialsmain"
-                android:src="@drawable/icon_profile_black"
-                 />
-
-
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/_10sdp"
+                android:src="@drawable/profile_main" />
 
         </RelativeLayout>
-
 
 
     </androidx.cardview.widget.CardView>

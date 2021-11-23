@@ -388,7 +388,7 @@ public class ServiceHandler {
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(context, "Something went wrong please try again!", Toast.LENGTH_SHORT).show();
-
+                        Log.d("Error", error.toString());
                     }
                 }
             }) {

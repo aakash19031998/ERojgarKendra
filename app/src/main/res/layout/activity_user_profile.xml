@@ -15,36 +15,36 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <TextView
-            android:id="@+id/maintext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/place_text"
-            android:layout_toRightOf="@+id/backbutton"
-            android:textColor="@color/app_colour_name"
-            android:textSize="@dimen/_12sdp"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:textStyle="bold">
+<!--        <TextView-->
+<!--            android:id="@+id/maintext"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/place_text"-->
+<!--            android:layout_toRightOf="@+id/backbutton"-->
+<!--            android:textColor="@color/app_colour_name"-->
+<!--            android:textSize="@dimen/_12sdp"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginTop="@dimen/_14sdp"-->
+<!--            android:layout_marginLeft="@dimen/_10sdp"-->
+<!--            android:textStyle="bold">-->
 
-        </TextView>
+<!--        </TextView>-->
 
-        <TextView
+<!--        <TextView-->
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/maintext"
-            android:text="@string/me_text"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:layout_centerVertical="true"
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_toRightOf="@+id/maintext"-->
+<!--            android:text="@string/me_text"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="@dimen/_12sdp"-->
+<!--            android:layout_centerVertical="true"-->
 
-            android:layout_marginTop="@dimen/_14sdp"
+<!--            android:layout_marginTop="@dimen/_14sdp"-->
 
-            android:textStyle="bold">
+<!--            android:textStyle="bold">-->
 
-        </TextView>
+<!--        </TextView>-->
 
         <ImageView
             android:id="@+id/backbutton"
@@ -117,7 +117,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/black"
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:textStyle="bold"
@@ -143,7 +143,6 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_name"
                     android:hint="@string/name_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -168,7 +167,6 @@
                     android:maxLength="10"
                     android:singleLine="true"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_mobile_app_icon"
                     android:maxLines="1"
                     android:hint="@string/phone_no_hint" />
 
@@ -194,7 +192,6 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_email_icon"
                     android:singleLine="true"
                     android:hint="@string/email_hint" />
 
@@ -220,7 +217,6 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_calendar"
                     android:hint="@string/dob_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -243,7 +239,6 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_language"
                     android:singleLine="true"
                     android:hint="@string/language_hing" />
 
@@ -312,7 +307,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/black"
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:textStyle="bold"
@@ -340,7 +335,6 @@
                     android:drawableRight="@drawable/bg_reg_drop_down"
                     android:maxLines="1"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_state"
                     android:singleLine="true"
                     android:hint="@string/state_hing" />
 
@@ -378,7 +372,6 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_state"
                     android:singleLine="true"
                     android:hint="@string/city_hing" />
 
@@ -397,7 +390,7 @@
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/black"
 
                 android:text="@string/header_qualification_details"></TextView>
 
@@ -425,7 +418,6 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_qualificatiion"
                     android:drawableRight="@drawable/bg_reg_drop_down"
                     android:hint="@string/qualification_type_hint" />
 
@@ -452,7 +444,6 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_experience_year"
                     android:drawableRight="@drawable/bg_reg_drop_down"
                     android:hint="@string/exp_hint" />
 
@@ -480,7 +471,6 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_experience_year"
                     android:hint="@string/exp_in_years_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -505,7 +495,6 @@
                     android:singleLine="true"
                     android:maxLines="1"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_designation"
                     android:hint="@string/designation_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -529,7 +518,6 @@
                     android:maxLines="1"
                     android:drawablePadding="@dimen/_8sdp"
                     android:inputType="number"
-                    android:drawableLeft="@drawable/bg_reg_salary"
                     android:singleLine="true"
                     android:hint="@string/salary_hint" />
 
@@ -546,7 +534,7 @@
                 android:id="@+id/coursename_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/black"
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:textStyle="bold"
@@ -571,7 +559,6 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/centre_hint"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_centre_name"
                     android:singleLine="true"
                     android:focusable="false"
                     android:maxLines="1"/>
@@ -599,7 +586,6 @@
                     android:drawablePadding="@dimen/_8sdp"
                     android:focusable="false"
 
-                    android:drawableLeft="@drawable/bg_reg_project_name"
                     android:singleLine="true"
                     android:hint="@string/project_hint" />
 
@@ -627,7 +613,6 @@
                     android:drawablePadding="@dimen/_8sdp"
                     android:focusable="false"
 
-                    android:drawableLeft="@drawable/bg_reg_branch_name"
                     android:hint="@string/batch_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -651,7 +636,6 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:drawableLeft="@drawable/bg_reg_course"
                     android:singleLine="true"
                     android:focusable="false"
                     android:hint="@string/course_hint" />
@@ -672,7 +656,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/black"
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:textStyle="bold"
@@ -701,7 +685,6 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/bg_reg_upload"
                     android:gravity="center"
-
                     android:foregroundGravity="center_horizontal"
                     />
 
@@ -724,7 +707,7 @@
                         android:padding="@dimen/_4sdp"
                         android:singleLine="true"
                         android:text="@string/upload_cv"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_15sdp" />
 
                 <ImageView

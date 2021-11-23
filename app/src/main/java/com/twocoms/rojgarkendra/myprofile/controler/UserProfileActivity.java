@@ -24,11 +24,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
@@ -38,8 +36,6 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
@@ -61,19 +57,15 @@ import com.twocoms.rojgarkendra.global.model.LoadingDialog;
 import com.twocoms.rojgarkendra.global.model.ServiceHandler;
 import com.twocoms.rojgarkendra.global.model.Validation;
 import com.twocoms.rojgarkendra.registrationscreen.controler.ImagePickerActivity;
-import com.twocoms.rojgarkendra.registrationscreen.controler.RegisterUserDataActivity;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -691,10 +683,9 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
+                    CommonMethod.showToast(AppConstant.SOMETHING_WENT_WRONG, UserProfileActivity.this);
                     e.printStackTrace();
                 }
-
-
             }
         });
 
@@ -1423,37 +1414,37 @@ public class UserProfileActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
 
-            if (!userDataBinding.nameEditText.getText().toString().equals("")) {
-                userDataBinding.profileHeader.nameVisitingCard.setText(userDataBinding.nameEditText.getText().toString());
-                userDataBinding.profileHeader.nameVisitingCard.setVisibility(View.VISIBLE);
-            } else {
-                userDataBinding.profileHeader.nameVisitingCard.setText(userDataBinding.nameEditText.getText().toString());
-                userDataBinding.profileHeader.nameVisitingCard.setVisibility(View.GONE);
-            }
-
-            if (!userDataBinding.emailEditText.getText().toString().equals("")) {
-                userDataBinding.profileHeader.emailIdVisitingcard.setText(userDataBinding.emailEditText.getText().toString());
-                userDataBinding.profileHeader.emailLayout.setVisibility(View.VISIBLE);
-            } else {
-                userDataBinding.profileHeader.emailIdVisitingcard.setText(userDataBinding.emailEditText.getText().toString());
-                userDataBinding.profileHeader.emailLayout.setVisibility(View.GONE);
-            }
-
-            if (!userDataBinding.designationEditText.getText().toString().equals("")) {
-                userDataBinding.profileHeader.designationVisitingcard.setText(userDataBinding.designationEditText.getText().toString());
-                userDataBinding.profileHeader.designationLayout.setVisibility(View.VISIBLE);
-            } else {
-                userDataBinding.profileHeader.designationVisitingcard.setText(userDataBinding.designationEditText.getText().toString());
-                userDataBinding.profileHeader.designationLayout.setVisibility(View.GONE);
-            }
-
-            if (!userDataBinding.cityEditText.getText().toString().equals("")) {
-                userDataBinding.profileHeader.locationVisitingcard.setText(userDataBinding.cityEditText.getText().toString());
-                userDataBinding.profileHeader.locationLayout.setVisibility(View.VISIBLE);
-            } else {
-                userDataBinding.profileHeader.locationVisitingcard.setText(userDataBinding.cityEditText.getText().toString());
-                userDataBinding.profileHeader.locationLayout.setVisibility(View.GONE);
-            }
+//            if (!userDataBinding.nameEditText.getText().toString().equals("")) {
+//                userDataBinding.profileHeader.nameVisitingCard.setText(userDataBinding.nameEditText.getText().toString());
+//                userDataBinding.profileHeader.nameVisitingCard.setVisibility(View.VISIBLE);
+//            } else {
+//                userDataBinding.profileHeader.nameVisitingCard.setText(userDataBinding.nameEditText.getText().toString());
+//                userDataBinding.profileHeader.nameVisitingCard.setVisibility(View.GONE);
+//            }
+//
+//            if (!userDataBinding.emailEditText.getText().toString().equals("")) {
+//                userDataBinding.profileHeader.emailIdVisitingcard.setText(userDataBinding.emailEditText.getText().toString());
+//                userDataBinding.profileHeader.emailLayout.setVisibility(View.VISIBLE);
+//            } else {
+//                userDataBinding.profileHeader.emailIdVisitingcard.setText(userDataBinding.emailEditText.getText().toString());
+//                userDataBinding.profileHeader.emailLayout.setVisibility(View.GONE);
+//            }
+//
+//            if (!userDataBinding.designationEditText.getText().toString().equals("")) {
+//                userDataBinding.profileHeader.designationVisitingcard.setText(userDataBinding.designationEditText.getText().toString());
+//                userDataBinding.profileHeader.designationLayout.setVisibility(View.VISIBLE);
+//            } else {
+//                userDataBinding.profileHeader.designationVisitingcard.setText(userDataBinding.designationEditText.getText().toString());
+//                userDataBinding.profileHeader.designationLayout.setVisibility(View.GONE);
+//            }
+//
+//            if (!userDataBinding.cityEditText.getText().toString().equals("")) {
+//                userDataBinding.profileHeader.locationVisitingcard.setText(userDataBinding.cityEditText.getText().toString());
+//                userDataBinding.profileHeader.locationLayout.setVisibility(View.VISIBLE);
+//            } else {
+//                userDataBinding.profileHeader.locationVisitingcard.setText(userDataBinding.cityEditText.getText().toString());
+//                userDataBinding.profileHeader.locationLayout.setVisibility(View.GONE);
+//            }
         }
     };
 

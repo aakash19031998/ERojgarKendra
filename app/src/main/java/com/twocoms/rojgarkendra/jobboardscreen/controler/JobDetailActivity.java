@@ -34,6 +34,7 @@ public class JobDetailActivity extends AppCompatActivity {
     LinearLayout titleLnr;
     String jobId = "";
     VacancyDetailModel vacancyDetailModel;
+    boolean isJobApplied;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,13 @@ public class JobDetailActivity extends AppCompatActivity {
 //        titleLnr = (LinearLayout) findViewById(R.id.title_lnr);
         jobDetailBinding.successStoriesToolbar.title.setText("Vacancy Detail");
         jobId = getIntent().getStringExtra("jobId");
+        isJobApplied = getIntent().getBooleanExtra("isApplied", false);
+
+        if (isJobApplied) {
+            jobDetailBinding.applyJobs.setText("Already Applied");
+        } else {
+            jobDetailBinding.applyJobs.setText("Apply");
+        }
         getJobDetail();
     }
 
@@ -94,9 +102,13 @@ public class JobDetailActivity extends AppCompatActivity {
         jobDetailBinding.applyJobs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(vacancyDetailModel != null) {
-                    String userId = GlobalPreferenceManager.getStringForKey(JobDetailActivity.this, AppConstant.KEY_USER_ID, "");
-                    applyAllJobs(userId, String.valueOf(vacancyDetailModel.getId()));
+                if (vacancyDetailModel != null) {
+                    if (!isJobApplied) {
+                        String userId = GlobalPreferenceManager.getStringForKey(JobDetailActivity.this, AppConstant.KEY_USER_ID, "");
+                        applyAllJobs(userId, String.valueOf(vacancyDetailModel.getId()));
+                    } else {
+                        CommonMethod.showToast("Job already applied please try for other option.", JobDetailActivity.this);
+                    }
                 }
             }
         });
@@ -138,16 +150,16 @@ public class JobDetailActivity extends AppCompatActivity {
                         JSONObject jsonObjectData = jsonObject.getJSONObject(AppConstant.KEY_VACANCY_DETAIL_OBJ_DATA);
                         vacancyDetailModel = new VacancyDetailModel();
                         vacancyDetailModel.setId(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_ID));
-                      //  vacancyDetailModel.setVacancy_master_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_VACANCY_MASTER_ID));
-                      //  vacancyDetailModel.setNaps_opportunity_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_NAPS_OPPORTUNITY_ID));
-                      //  vacancyDetailModel.setZoho_recruit_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_ZOHO_RECRUIT_ID));
-                      //  vacancyDetailModel.setZoho_sourcing_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_ZOHO_SOURCING_ID));
+                        //  vacancyDetailModel.setVacancy_master_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_VACANCY_MASTER_ID));
+                        //  vacancyDetailModel.setNaps_opportunity_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_NAPS_OPPORTUNITY_ID));
+                        //  vacancyDetailModel.setZoho_recruit_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_ZOHO_RECRUIT_ID));
+                        //  vacancyDetailModel.setZoho_sourcing_id(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_ZOHO_SOURCING_ID));
                         vacancyDetailModel.setVacancy_title(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_VACANCY_TITLE));
                         vacancyDetailModel.setClient_name(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_CLIENT_NAME));
 
 
                         //       vacancyDetailModel.setIndustry(jsonObjectData.getInt(AppConstant.KEY_VACANCY_DETAIL_INDUSTRY));
-                      //  vacancyDetailModel.setContact_name(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_CONTACT_NAME));
+                        //  vacancyDetailModel.setContact_name(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_CONTACT_NAME));
                         vacancyDetailModel.setNumber_of_open_positions(jsonObjectData.getInt(AppConstant.KEY_VACANCY_DETAIL_NO_OPEN_POSITION));
                         vacancyDetailModel.setYears_of_exp_required(jsonObjectData.getInt(AppConstant.KEY_VACANCY_DETAIL_YEARS_EXP_REQUIRED));
                         vacancyDetailModel.setMonths_of_exp_required(jsonObjectData.getInt(AppConstant.KEY_VACANCY_DETAIL_MONTHS_EXP_REQUIRED));
@@ -176,7 +188,7 @@ public class JobDetailActivity extends AppCompatActivity {
 //                        vacancyDetailModel.setDate_opened(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_DATE_OPENED));
                         vacancyDetailModel.setJob_type(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_JOB_TYPE));
 //                        vacancyDetailModel.setIs_hot_job_opening(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_IS_HOT_JOB_OPENING));
-                      //  vacancyDetailModel.setAssigned_recruiter(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_ASSIGNED_RECRUITER));
+                        //  vacancyDetailModel.setAssigned_recruiter(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_ASSIGNED_RECRUITER));
                         vacancyDetailModel.setCity(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_CITY));
 //                        vacancyDetailModel.setState_province(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_STATE_PROVINCE));
 //                        vacancyDetailModel.setCountry(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_COUNTRY));
@@ -186,16 +198,16 @@ public class JobDetailActivity extends AppCompatActivity {
 //                        vacancyDetailModel.setCreated_on(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_CREATED_ON));
 //                        vacancyDetailModel.setEdited_by(jsonObjectData.getDouble(AppConstant.KEY_VACANCY_DETAIL_EDITED_BY));
 //                        vacancyDetailModel.setUpdated_on(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_UPDATED_ON));
-                      //  vacancyDetailModel.setPublished(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_PUBLISHED));
-                      //  vacancyDetailModel.setRevenue_per_position(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_REVENUE_PER_POSITION));
-                       // vacancyDetailModel.setIndsId(jsonObjectData.getDouble(AppConstant.KEY_VACANCY_DETAIL_INDSID));
-                       // vacancyDetailModel.setInds_name(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_INDS_NAME));
-                      //  vacancyDetailModel.setInds_desc(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_INDS_DESC));
-                     //   vacancyDetailModel.setInds_logo(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_INDS_LOGO));
-                       // vacancyDetailModel.setInds_status(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_INDS_STATUS));
-                       // vacancyDetailModel.setCreated_on(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_CREAETED_AT));
+                        //  vacancyDetailModel.setPublished(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_PUBLISHED));
+                        //  vacancyDetailModel.setRevenue_per_position(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_REVENUE_PER_POSITION));
+                        // vacancyDetailModel.setIndsId(jsonObjectData.getDouble(AppConstant.KEY_VACANCY_DETAIL_INDSID));
+                        // vacancyDetailModel.setInds_name(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_INDS_NAME));
+                        //  vacancyDetailModel.setInds_desc(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_INDS_DESC));
+                        //   vacancyDetailModel.setInds_logo(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_INDS_LOGO));
+                        // vacancyDetailModel.setInds_status(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_INDS_STATUS));
+                        // vacancyDetailModel.setCreated_on(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_CREAETED_AT));
 //                        vacancyDetailModel.setStCode(jsonObjectData.getDouble(AppConstant.KEY_VACANCY_DETAIL_STCODE));
-                  //      vacancyDetailModel.setStateName(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_STATENAME));
+                        //      vacancyDetailModel.setStateName(jsonObjectData.getString(AppConstant.KEY_VACANCY_DETAIL_STATENAME));
                         setDataonView(vacancyDetailModel);
 
                     } else {
@@ -272,6 +284,7 @@ public class JobDetailActivity extends AppCompatActivity {
                         String message = jsonObject.getString(AppConstant.KEY_JOB_DATA_MESSAGE);
                         if (jsonObject.getBoolean(AppConstant.KEY_JOB_DATA_SUCCESS)) {
                             CommonMethod.showToast(AppConstant.JOB_APPLIED_SUCCESSFULLY_MESSAGE, JobDetailActivity.this);
+                            finish();
                         } else {
                             CommonMethod.showToast(message, JobDetailActivity.this);
                         }

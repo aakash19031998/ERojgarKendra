@@ -125,13 +125,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             imageView.setVisibility(View.VISIBLE);
 
         }
-        if (headerTitle.getLeftImg() == -1) {
-            left_icon.setVisibility(View.INVISIBLE);
-        } else {
-            left_icon.setVisibility(View.VISIBLE);
-            left_icon.setImageResource(headerTitle.getLeftImg());
-
-        }
+//        if (headerTitle.getLeftImg() == -1) {
+//            left_icon.setVisibility(View.INVISIBLE);
+//        } else {
+//            left_icon.setVisibility(View.VISIBLE);
+//            left_icon.setImageResource(headerTitle.getLeftImg());
+//
+//        }
 
 
         return convertView;

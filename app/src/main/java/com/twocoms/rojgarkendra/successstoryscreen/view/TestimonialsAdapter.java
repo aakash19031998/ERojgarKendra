@@ -50,7 +50,7 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
             String profileUrl = testimonialsModels.get(position).getProfileUrl().trim();
             Glide.with(context)
                     .load(profileUrl)
-                    .apply(new RequestOptions().placeholder(R.drawable.icon_profile_black).error(R.drawable.icon_profile_black))
+                    .apply(new RequestOptions().placeholder(R.drawable.profile_main).error(R.drawable.profile_main))
                     .into(holder.userImage);
 
         }

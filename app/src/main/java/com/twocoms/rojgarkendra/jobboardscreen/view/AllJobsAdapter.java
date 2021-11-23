@@ -63,6 +63,7 @@ public class AllJobsAdapter extends RecyclerView.Adapter<AllJobsAdapter.ViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(context, JobDetailActivity.class);
                 intent.putExtra("jobId", modelHotJobs.get(position).getId() + "");
+                intent.putExtra("isApplied", modelHotJobs.get(position).isApplied() );
                 context.startActivity(intent);
             }
         });
@@ -117,7 +118,7 @@ public class AllJobsAdapter extends RecyclerView.Adapter<AllJobsAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView salaryText, jobText, clientText, locationText, vacancyText, dateText, vacancyTitle;
-        Button viewJobBtn, applyJobBtn;
+        TextView viewJobBtn, applyJobBtn;
 
         ViewHolder(View itemView) {
             super(itemView);

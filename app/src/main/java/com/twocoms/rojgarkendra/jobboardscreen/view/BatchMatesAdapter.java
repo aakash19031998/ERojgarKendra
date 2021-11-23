@@ -110,7 +110,7 @@ public class BatchMatesAdapter extends RecyclerView.Adapter<BatchMatesAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView salaryText, jobText, clientText, locationText, vacancyText, dateText;
-        Button viewJobBtn, applyJobBtn;
+        TextView viewJobBtn, applyJobBtn;
 
         ViewHolder(View itemView) {
             super(itemView);

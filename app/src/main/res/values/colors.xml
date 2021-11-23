@@ -19,4 +19,11 @@
     <color name="profile_default_tint">#e0e0e0</color>
     <color name="red"></color>
     <color name="default_color_android">#808080</color>
+
+    <color name="global_color_blue">#589ad3</color>
+    <color name="yellow_bg">#f19120</color>
+    <color name="green_color_add_document">#008231</color>
+    <color name="bg_color">#f7f7f7</color>
+
+
 </resources>

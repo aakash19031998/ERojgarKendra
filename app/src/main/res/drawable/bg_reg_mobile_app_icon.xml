@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:drawable="@drawable/icon_mobile"
+        android:drawable="@drawable/ic_mobile_icon"
         android:width="@dimen/_16sdp"
         android:height="@dimen/_16sdp"
         />
